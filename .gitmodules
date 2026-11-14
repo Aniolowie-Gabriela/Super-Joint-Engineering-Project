@@ -1,0 +1,4 @@
+[submodule "agent-skills"]
+	path = agent-skills
+	url = https://github.com/taf4you2/agent-skills.git
+	branch = main
