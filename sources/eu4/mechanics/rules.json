@@ -2493,7 +2493,7 @@
         "autonomy_decreased",
         "DECREASE_AUTONOMY_STEP"
       ],
-      "text": "Im wyższa autonomia lokalna, tym mniej podatków, dochodu z produkcji i zasobów ludzkich daje prowincja. Obniżaj ją tam, gdzie poradzisz sobie ze wzrostem niepokoju, a podnoś, gdy uniknięcie buntu jest ważniejsze od dochodu.",
+      "text": "Im wyższa autonomia lokalna, tym mniej podatków, dochodu z produkcji i rekrutów daje prowincja. Najedź na autonomię w oknie prowincji, a przed obniżeniem sprawdź niepokoje.",
       "refs": [
         {
           "path": "common/static_modifiers/00_static_modifiers.txt",
@@ -2506,6 +2506,10 @@
         {
           "path": "common/static_modifiers/00_static_modifiers.txt",
           "symbol": "autonomy_increased"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "local_autonomy"
         }
       ]
     },
@@ -2872,7 +2876,8 @@
       "patterns": [
         "\\b(?:pozyczk\\w*|loan\\w*|dlug\\w*|debt)\\b.{0,44}\\b(?:oprocent\\w*|odset\\w*|spl\\w*|koszt\\w*|rat\\w*|jak dziala|interest|repay\\w*|cost|term)\\b",
         "\\b(?:jak splac\\w*|czy brac|warto brac|kiedy brac|oprocent\\w*|interest on|repay|take out)\\b.{0,30}\\b(?:pozyczk\\w*|dlug\\w*|loans?|debt)\\b",
-        "\\b(?:pozyczka bankowa|kredyt bankowy|bank loans?)\\b"
+        "\\b(?:pozyczka bankowa|kredyt bankowy|bank loans?)\\b",
+        "\\bpozycz\\w*\\b.{0,60}\\b(?:deficyt\\w*|na minusie|pod kreska|ujemn\\w* bilans)\\b"
       ],
       "symbols": [
         "BASE_INTERESTS",
@@ -2880,7 +2885,7 @@
         "INFLATION_FROM_LOAN",
         "HINT_LOANS_TEXT"
       ],
-      "text": "Pożyczka daje dukaty od razu, ale do spłaty stale obciąża miesięczny budżet odsetkami. Sprawdź pozycję odsetek w budżecie i spłacaj najdroższe pożyczki, gdy możesz to zrobić bez ponownego zadłużenia się przy następnym wydatku.",
+      "text": "Pożyczka zasila skarbiec od razu, ale nie usuwa stałego deficytu i dodaje miesięczne odsetki. W zakładce Gospodarka sprawdź, które regularne wydatki mogą spaść, zanim weźmiesz kolejną pożyczkę.",
       "refs": [
         {
           "path": "common/defines.lua",
@@ -2907,7 +2912,7 @@
         "flavor_pol.18",
         "pol_commonwealth"
       ],
-      "text": "Polska zaczyna w 1444 z wasalnym Mazowszem i gwarancją dla Mołdawii, a Litwa jest osobnym państwem. W czasie bezkrólewia dobierz sojuszników i wypatruj wydarzenia wyboru Kazimierza.",
+      "text": "Polska zaczyna w 1444 z własnym państwem i wasalnym Mazowszem, a Mołdawia ma polską gwarancję. Powiązania widać w dyplomacji poszczególnych państw, a wasali znajdziesz na liście poddanych Polski.",
       "refs": [
         {
           "path": "history/countries/POL - Poland.txt",
@@ -3750,7 +3755,7 @@
         "HINT_TRADEVALUE_TEXT",
         "HINT_TRADEEFF_TEXT"
       ],
-      "text": "Wartość handlu to pula do podziału, siła handlowa wpływa na twój udział, a efektywność zwiększa dochód z tego udziału. Sprawdź je osobno, żeby ustalić, czy potrzebujesz bogatszego szlaku, większego udziału, czy premii do dochodu.",
+      "text": "Większa siła handlowa względem innych państw daje ci większą część wartości węzła, a efektywność wpływa na dochód z tej części. Kliknij węzeł na mapie handlu i sprawdź swój udział w sile handlowej oraz wartość do podziału.",
       "refs": [
         {
           "path": "localisation/hints_l_english.yml",
@@ -3763,6 +3768,10 @@
         {
           "path": "localisation/hints_l_english.yml",
           "symbol": "HINT_TRADEEFF_TEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_NODE_POWER_SHARE"
         }
       ]
     },
@@ -4098,7 +4107,7 @@
         "cb_super_badboy",
         "DIPLOMATIC_ACTION_COALITION_RELATIONS_FACTOR"
       ],
-      "text": "Sprawdź w dyplomacji opinię sąsiadów i karę za agresywną ekspansję, bo może z niej powstać koalicja. Wyślij dyplomatów do poprawy stosunków i zaczekaj z kolejnym podbojem, jeśli zagrożenie jest duże.",
+      "text": "Sprawdź w dyplomacji opinię sąsiadów i karę za agresywną ekspansję, bo przy złej opinii część z nich może stworzyć koalicję. Poprawa ogólnej opinii przez dyplomatów zmniejsza ryzyko, więc wyślij ich do groźnych sąsiadów przed kolejnym podbojem.",
       "refs": [
         {
           "path": "common/cb_types/00_cb_types.txt",
@@ -6184,7 +6193,7 @@
         "HINT_TRADEPOWER_TEXT",
         "TRADE_MISSION_OFFICE_DESC"
       ],
-      "text": "Duży udział w węźle daje tylko część zgromadzonej w nim wartości, więc w ubogim węźle możesz dostać niewiele. Sprawdź osobno wartość węzła, czy rzeczywiście w nim zbierasz, oraz dokąd odpływa przekazywany handel.",
+      "text": "Duży udział daje część zgromadzonej wartości, więc w ubogim węźle dochód może być mały. W widoku węzła porównaj wartość handlu ze swoim udziałem, sprawdź czy zbierasz i dokąd płynie reszta.",
       "refs": [
         {
           "path": "localisation/hints_l_english.yml",
@@ -6197,6 +6206,10 @@
         {
           "path": "localisation/tradenodes_l_english.yml",
           "symbol": "TRADE_MISSION_OFFICE_DESC"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_NODE_POWER_SHARE"
         }
       ]
     },
@@ -6408,7 +6421,7 @@
       "patterns": [
         "\\b(?:bitw\\w*|walcz\\w*|atak\\w*|wojsk\\w*|battle|attack)\\b.{0,48}\\b(?:gorach|gorsk\\w*|mountains?)\\b|\\b(?:gorach|gorsk\\w*|mountains?)\\b.{0,55}\\b(?:bitw\\w*|walcz\\w*|atak\\w*|wojsk\\w*|battle|attack)\\b"
       ],
-      "text": "Atakujący w górach dostaje karę −2 do rzutu, więc większa armia może przegrać. Sprawdź role i modyfikatory przed ruchem, a w razie potrzeby wybierz inne pole bitwy, bo przewaga manewru może zdjąć karę przeprawy, a kara gór pozostaje.",
+      "text": "Atakujący w górach dostaje karę −2 do rzutu, więc większa armia może przegrać. W oknie bitwy najedź na rzut, żeby odczytać modyfikator terenu i osobną karę za przeprawę.",
       "symbols": [
         "mountain",
         "RIVER_CROSSING_PENALTY",
@@ -6588,6 +6601,99 @@
         {
           "path": "localisation/EU4_l_english.yml",
           "symbol": "SOH_NONE"
+        }
+      ]
+    },
+    {
+      "id": "monthly-war-reparations",
+      "title": "Cykliczne dochody z traktatu pokojowego",
+      "patterns": [
+        "\\b(?:po (?:wygranej )?wojnie|po pokoju|w pokoju|peace|reparac\\w*)\\b.{0,60}\\b(?:co miesiac|miesieczn\\w*|cyklicz\\w*|monthly|regularnie)\\b|\\b(?:co miesiac|miesieczn\\w*|cyklicz\\w*|monthly|regularnie)\\b.{0,60}\\b(?:wojn\\w*|pokoj\\w*|reparac\\w*)\\b"
+      ],
+      "text": "Żądanie reparacji w traktacie pokojowym daje co miesiąc część dochodu pokonanego przez określony czas. W oknie pokoju wybierz reparacje, jeśli wolisz późniejsze regularne wpływy od jednorazowej gotówki.",
+      "symbols": [
+        "WAR_REPARATIONS_FACTOR",
+        "WAR_REPARATIONS_YEARS",
+        "PEACE_COST_WAR_REPARATIONS"
+      ],
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_FACTOR"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PEACE_COST_WAR_REPARATIONS"
+        }
+      ]
+    },
+    {
+      "id": "temple-placement-tax-income",
+      "title": "Kiedy warto budować kościół",
+      "patterns": [
+        "\\b(?:kosciol\\w*|swiatyn\\w*|temple\\w*|church)\\b.{0,48}\\b(?:kazdej|wsz\\w*|gdzie|kiedy|oplac\\w*|warto|everywhere)\\b|\\b(?:kazdej|wszedzie|gdzie|kiedy|warto|everywhere)\\b.{0,55}\\b(?:kosciol\\w*|swiatyn\\w*|temple\\w*|church)\\b"
+      ],
+      "text": "Kościół procentowo zwiększa podatki, więc jego zysk różni się między prowincjami. W oknie budowy porównaj prognozowany miesięczny przyrost podatków i zacznij od prowincji z najlepszym zwrotem.",
+      "symbols": [
+        "temple"
+      ],
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "temple"
+        }
+      ]
+    },
+    {
+      "id": "improving-opinion-after-conquest",
+      "title": "Poprawa stosunków po agresywnej ekspansji",
+      "patterns": [
+        "\\b(?:popraw\\w*|improv\\w*)\\b.{0,22}\\b(?:stosunk\\w*|relac\\w*|relations)\\b.{0,60}\\b(?:podboj\\w*|koalicj\\w*|agresywn\\w* ekspansj\\w*|coalition)\\b|\\b(?:koalicj\\w*|podboj\\w*)\\b.{0,44}\\b(?:popraw\\w*|improv\\w*) (?:stosunk\\w*|relac\\w*|relations)\\b"
+      ],
+      "text": "Dyplomata poprawia ogólną opinię kraju o tobie, dzięki czemu może zmaleć ryzyko jego udziału w koalicji. W dyplomacji sprawdź opinię i wyślij dyplomatę do zagrożonego państwa, a w projekcie pokoju ponownie odczytaj ostrzeżenie o koalicji.",
+      "symbols": [
+        "MACRO_DIPLOMACY_COALITION_RULE_DESC",
+        "IMPROVE_RELATION_SPEED",
+        "DIPLOMATIC_ACTION_COALITION_RELATIONS_FACTOR"
+      ],
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MACRO_DIPLOMACY_COALITION_RULE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "IMPROVE_RELATION_SPEED"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOMATIC_ACTION_COALITION_RELATIONS_FACTOR"
+        }
+      ]
+    },
+    {
+      "id": "poland-mazovia-on-the-map",
+      "title": "Mazowsze jako osobne państwo poddane Polsce",
+      "patterns": [
+        "\\b(?:mazowsz\\w*|mazov\\w*|masov\\w*)\\b.{0,45}\\b(?:osobn\\w*|na mapie|czyje|poddan\\w*|separate)\\b|\\b(?:osobn\\w*|poddan\\w*|czyje|separate)\\b.{0,50}\\b(?:mazowsz\\w*|mazov\\w*|masov\\w*)\\b"
+      ],
+      "text": "W 1444 Mazowsze jest polskim wasalem, dlatego nadal ma własne państwo na mapie. Zobacz zależność w dyplomacji Mazowsza lub na liście poddanych Polski.",
+      "symbols": [
+        "second = MAZ",
+        "owner = MAZ"
+      ],
+      "refs": [
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MAZ"
+        },
+        {
+          "path": "history/provinces/257 - Warszawa.txt",
+          "symbol": "owner = MAZ"
         }
       ]
     }
