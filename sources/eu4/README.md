@@ -6,6 +6,7 @@ Baza dla asystenta rozgrywki w EU4 1.37 bez modów. Lokalne dane gry pochodzą z
 |---|---|
 | [Strategie i odsyłacze do wiki i Reddita](strategies-1.37.json) | Dziewięć polskich notatek o gospodarce na starcie, wojnach i unikaniu koalicji. Każda ma identyfikator, zastosowanie, ograniczenia oraz powiązane źródła. |
 | [Poradniki wideo](videos.md) | Linki do filmów, tematy, wersje i dostępność napisów. |
+| [Notatki i dane do RAG](video-notes/README.md) | Opracowania sześciu filmów z odsyłaczami do konkretnych minut, osobny przewodnik po Polsce i fragmenty do bezpośredniego indeksowania. |
 | [Dane instalacji Steam](game-data.md) | Wersja, zakres zweryfikowanego eksportu lokalnego oraz miejsca, w których gra definiuje reguły i stan startowy. |
 
 ## Artykuły przejrzane do lokalnej bazy

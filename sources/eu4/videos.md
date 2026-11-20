@@ -1,5 +1,7 @@
 # Poradniki wideo do EU4
 
+[Opracowania z odsyłaczami do poszczególnych fragmentów filmów i eksport do RAG](video-notes/README.md)
+
 Napisy w pierwszej tabeli udało się wyeksportować z YouTube. Są generowane automatycznie, więc nazwy mechanik, liczb i krajów mogą wymagać sprawdzenia. Numer wersji pochodzi ze strony filmu, o ile autor go podał.
 
 | Temat | Autor i film | Wersja | Napisy |
