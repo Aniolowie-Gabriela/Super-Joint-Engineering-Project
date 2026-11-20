@@ -2590,7 +2590,7 @@
         "GOLD_INFLATION",
         "HINT_TRADEGOODS_TEXT"
       ],
-      "text": "Złoto daje dochód prosto do skarbca i zwiększa inflację, a wyczerpanie kopalni zmniejsza jej bazową produkcję o połowę. Zwiększaj rozwój produkcji kopalni, sprawdzając w podglądzie dodatkowy dochód i ryzyko wyczerpania.",
+      "text": "Złoto zasila dochód bezpośrednio, ale im większy ma w nim udział, tym bardziej może podnosić inflację i późniejsze koszty. Zobacz podpowiedź inflacji w gospodarce i przed rozwojem kopalni porównaj dodatkowy dochód z inflacją oraz ryzykiem wyczerpania.",
       "refs": [
         {
           "path": "common/defines.lua",
@@ -2667,7 +2667,7 @@
         "HINT_TRADEPOWER_TEXT",
         "entrepot"
       ],
-      "text": "Targowisko zwiększa siłę handlową prowincji, więc dodatkowy dochód zależy od twojego udziału w handlu. Najpierw sprawdź centra handlu i ujścia rzek w węźle, z którego zbierasz lub przekazujesz handel do swojego głównego węzła.",
+      "text": "Targowisko procentowo zwiększa siłę handlową prowincji, więc zwykle daje większy przyrost w silniejszym ośrodku. Najpierw porównaj centra handlu i ujścia rzek w węźle, który zasila miejsce twojego zbierania.",
       "refs": [
         {
           "path": "common/buildings/00_buildings.txt",
@@ -2687,9 +2687,9 @@
       "id": "peace-time-maintenance-budget",
       "title": "Deficyt w pokoju i koszt utrzymania",
       "patterns": [
-        "\\b(?:deficyt\\w*|ujemn\\w* bilans\\w*|na minusie|losing money|budget deficit|negative balance)\\b",
-        "\\b(?:utrzyman\\w* (?:armii|wojsk\\w*|fort\\w*)|army maintenance|fort maintenance)\\b",
-        "\\b(?:wylacz\\w*|uspi\\w*|mothball\\w*)\\b.{0,22}\\b(?:fort\\w*|fortress\\w*)\\b"
+        "^(?!.*\\bgdzie\\b.{0,24}\\b(?:sprawdz|zobacz|odczyt)).*?(?:\\b(?:deficyt\\w*|ujemn\\w* bilans\\w*|na minusie|losing money|budget deficit|negative balance)\\b)",
+        "^(?!.*\\bgdzie\\b.{0,24}\\b(?:sprawdz|zobacz|odczyt)).*?(?:\\b(?:utrzyman\\w* (?:armii|wojsk\\w*|fort\\w*)|army maintenance|fort maintenance)\\b)",
+        "^(?!.*\\bgdzie\\b.{0,24}\\b(?:sprawdz|zobacz|odczyt)).*?(?:\\b(?:wylacz\\w*|uspi\\w*|mothball\\w*)\\b.{0,22}\\b(?:fort\\w*|fortress\\w*)\\b)"
       ],
       "symbols": [
         "MIN_ARMY_MAINTENANCE",
@@ -3153,7 +3153,7 @@
         "pol_commonwealth",
         "commonwealth_enforced"
       ],
-      "text": "Unijna decyzja pozwala od razu odziedziczyć Litwę, gdy jej chęć wolności jest poniżej 25%. Utrzymaj unię i pokój, włącz Mazowsze, osiągnij stabilność +1 i zwykle technologię administracyjną 10 oraz zdobądź polskie rdzenie na Krakowie, Warszawie, Gdańsku i Malborku.",
+      "text": "Polska jako senior Litwy może ją odziedziczyć przy tworzeniu Rzeczypospolitej, zwykle od technologii administracyjnej 10 i z rdzeniami na Krakowie, Warszawie, Gdańsku i Malborku. Sprawdź podpowiedź decyzji, w tym pokój, stabilność, nieistnienie Mazowsza oraz rozmiar i chęć wolności Litwy.",
       "refs": [
         {
           "path": "decisions/TheCommonwealth.txt",
@@ -3414,8 +3414,8 @@
       "id": "beginner-gdansk-benefits",
       "title": "Dlaczego Polsce przydaje się Gdańsk",
       "patterns": [
-        "\\b(?:po co|dlaczego|czemu|why).{0,30}\\b(?:gdan\\w*|danzig)\\b.{0,25}\\b(?:polsk\\w*|poland)\\b",
-        "\\b(?:polsk\\w*|poland)\\b.{0,30}\\b(?:po co|dlaczego|czemu)\\b.{0,30}\\b(?:gdan\\w*|danzig)\\b"
+        "\\b(?:po co|dlaczego|czemu|why).{0,30}\\b(?:gdan\\w*|danzig)\\b.{0,25}\\b(?:pols[ck]\\w*|poland)\\b",
+        "\\b(?:pols[ck]\\w*|poland)\\b.{0,30}\\b(?:po co|dlaczego|czemu)\\b.{0,30}\\b(?:gdan\\w*|danzig)\\b"
       ],
       "text": "Gdańsk ma centrum handlu i ujście Wisły w węźle Bałtyku, więc zwiększa tam twoją siłę. Zdobądź prowincję i zrób na niej rdzeń, jeśli planujesz utworzyć Rzeczpospolitą.",
       "refs": [
@@ -3828,7 +3828,8 @@
       "patterns": [
         "^(?:casus belli|cb|pretekst do wojny)[? .]*$",
         "\\b(?:co to(?: jest)?|czym jest|what is|what does)\\s+(?:a\\s+)?(?:casus belli|cb|pretekst(?: do wojny)?)\\b",
-        "\\b(?:jak(?:i|ie)?|ktory|which)\\s+(?:wybrac\\s+)?(?:casus belli|cb|pretekst)\\b"
+        "\\b(?:jak(?:i|ie)?|ktory|which)\\s+(?:wybrac\\s+)?(?:casus belli|cb|pretekst)\\b",
+        "\\b(?:co daje|po co|co mi daje)\\b.{0,18}\\b(?:powod do wojny|pretekst do wojny)\\b"
       ],
       "symbols": [
         "cb_conquest",
@@ -3836,7 +3837,7 @@
         "take_claim",
         "take_core"
       ],
-      "text": "Casus belli to powód wypowiedzenia wojny, który określa cel i wpływa na warunki pokoju. W oknie wypowiedzenia wybierz pretekst pasujący do tego, co chcesz uzyskać, na przykład podbój pod roszczenie lub odzyskanie własnego rdzenia.",
+      "text": "Casus belli wyznacza cel wojny i pozwala uniknąć kary stabilności za atak bez powodu. W oknie wypowiedzenia wybierz cel pasujący do żądań, na przykład podbój pod roszczenie lub odzyskanie rdzenia.",
       "refs": [
         {
           "path": "common/cb_types/00_cb_types.txt",
@@ -3849,6 +3850,10 @@
         {
           "path": "localisation/aow_l_english.yml",
           "symbol": "WARSCORE_COST_DESC"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "STABHIT_FROM_NO_CB"
         }
       ]
     },
@@ -3928,7 +3933,8 @@
         "^(?:cel wojny|war goal|wargoal|ticking war ?score)[? .]*$",
         "\\b(?:co to|czym jest|jak dziala|what is)\\b.{0,18}\\b(?:cel wojny|war goal|wargoal|ticking war ?score)\\b",
         "\\b(?:cel\\w* (?:wojny|wojenn\\w*)|war goal)\\b.{0,46}\\b(?:nalicz\\w*|utrzym\\w*|narastaj\\w*|ticking)\\b",
-        "\\b(?:cel(?:em)? podboju|cel wojny|war goal)\\b.{0,50}\\b(?:trzym\\w*|narast\\w*|utrzym\\w*)"
+        "\\b(?:cel(?:em)? podboju|cel wojny|war goal)\\b.{0,50}\\b(?:trzym\\w*|narast\\w*|utrzym\\w*)",
+        "\\b(?:wygryw\\w*|wygral\\w*)\\b.{0,27}\\bbitw\\w*.{0,35}\\bwynik\\w* wojny\\b"
       ],
       "symbols": [
         "DEFAULT_WARGOAL_TICKINGWARSCORE_BONUS",
@@ -4061,7 +4067,7 @@
         "AE_DISTANCE_BASE",
         "AE_SAME_RELIGION"
       ],
-      "text": "Agresywna ekspansja to kara do opinii innych państw o tobie, która może wzrosnąć po podboju i z czasem maleje. Przed podpisaniem pokoju sprawdź ostrzeżenie o koalicji i ogranicz żądania, jeśli przybywa groźnych przeciwników.",
+      "text": "Agresywna ekspansja to kara do opinii innych państw, która rośnie po podboju. Najedź na ostrzeżenie o koalicji w oknie pokoju, odczytaj listę zagrożonych państw i w razie potrzeby ogranicz żądania.",
       "refs": [
         {
           "path": "common/opinion_modifiers/00_opinion_modifiers.txt",
@@ -6318,8 +6324,8 @@
       "id": "poland-regency-declare-war",
       "title": "Polska w 1444 i blokada wypowiadania wojny",
       "patterns": [
-        "^(?=.*\\b(?:polsk\\w*|poland)\\b).*?(?:\\b(?:polsk\\w*|poland)\\b.{0,80}\\b(?:wypowiedziec|wypowiada\\w*|zaczac|zaczyna\\w*|declare|start)\\b.{0,25}\\b(?:wojn\\w*|war)\\b)",
-        "^(?=.*\\b(?:polsk\\w*|poland)\\b).*?(?:\\b(?:regencj\\w*|bezkr[oó]lewi\\w*|regency)\\b.{0,60}\\b(?:blok\\w*|wojn\\w*|wars?)\\b|\\b(?:wypowiedziec|wypowiada\\w*) wo[jj]n\\w*.{0,50}\\b(?:regencj\\w*|bezkr[oó]lewi\\w*)\\b)"
+        "^(?=.*\\b(?:pols[ck]\\w*|poland)\\b).*?(?:\\b(?:pols[ck]\\w*|poland)\\b.{0,80}\\b(?:wypowiedziec|wypowiada\\w*|zaczac|zaczyna\\w*|declare|start)\\b.{0,25}\\b(?:wojn\\w*|war)\\b)",
+        "^(?=.*\\b(?:pols[ck]\\w*|poland)\\b).*?(?:\\b(?:regencj\\w*|bezkr[oó]lewi\\w*|regency)\\b.{0,60}\\b(?:blok\\w*|wojn\\w*|wars?)\\b|\\b(?:wypowiedziec|wypowiada\\w*) wo[jj]n\\w*.{0,50}\\b(?:regencj\\w*|bezkr[oó]lewi\\w*)\\b)"
       ],
       "symbols": [
         "NO_WAR_WHEN_REGENCY",
@@ -6339,6 +6345,249 @@
         {
           "path": "events/flavorPOL.txt",
           "symbol": "flavor_pol.18"
+        }
+      ]
+    },
+    {
+      "id": "economy-budget-interface",
+      "title": "Gdzie sprawdzić, skąd bierze się miesięczny deficyt",
+      "patterns": [
+        "\\b(?:gdzie|jak)\\b.{0,25}\\b(?:sprawdz|zobacz|odczyt)\\w*.{0,48}\\b(?:bilans\\w*|minus\\w*|deficyt\\w*|wydatk\\w*|budget|income)\\b"
+      ],
+      "text": "Otwórz zakładkę Gospodarka i odczytaj saldo miesięczne oraz największe pozycje po stronie wydatków. Porównaj przede wszystkim utrzymanie armii, fortów, doradców i odsetki, zanim zdecydujesz, który koszt można bezpiecznie zmniejszyć.",
+      "symbols": [
+        "BALANCE",
+        "LAND_MAINTENANCE_FACTOR",
+        "BASE_INTERESTS"
+      ],
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "BALANCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "LAND_MAINTENANCE_FACTOR"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_INTERESTS"
+        }
+      ]
+    },
+    {
+      "id": "cheap-burgher-loans",
+      "title": "Tanie pożyczki od mieszczaństwa",
+      "patterns": [
+        "\\b(?:tani\\w*|tanio|nisk\\w* odsetk\\w*|cheap|low interest)\\b.{0,24}\\b(?:pozycz\\w*|kredyt\\w*|loans?)\\b|\\b(?:pozycz\\w*|kredyt\\w*|loans?)\\b.{0,28}\\b(?:tani\\w*|mieszcz\\w*|burgher\\w*)\\b"
+      ],
+      "text": "Jeśli masz dostęp do mieszczaństwa, przywilej Zadłużenie u mieszczan daje standardowo pięć pięcioletnich pożyczek na 1%. Otwórz stany i sprawdź dostępność przywileju przed zaciągnięciem droższej pożyczki bankowej.",
+      "symbols": [
+        "estate_burghers_indebted_to_burghers",
+        "BASE_INTERESTS",
+        "BANK_LOAN_DURATION"
+      ],
+      "refs": [
+        {
+          "path": "common/estate_privileges/03_burgher_privileges.txt",
+          "symbol": "estate_burghers_indebted_to_burghers"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_INTERESTS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANK_LOAN_DURATION"
+        }
+      ]
+    },
+    {
+      "id": "mountain-combat-advantage",
+      "title": "Atak w górach mimo liczniejszej armii",
+      "patterns": [
+        "\\b(?:bitw\\w*|walcz\\w*|atak\\w*|wojsk\\w*|battle|attack)\\b.{0,48}\\b(?:gorach|gorsk\\w*|mountains?)\\b|\\b(?:gorach|gorsk\\w*|mountains?)\\b.{0,55}\\b(?:bitw\\w*|walcz\\w*|atak\\w*|wojsk\\w*|battle|attack)\\b"
+      ],
+      "text": "Atakujący w górach dostaje karę −2 do rzutu, więc większa armia może przegrać. Sprawdź role i modyfikatory przed ruchem, a w razie potrzeby wybierz inne pole bitwy, bo przewaga manewru może zdjąć karę przeprawy, a kara gór pozostaje.",
+      "symbols": [
+        "mountain",
+        "RIVER_CROSSING_PENALTY",
+        "THERE_WILL_BE_CROSSING_MODIFIER"
+      ],
+      "refs": [
+        {
+          "path": "map/terrain.txt",
+          "symbol": "mountain"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "RIVER_CROSSING_PENALTY"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "THERE_WILL_BE_CROSSING_MODIFIER"
+        }
+      ]
+    },
+    {
+      "id": "war-declaration-participants",
+      "title": "Gdzie sprawdzić, kto dołączy do wojny",
+      "patterns": [
+        "\\b(?:kto|ktore panstw\\w*|who)\\b.{0,35}\\b(?:dolacz\\w*|wejdzie|join)\\b.{0,24}\\b(?:wojn\\w*|war)\\b|\\b(?:uczestnik\\w*|partici\\w*)\\b.{0,34}\\b(?:deklarac\\w*|wypowiedze\\w*)\\b"
+      ],
+      "text": "W oknie wypowiedzenia wojny sprawdź uczestników po obu stronach i najedź na znacznik przy ich nazwach, żeby odczytać przewidywaną odpowiedź. Możesz zaznaczyć wzywanych sojuszników i sprawdzić, które państwa będą broniły przeciwnika.",
+      "symbols": [
+        "CALL_CHECKBOX_CANNOT_CALL_DESC",
+        "CALL_CHECKBOX_ALLIED_TO_ENEMY",
+        "FULL_ALLY_CHECKBOX_WILL_AUTOJOIN"
+      ],
+      "refs": [
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "CALL_CHECKBOX_CANNOT_CALL_DESC"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "CALL_CHECKBOX_ALLIED_TO_ENEMY"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "FULL_ALLY_CHECKBOX_WILL_AUTOJOIN"
+        }
+      ]
+    },
+    {
+      "id": "active-truce-coalition",
+      "title": "Rozejm a dołączenie do koalicji",
+      "patterns": [
+        "\\b(?:rozejm\\w*|truce)\\b.{0,68}\\b(?:koalicj\\w*|coalition)\\b|\\b(?:koalicj\\w*|coalition)\\b.{0,64}\\b(?:rozejm\\w*|truce)\\b"
+      ],
+      "text": "Państwo nie może dołączyć do koalicji przeciw tobie, dopóki ma z tobą rozejm. Sprawdź datę końca rozejmu w dyplomacji i wykorzystaj czas na obniżenie ryzyka, na przykład przez poprawę stosunków.",
+      "symbols": [
+        "NO_TRUCE_COALITION",
+        "MIN_DAYS_AFTER_TRUCE_ENDS",
+        "AE_COALITION_THRESHOLD"
+      ],
+      "refs": [
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "NO_TRUCE_COALITION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MIN_DAYS_AFTER_TRUCE_ENDS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_COALITION_THRESHOLD"
+        }
+      ]
+    },
+    {
+      "id": "alliance-offer-refusal",
+      "title": "Dlaczego państwo odmawia zawarcia sojuszu",
+      "patterns": [
+        "\\b(?:odmaw\\w*|nie chce|nie przyjm\\w*|reject\\w*|refus\\w*)\\b.{0,46}\\b(?:sojusz(?:u|em)?|alliance)\\b|\\b(?:ofert\\w*|propozyc\\w*)\\b.{0,24}\\b(?:sojusz\\w*|alliance)\\b.{0,27}\\b(?:odmow\\w*|odmaw\\w*|refus\\w*)\\b"
+      ],
+      "text": "Dobra opinia pomaga, ale zgoda na nowy sojusz zależy też od interesów państwa, na przykład od tego, czy jesteś sprzymierzony z jego rywalem. Najedź na podpowiedź akceptacji przy ofercie sojuszu, by rozpoznać przeszkodę, albo porównaj innego kandydata.",
+      "symbols": [
+        "ALLIANCETITLE",
+        "RIVAL_ALLIANCE_PENALTY",
+        "DIPLOMATIC_ACTION_ALLIANCE_ACCEPTANCE_MULT"
+      ],
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "ALLIANCETITLE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "RIVAL_ALLIANCE_PENALTY"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOMATIC_ACTION_ALLIANCE_ACCEPTANCE_MULT"
+        }
+      ]
+    },
+    {
+      "id": "coalition-uninvolved-countries",
+      "title": "Agresywna ekspansja u państw spoza wojny",
+      "patterns": [
+        "\\b(?:koalicj\\w*|agresywn\\w* ekspansj\\w*)\\b.{0,50}\\b(?:nie walcz\\w*|nie bral\\w*|spoza wojny|outside the war)\\b|\\b(?:nie walcz\\w*|nie bral\\w*)\\b.{0,54}\\b(?:koalicj\\w*|agresywn\\w* ekspansj\\w*)\\b"
+      ],
+      "text": "Podbój może obniżyć opinię państw z okolicy, także tych, które nie prowadziły z tobą wojny. Najedź na ostrzeżenie o koalicji w projekcie pokoju, zobacz zagrożone państwa i zmniejsz żądania, jeśli lista jest długa lub silna.",
+      "symbols": [
+        "AE_COALITION_THRESHOLD",
+        "DIPLOMATIC_ACTION_COALITION_DISTANCE_FACTOR",
+        "COALITIONWITHAGAINST"
+      ],
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_COALITION_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOMATIC_ACTION_COALITION_DISTANCE_FACTOR"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "COALITIONWITHAGAINST"
+        }
+      ]
+    },
+    {
+      "id": "danzig-confederation-support",
+      "title": "Czy poprzeć Gdańsk w wydarzeniu o Konfederacji Pruskiej",
+      "patterns": [
+        "\\b(?:poprzec|wesprzec|wspar\\w*|help|support)\\b.{0,43}\\b(?:gdan\\w*|danzig|konfederacj\\w* prusk\\w*)\\b|\\b(?:gdan\\w*|danzig)\\b.{0,45}\\b(?:przeciw krzyz\\w*|konfederacj\\w*)\\b"
+      ],
+      "text": "Gdy pojawi się prośba Konfederacji Pruskiej, poparcie Gdańska daje sojusz i może otworzyć drogę do jego wasalizacji w misji Polski. Wybierz poparcie, jeśli chcesz osłabić Krzyżaków, a po wojnie sprawdź, czy niepodległy Gdańsk spełnia warunki misji.",
+      "symbols": [
+        "flavor_teu.2",
+        "pol_prussia_confederation",
+        "flavor_teu.3"
+      ],
+      "refs": [
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.2"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_prussia_confederation"
+        },
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.3"
+        }
+      ]
+    },
+    {
+      "id": "poland-foreign-elective-heir",
+      "title": "Polska elekcja i kandydaci z obcych dynastii",
+      "patterns": [
+        "\\b(?:pols[ck]\\w*|sejm\\w*|poland)\\b.{0,75}\\b(?:obc\\w* dynasti\\w*|nast\\w* tronu|foreign heir|foreign dynasty)\\b|\\b(?:obc\\w* dynasti\\w*|nast\\w* tronu|foreign heir)\\b.{0,70}\\b(?:pols[ck]\\w*|sejm\\w*|poland)\\b"
+      ],
+      "text": "Polska monarchia elekcyjna z Res Publica pozwala innym państwom wspierać w elekcji kandydatów ze swoich dynastii. Sprawdź poparcie kandydatów w panelu ustroju i rozważ wsparcie miejscowego szlachcica prestiżem.",
+      "symbols": [
+        "polish_elective_monarchy",
+        "SUPPORT_HEIR_DESC",
+        "SOH_NONE"
+      ],
+      "refs": [
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_elective_monarchy"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SUPPORT_HEIR_DESC"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SOH_NONE"
         }
       ]
     }
