@@ -1,6 +1,7 @@
 """Read-only retrieval for the EU4 assistant, CLI and MCP server."""
 
 import argparse
+from collections import deque
 from contextlib import closing
 import json
 from pathlib import Path
@@ -9,6 +10,33 @@ import sqlite3
 import unicodedata
 
 from interpret import COUNTRY_TAG, annotations
+
+TRADE_NODE_ALIASES = {
+    "english_channel": r"la manche|kanal(?:u|em|e|owi)?(?: la manche)?",
+    "cape_of_good_hope": r"przylad(?:ek|ka|ku|kiem) dobrej nadziei",
+    "ivory_coast": r"wybrzez(?:e|a|u) kosci sloniowej",
+    "baltic_sea": r"baltyk(?:u|iem)?|morze baltyckie",
+    "lubeck": r"lubek(?:a|i|e|ce)",
+    "krakow": r"krakow(?:a|ie|em)?",
+    "venice": r"wenecj(?:a|i|e|e)",
+    "genua": r"genu(?:a|i|e)",
+    "sevilla": r"sewill(?:a|i|e)",
+    "wien": r"wied(?:en|nia|niu)",
+}
+TRADE_OUTLET = re.compile(r'\boutgoing\s*=\s*\{\s*name\s*=\s*"([^"]+)"')
+TRADE_NODE_PL = {
+    "english_channel": "Kanał La Manche",
+    "cape_of_good_hope": "Przylądek Dobrej Nadziei",
+    "ivory_coast": "Wybrzeże Kości Słoniowej",
+    "baltic_sea": "Bałtyk",
+    "lubeck": "Lubeka",
+    "krakow": "Kraków",
+    "saxony": "Saksonia",
+    "venice": "Wenecja",
+    "genua": "Genua",
+    "sevilla": "Sewilla",
+    "wien": "Wiedeń",
+}
 
 MECHANIC_LOOKUPS = (
     (r"wojen.*budzet|budzet.*wojen|(?:bilans|skarb|deficyt).*(?:utrzym|fort|wojn)", ("wartime-budget",)),
@@ -144,6 +172,106 @@ def open_index(path):
 def normalize(value):
     plain = unicodedata.normalize("NFKD", value.casefold().replace("ł", "l"))
     return "".join(char for char in plain if not unicodedata.combining(char))
+
+
+def guide_context(db_path, question=None):
+    """Odczytaj gotowe objaśnienia pasujące do krótkiego, typowego pytania."""
+    with closing(open_index(db_path)) as db:
+        if not db.execute("SELECT 1 FROM sqlite_master WHERE name = 'guide_pattern'").fetchone():
+            return []
+        if question is None:
+            matched = [row[0] for row in db.execute("SELECT DISTINCT record_id FROM guide_pattern ORDER BY record_id")]
+        else:
+            text = normalize(question)
+            rows = db.execute("SELECT pattern, record_id FROM guide_pattern ORDER BY record_id")
+            matched = list(dict.fromkeys(record_id for pattern, record_id in rows if re.search(pattern, text)))
+        return [
+            {**json.loads(db.execute("SELECT json FROM record WHERE id = ?", (record_id,)).fetchone()[0]),
+             "index_row_id": record_id}
+            for record_id in matched
+        ]
+
+
+def guide_candidates(db_path, question, limit=8):
+    records = guide_context(db_path)
+    if not records:
+        return []
+    try:
+        from semantic import neighbors
+    except ImportError:
+        return []
+    by_row = {record["index_row_id"]: record for record in records}
+    return [by_row[row] for row, _ in neighbors(db_path, question, (), limit, list(by_row))]
+
+
+def trade_network(db_path):
+    nodes = {}
+    with closing(open_index(db_path)) as db:
+        for (payload,) in db.execute("SELECT json FROM record WHERE family = 'tradenodes' ORDER BY id"):
+            record = json.loads(payload)
+            nodes.setdefault(record["symbol"], []).append(record)
+    return nodes
+
+
+def trade_label(record):
+    return TRADE_NODE_PL.get(record["symbol"], record["title"])
+
+
+def trade_route(db_path, origin, destination, nodes=None):
+    """Znajdź najkrótszą skierowaną trasę z definicji gry."""
+    nodes = trade_network(db_path) if nodes is None else nodes
+    origin, destination = tuple(normalize(value).replace(" ", "_") for value in (origin, destination))
+    if origin not in nodes or destination not in nodes:
+        raise ValueError("Podaj identyfikatory węzłów, np. krakow i english_channel.")
+    pending = deque([(origin,)])
+    visited = {origin}
+    while pending:
+        route = pending.popleft()
+        current = route[-1]
+        if current == destination:
+            return [
+                next((record for record in nodes[node] if next_node in TRADE_OUTLET.findall(record["text"])),
+                     nodes[node][0])
+                for node, next_node in zip(route, route[1:] + ("",))
+            ]
+        neighbors = [match for record in nodes[current] for match in TRADE_OUTLET.findall(record["text"])]
+        for neighbor in neighbors:
+            if neighbor in nodes and neighbor not in visited:
+                visited.add(neighbor)
+                pending.append((*route, neighbor))
+    return []
+
+
+def trade_question(db_path, question):
+    text = normalize(question)
+    if not re.search(r"handel|handl|zbier|przekier|wezl|towar|trade|kupc", text):
+        return None
+    nodes = trade_network(db_path)
+    mentions = []
+    for symbol, rows in nodes.items():
+        names = [re.escape(symbol.replace("_", " ")), re.escape(normalize(rows[0]["title"]))]
+        names.append(TRADE_NODE_ALIASES.get(symbol, "(?!)"))
+        found = re.search(r"(?<!\w)(?:" + "|".join(names) + r")(?!\w)", text)
+        if found:
+            before = text[:found.start()].rstrip()
+            if re.search(r"\b(?:ze?|od|from)$", before):
+                direction = "origin"
+            elif re.search(r"\b(?:do|to|into|w kierunku|(?:zbier\w*|collect\w*) (?:w|in|at))$", before):
+                direction = "destination"
+            else:
+                direction = None
+            mentions.append((found.end(), symbol, direction))
+    if len(mentions) != 2:
+        return None
+    mentions.sort()
+    first, second = mentions
+    if first[2] == second[2]:
+        if first[2] is not None or not re.match(r"\s*(?:→|->)", text[first[0]:]):
+            return None
+    if first[2] == "destination" or second[2] == "origin":
+        first, second = second, first
+    origin, target = first[1], second[1]
+    return nodes[origin][0], nodes[target][0], trade_route(db_path, origin, target, nodes)
 
 
 def lexical_query(question):

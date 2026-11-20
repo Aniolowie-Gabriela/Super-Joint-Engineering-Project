@@ -6,7 +6,7 @@ Po zbudowaniu bazy i uruchomieniu Ollamy wpisz pytanie. Odpowiedź zawiera numer
 python sources/eu4/mechanics/ask.py "Po co mi kupcy?"
 ```
 
-Klient domyślnie korzysta z `gemma4:e4b`, włączonego rozumowania i kontekstu 4096. Przeszukuje bazę przed każdym pytaniem. Na krótkie pytanie odpowiada zwięźle i podpowiada, co zrobić w grze. Gdy potrzebujesz rozpiski, podaj polecenie „policz” lub dodaj przełącznik `--detailed`. Te same źródła można podłączyć w innej aplikacji przez MCP.
+Klient domyślnie korzysta z `gemma4:e4b`, włączonego rozumowania i kontekstu 4096. Na typowe krótkie pytanie pokazuje sprawdzone objaśnienie z odsyłaczem do plików gry. Ścieżki handlu wylicza z kierunków zapisanych w grze. Gdy pytanie wymaga połączenia reguł, dobiera źródła i zleca odpowiedź Gemmie. Gdy potrzebujesz rozpiski, podaj polecenie „policz” lub dodaj przełącznik `--detailed`.
 
 W próbie na Radeonie RX 7600S użyto `llama-server` dołączonego do Ollamy, z Gemmą E4B, wszystkimi wagami na GPU i oddzielnym budżetem 256 tokenów rozumowania. Backend należy wskazać w PowerShell przez `$env:EU4_LLM_BACKEND = 'llama.cpp'`, a adres lokalnego serwera przez `--url`. Wersja klienta z tym backendem umie rozszerzyć wyszukiwanie o angielskie nazwy gry.
 
@@ -26,7 +26,7 @@ Wyszukiwanie tekstowe SQL FTS5 uzupełnia słownik polskich nazw i identyfikator
 
 ### Włącz wyszukiwanie po znaczeniu
 
-Zainstaluj biblioteki z [pliku wymagań](requirements.txt). Umieść pliki `tokenizer.json` oraz `onnx/model_int8.onnx` z eksportu modelu E5 w katalogu `embedding-model` obok bazy z nazwami `tokenizer.json` i `model_int8.onnx`. Zbuduj wektory raz po każdej przebudowie bazy.
+Zainstaluj biblioteki z [pliku wymagań](requirements.txt) w Pythonie 3.12 lub nowszym. Umieść pliki `tokenizer.json` oraz `onnx/model_int8.onnx` z eksportu modelu E5 w katalogu `embedding-model` obok bazy z nazwami `tokenizer.json` i `model_int8.onnx`. Zbuduj wektory raz po każdej przebudowie bazy.
 
 ```powershell
 python -m pip install -r sources/eu4/mechanics/requirements.txt
@@ -50,10 +50,11 @@ W środowisku Pythona używanym przez hosta zainstaluj oficjalne SDK przez `pyth
 }
 ```
 
-- `search_eu4(query, limit)` zwraca trafienia z tekstem i danymi źródła.
+- `search_eu4(query, limit)` zwraca krótkie trafienia z tekstem i danymi źródła.
 - `read_eu4_record(chunk_id)` otwiera wskazany fragment. `related` pokazuje odsyłacze po symbolach, a `other_sections` pozostałe fragmenty tej samej reguły.
 - `find_eu4_symbol(symbol, family)` odczytuje definicję po identyfikatorze i rodzinie danych.
 - `trace_eu4_flag(flag)` odróżnia zapis flagi, sprawdzenie i usunięcie, podając zakres, plik i wiersz.
+- `trace_eu4_trade(origin, destination)` wyznacza skierowaną ścieżkę z identyfikatorów węzłów i zwraca jej definicje.
 
 Narzędzie korzysta z lokalnego pliku w trybie odczytu. Klient Gemmy przesyła kontekst do lokalnego modelu wyłącznie przez localhost. Wersja gry, warunki DLC i zakres dowodu pozostają widoczne w zwracanych danych. [Dokumentacja MCP](https://modelcontextprotocol.io/docs/learn/architecture), [Gemma 4 E4B](https://ollama.com/library/gemma4%3Ae4b)
 
@@ -64,6 +65,8 @@ python sources/eu4/mechanics/evaluate.py --db outputs/eu4-gameplay/mechanics/kno
 ```
 
 Test wykorzystuje sześć pytań z odpowiedzią sprawdzalną w plikach gry i jedno pytanie wymagające danych z kampanii. Każde pytanie jest wysyłane do tej samej Gemmy z kontekstem i bez niego. Dopasowanie wzorców wspiera ręczną ocenę odpowiedzi, kolejności warunków i zgodności cytowań.
+
+Aby zadać własny zestaw pytań w ich oryginalnym brzmieniu, dodaj `--questions zestaw.json`. Plik ma zawierać tablicę obiektów z polami `id`, `question`, `expected`, `required` i `sources`. Raport zachowuje kryteria, cytowane fragmenty, wybraną metodę odpowiedzi i czas. Wyniki sprawdź według klucza i źródeł.
 
 W publicznym repozytorium jest kod i nasze opracowania. Baza z treścią plików instalacji powstaje lokalnie.
 

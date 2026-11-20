@@ -2478,6 +2478,3869 @@
           "symbol": "INFLATION_ACTION_REDUCTION"
         }
       ]
+    },
+    {
+      "id": "local-autonomy-budget",
+      "title": "Autonomia lokalna a dochód i bunt",
+      "patterns": [
+        "\\b(?:local autonomy|autonomi\\w*)\\b.{0,45}\\b(?:co daje|wplyw\\w*|dochod\\w*|podat\\w*|produkcj\\w*|bunt\\w*|zmniejsz\\w*|podnie\\w*)\\b",
+        "\\b(?:co to(?: jest)?|czym jest|co daje|obniz\\w*|podnies\\w*|zmniejsz\\w*|zwieksz\\w*|what is|lower|raise|reduce)\\b.{0,28}\\b(?:autonomi\\w*|(?:local )?autonomy)\\b",
+        "\\bpo co.{0,25}\\bobniz\\w*.{0,15}\\bautonomi\\w*\\b"
+      ],
+      "symbols": [
+        "local_autonomy_multiplicative",
+        "autonomy_increased",
+        "autonomy_decreased",
+        "DECREASE_AUTONOMY_STEP"
+      ],
+      "text": "Im wyższa autonomia lokalna, tym mniej podatków, dochodu z produkcji i zasobów ludzkich daje prowincja. Obniżaj ją tam, gdzie poradzisz sobie ze wzrostem niepokoju, a podnoś, gdy uniknięcie buntu jest ważniejsze od dochodu.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "local_autonomy_multiplicative"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "autonomy_decreased"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "autonomy_increased"
+        }
+      ]
+    },
+    {
+      "id": "state-territory-full-core",
+      "title": "Stan, terytorium i pełny rdzeń",
+      "patterns": [
+        "\\b(?:stan(?:y|ow|em|ami)?|terytori\\w*|state|territor(?:y|ies))\\b.{0,38}\\b(?:terytori\\w*|stan(?:y|ow|em|ami)?|territor(?:y|ies)|states?|pel\\w* rdze\\w*|full core)\\b",
+        "\\b(?:utworzy\\w*|tworz\\w*|robic|zrobic|zamien\\w*|przeksztalc\\w*|make|create)\\b.{0,34}\\b(?:stan(?:y|em|ami)?|state)\\b",
+        "\\b(?:rdzen terytorialny|terytorialn\\w* rdze\\w*|territorial core|full cores?)\\b"
+      ],
+      "symbols": [
+        "STATE_DRO",
+        "CONFIRMMAKESTATETEXT",
+        "CONFIRMABANDONSTATECORECOST",
+        "territory_core",
+        "in_state"
+      ],
+      "text": "Stan z pełnymi rdzeniami pozwala zejść poniżej minimalnej autonomii terytorium, ale zwiększa wykorzystanie limitu administracyjnego i koszty utrzymania. Zacznij od bogatych obszarów i sprawdź osobno koszt utrzymania stanu oraz punkty administracyjne potrzebne na pełne rdzenie.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CONFIRMMAKESTATETEXT"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CONFIRMABANDONSTATECORECOST"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "territory_core"
+        }
+      ]
+    },
+    {
+      "id": "province-income-tax-and-production",
+      "title": "Podatki i dochód z produkcji",
+      "patterns": [
+        "\\b(?:podat\\w*|tax\\w*)\\b.{0,40}\\b(?:produkcj\\w*|production)\\b",
+        "\\b(?:co daje|co podnosi|od czego zalezy|jak zwieksz\\w*|increase|what determines)\\b.{0,32}\\b(?:bazow\\w* podat\\w*|dochod z produkcji|tax income|production income)\\b",
+        "\\b(?:dochod z produkcji|production income)\\b.{0,30}\\b(?:cena|towar\\w*|price|goods)\\b"
+      ],
+      "symbols": [
+        "HINT_INCOME_TEXT",
+        "HINT_TAXES_TEXT",
+        "HINT_TRADEVALUE_TEXT",
+        "production_efficiency",
+        "provincial_tax_income"
+      ],
+      "text": "Podatki zależą głównie od bazowego podatku i jego modyfikatorów, a dochód z produkcji od ilości i ceny towaru oraz efektywności produkcji. Przed wydaniem punktów rozwoju lub dukatów sprawdź podgląd przyrostu dochodu w wybranej prowincji.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_INCOME_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TAXES_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "EFFECTIVE_INCOME_EXPL"
+        }
+      ]
+    },
+    {
+      "id": "gold-mine-income-inflation",
+      "title": "Złoto, inflacja i ryzyko wyczerpania kopalni",
+      "patterns": [
+        "\\b(?:kopalni\\w* zlota|zlota kopalni\\w*|gold mines?|gold depletion|gold inflation)\\b",
+        "\\b(?:zlot(?:o|a|em|u)|gold)\\b.{0,37}\\b(?:dochod\\w*|produkcj\\w*|inflacj\\w*|wyczerp\\w*|income|production|inflation|deplet\\w*)\\b",
+        "\\b(?:rozwij\\w*|zwieksz\\w*|develop\\w*|increase)\\b.{0,28}\\b(?:zlot(?:o|a|em|u)|gold)\\b"
+      ],
+      "symbols": [
+        "GOLD_MINE_SIZE",
+        "GOLD_MINE_DEPLETION_CHANCE",
+        "GOLD_DEPLETE_WARNING",
+        "GOLD_INFLATION",
+        "HINT_TRADEGOODS_TEXT"
+      ],
+      "text": "Złoto daje dochód prosto do skarbca i zwiększa inflację, a wyczerpanie kopalni zmniejsza jej bazową produkcję o połowę. Zwiększaj rozwój produkcji kopalni, sprawdzając w podglądzie dodatkowy dochód i ryzyko wyczerpania.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "GOLD_MINE_SIZE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GOLD_INFLATION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GOLD_MINE_DEPLETION_CHANCE"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "GOLD_DEPLETE_WARNING"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEGOODS_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "building-payback-workshop-temple-manufactory",
+      "title": "Zwrot kosztu świątyni, warsztatu i manufaktury",
+      "patterns": [
+        "\\b(?:budyn\\w*|budow\\w*|buildings?|inwestycj\\w*)\\b.{0,35}\\b(?:zwrot\\w*|oplac\\w*|zysk\\w*|roi|payback|profit\\w*)\\b",
+        "\\b(?:zwrot\\w*|oplac\\w*|warto|payback|roi|profitab\\w*)\\b.{0,50}\\b(?:budyn\\w*|warsztat\\w*|swiatyn\\w*|manufaktur\\w*|buildings?|workshops?|temples?|manufactor\\w*)\\b",
+        "\\b(?:gdzie|kiedy|where|when)\\b.{0,30}\\b(?:warsztat\\w*|swiatyn\\w*|manufaktur\\w*|workshops?|temples?|manufactor\\w*)\\b"
+      ],
+      "symbols": [
+        "temple",
+        "workshop",
+        "manufactory",
+        "MACRO_INCREASE_INCOME_DESC"
+      ],
+      "text": "Świątynia podnosi podatki, warsztat zwiększa efektywność produkcji, a manufaktura produkcyjna zwiększa ilość towaru i jego wkład w handel. Porównaj miesięczny przyrost dochodu z ceną budynku, dzieląc cenę przez przyrost, by oszacować liczbę miesięcy zwrotu po ukończeniu budowy.",
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "temple"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "workshop"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "manufactory"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "MACRO_INCREASE_INCOME_DESC"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "marketplace-trade-power-investment",
+      "title": "Targowisko i siła handlowa",
+      "patterns": [
+        "\\b(?:targowisk\\w*|marketplaces?)\\b.{0,38}\\b(?:dochod\\w*|oplac\\w*|warto|handel|rywal\\w*|sila|trade|income|worth)\\b",
+        "\\b(?:gdzie|kiedy|na co|co daje|warto|where|when|worth|why)\\b.{0,42}\\b(?:targowisk\\w*|marketplaces?)\\b",
+        "\\b(?:targowisk\\w*|marketplaces?)\\b.{0,24}\\b(?:warsztat\\w*|workshops?)\\b",
+        "\\btargowisk\\w*\\b.{0,30}\\b(?:kas\\w*|pieniadz\\w*|zarob\\w*)\\b"
+      ],
+      "symbols": [
+        "marketplace",
+        "province_trade_power_modifier",
+        "HINT_TRADEPOWER_TEXT",
+        "entrepot"
+      ],
+      "text": "Targowisko zwiększa siłę handlową prowincji, więc dodatkowy dochód zależy od twojego udziału w handlu. Najpierw sprawdź centra handlu i ujścia rzek w węźle, z którego zbierasz lub przekazujesz handel do swojego głównego węzła.",
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "marketplace"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEPOWER_TEXT"
+        },
+        {
+          "path": "common/centers_of_trade/00_centers_of_trade.txt",
+          "symbol": "entrepot"
+        }
+      ]
+    },
+    {
+      "id": "peace-time-maintenance-budget",
+      "title": "Deficyt w pokoju i koszt utrzymania",
+      "patterns": [
+        "\\b(?:deficyt\\w*|ujemn\\w* bilans\\w*|na minusie|losing money|budget deficit|negative balance)\\b",
+        "\\b(?:utrzyman\\w* (?:armii|wojsk\\w*|fort\\w*)|army maintenance|fort maintenance)\\b",
+        "\\b(?:wylacz\\w*|uspi\\w*|mothball\\w*)\\b.{0,22}\\b(?:fort\\w*|fortress\\w*)\\b"
+      ],
+      "symbols": [
+        "MIN_ARMY_MAINTENANCE",
+        "MIN_NAVY_MAINTENANCE",
+        "alert_low_maintenance_delayed",
+        "FORT_CURRENTLY_HALF_MAIN",
+        "MORALE_RECOVERY_SPEED"
+      ],
+      "text": "Niższe utrzymanie armii oszczędza dukaty kosztem morale, a uśpienie fortu zmniejsza koszt, pozostawiając pusty garnizon. W bezpiecznym pokoju możesz tak ograniczyć wydatki, ale przed walką przywróć wydatki z wyprzedzeniem, żeby morale i garnizony zdążyły się odbudować.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "MIN_ARMY_MAINTENANCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MORALE_RECOVERY_SPEED"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "alert_low_maintenance_delayed"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "FORT_CURRENTLY_HALF_MAIN"
+        }
+      ]
+    },
+    {
+      "id": "corruption-root-out-budget",
+      "title": "Korupcja i koszt jej zwalczania",
+      "patterns": [
+        "\\b(?:korupcj\\w*|corruption)\\b.{0,42}\\b(?:wplyw\\w*|koszt\\w*|spad\\w*|wzrost\\w*|rosn\\w*|usun\\w*|effect|cost|grow\\w*|reduce)\\b",
+        "\\b(?:co to(?: jest)?|co daje|czym jest|zbij\\w*|obniz\\w*|zmniejsz\\w*|usun\\w*|what is|lower|remove|root out|reduce)\\b.{0,29}\\b(?:korupcj\\w*|corruption)\\b",
+        "\\b(?:root out corruption|zwalczan\\w* korupcji|jak walczyc z korupcja)\\b"
+      ],
+      "symbols": [
+        "corruption",
+        "root_out_corruption",
+        "CORRUPTION_SLIDER_TOOLTIP",
+        "CORRUPTION_EXPLANATION",
+        "over_extension"
+      ],
+      "text": "Zmniejszenie wydatków na zwalczanie korupcji poprawi bilans, ale rosnąca korupcja podnosi koszt działań opłacanych punktami monarchy i minimalną autonomię. W panelu gospodarki sprawdź roczną zmianę korupcji oraz jej przyczyny, zanim zmniejszysz suwak.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "corruption"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "root_out_corruption"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CORRUPTION_SLIDER_TOOLTIP"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CORRUPTION_EXPLANATION"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "over_extension"
+        }
+      ]
+    },
+    {
+      "id": "monarch-power-sources-priorities",
+      "title": "Punkty monarchy — przyrost i wydatki",
+      "patterns": [
+        "\\b(?:punk\\w* monarch\\w*|punk\\w* wladcy|monarch points|monarch power|mana)\\b.{0,40}\\b(?:skad|zwieksz\\w*|wiecej|zdob\\w*|wydaw\\w*|wydac|brak\\w*|na co|earn|get|spend|increase)\\b",
+        "\\b(?:co to(?: jest)?|what (?:is|are)|na co|jak (?:zdobyc|zwiekszyc)|skad|earn|get|spend|increase)\\b.{0,35}\\b(?:punk\\w* monarch\\w*|punk\\w* wladcy|monarch points|monarch power|mane)\\b",
+        "\\b(?:doradc\\w*|advisors?)\\b.{0,40}\\b(?:punk\\w* monarch\\w*|punk\\w* wladcy|monarch (?:points|power))\\b"
+      ],
+      "symbols": [
+        "BASE_POWER_INCREASE",
+        "HINT_MONARCHPOINTS_TEXT",
+        "HINT_ADVISOR_TEXT",
+        "HINT_ADMINPOWER_TEXT",
+        "HINT_MILPOWER_TEXT"
+      ],
+      "text": "Punkty monarchy dzielą się na administracyjne, dyplomatyczne i wojskowe, a miesięczny przyrost zależy między innymi od władcy i doradców. Zostaw potrzebne punkty na technologie lub rdzenie i zatrudnij doradcę w brakującej kategorii, jeśli stać cię na jego pensję.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_POWER_INCREASE"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MONARCHPOINTS_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ADVISOR_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ADMINPOWER_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "military-force-limit-expenses",
+      "title": "Limit armii i floty a koszty utrzymania",
+      "patterns": [
+        "\\b(?:force ?limits?|limit\\w* (?:armii|wojsk\\w*|pulko\\w*|floty|okreto\\w*|sily))\\b",
+        "\\b(?:ponad|przekrocz\\w*|above|over)\\b.{0,24}\\b(?:limit\\w* (?:armii|wojsk\\w*|pulko\\w*|floty|morski)|(?:land |naval )?force ?limits?)\\b"
+      ],
+      "symbols": [
+        "LAND_FORCELIMIT_EXTRA_COST_FACTOR",
+        "NAVAL_FORCELIMIT_EXTRA_COST_FACTOR",
+        "MACRO_WILL_EXCEED_FORCE_LIMIT_WARNING",
+        "regimental_camp",
+        "shipyard"
+      ],
+      "text": "Limit sił lądowych i morskich to progi kosztów, więc wojsko powyżej limitu nadal działa, ale drożej je utrzymujesz. Jeśli nadwyżka obciąża budżet, zmniejsz liczbę jednostek albo zwiększ odpowiedni limit, na przykład obozem pułkowym lub stocznią.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "LAND_FORCELIMIT_EXTRA_COST_FACTOR"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAVAL_FORCELIMIT_EXTRA_COST_FACTOR"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "MACRO_WILL_EXCEED_FORCE_LIMIT_WARNING"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "regimental_camp"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "shipyard"
+        }
+      ]
+    },
+    {
+      "id": "governing-capacity-courthouses",
+      "title": "Limit administracyjny i sądy",
+      "patterns": [
+        "\\b(?:governing capacity|limit\\w* administracyjn\\w*|limit\\w* stanow|zdolnos\\w* administracyjn\\w*|pojemnos\\w* administracyjn\\w*)\\b",
+        "\\b(?:sad\\w*|courthouses?|state houses?)\\b.{0,34}\\b(?:limit\\w*|govern\\w*|administrac\\w*)\\b",
+        "\\b(?:co daje|do czego sluzy|co robi|what does|what is)\\b.{0,25}\\b(?:sad|ratusz|courthouse|town hall)\\b"
+      ],
+      "symbols": [
+        "over_governing_capacity_modifier",
+        "courthouse",
+        "town_hall",
+        "state_house",
+        "STATE_DRO",
+        "GOVERNING_CAPACITY_TOOLTIP"
+      ],
+      "text": "Rozwój prowincji wykorzystuje limit administracyjny, a przekroczenie limitu utrudnia między innymi ekspansję i podnosi koszt doradców. Zostaw mniej ważne obszary jako terytoria i stawiaj sądy tam, gdzie najbardziej zmniejszą wykorzystanie limitu.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "over_governing_capacity_modifier"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "STATE_DRO"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "GOVERNING_CAPACITY_TOOLTIP"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "courthouse"
+        }
+      ]
+    },
+    {
+      "id": "loans-interest-and-deficit",
+      "title": "Pożyczki i miesięczne odsetki",
+      "patterns": [
+        "\\b(?:pozyczk\\w*|loan\\w*|dlug\\w*|debt)\\b.{0,44}\\b(?:oprocent\\w*|odset\\w*|spl\\w*|koszt\\w*|rat\\w*|jak dziala|interest|repay\\w*|cost|term)\\b",
+        "\\b(?:jak splac\\w*|czy brac|warto brac|kiedy brac|oprocent\\w*|interest on|repay|take out)\\b.{0,30}\\b(?:pozyczk\\w*|dlug\\w*|loans?|debt)\\b",
+        "\\b(?:pozyczka bankowa|kredyt bankowy|bank loans?)\\b"
+      ],
+      "symbols": [
+        "BASE_INTERESTS",
+        "BANK_LOAN_DURATION",
+        "INFLATION_FROM_LOAN",
+        "HINT_LOANS_TEXT"
+      ],
+      "text": "Pożyczka daje dukaty od razu, ale do spłaty stale obciąża miesięczny budżet odsetkami. Sprawdź pozycję odsetek w budżecie i spłacaj najdroższe pożyczki, gdy możesz to zrobić bez ponownego zadłużenia się przy następnym wydatku.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_INTERESTS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANK_LOAN_DURATION"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LOANS_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-start",
+      "title": "Polska w 1444: poddani i regencja",
+      "patterns": [
+        "\\b(?:pols[ck]\\w*|poland|polish)\\b.*\\b(?:poddani|poddanych|wasal\\w*|subjects?|vassals?|moldawi\\w*|moldavia|moldova|regencj\\w*|bezkr\\w*|regency)\\b|\\b(?:poddani|poddanych|wasal\\w*|subjects?|vassals?|moldawi\\w*|moldavia|moldova|regencj\\w*|bezkr\\w*|regency)\\b.*\\b(?:pols[ck]\\w*|poland|polish)\\b",
+        "\\b(?:pols[ck]\\w*|poland)\\b.*\\b(?:w 1444|in 1444|na start\\w*|na poczatku|starting position|opening position)\\b|\\b(?:jak zaczac|how to start|jak zaczynac|jak rozpoczac)\\b.*\\b(?:pols[ck]\\w*|poland)\\b"
+      ],
+      "symbols": [
+        "flavor_pol.18",
+        "pol_commonwealth"
+      ],
+      "text": "Polska zaczyna w 1444 z wasalnym Mazowszem i gwarancją dla Mołdawii, a Litwa jest osobnym państwem. W czasie bezkrólewia dobierz sojuszników i wypatruj wydarzenia wyboru Kazimierza.",
+      "refs": [
+        {
+          "path": "history/countries/POL - Poland.txt",
+          "symbol": "1444.11.11"
+        },
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MAZ"
+        },
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MOL"
+        },
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "end_date = 1444.11.10"
+        },
+        {
+          "path": "history/countries/LIT - Lithuania.txt",
+          "symbol": "1440.1.1"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-mazovia",
+      "title": "Jak włączyć Mazowsze",
+      "patterns": [
+        "\\b(?:mazowsz\\w*|mazovi\\w*|masovi\\w*|mazov\\w*)\\b.*\\b(?:z?integr\\w*|annex\\w*|wciel\\w*|wlacz\\w*|anekt\\w*|aneks\\w*|przejac|zdobyc|zrobic)\\b|\\b(?:z?integr\\w*|annex\\w*|wciel\\w*|wlacz\\w*|anekt\\w*|aneks\\w*|przejac|zdobyc|zrobic)\\b.*\\b(?:mazowsz\\w*|mazovi\\w*|masovi\\w*|mazov\\w*)\\b",
+        "\\b(?:kiedy|when)\\b.*\\b(?:mazowsz\\w*|mazovi\\w*|masovi\\w*)\\b"
+      ],
+      "symbols": [
+        "INTEGRATE_VASSAL_MIN_YEARS",
+        "pol_commonwealth",
+        "pol_deal_mazovia"
+      ],
+      "text": "Mazowsze jest polskim wasalem i właścicielem Warszawy, potrzebnej do utworzenia Rzeczypospolitej. Poprawiaj z nim stosunki i wciel je dyplomatycznie, żeby dostać Warszawę.",
+      "refs": [
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MAZ"
+        },
+        {
+          "path": "history/provinces/257 - Warszawa.txt",
+          "symbol": "owner = MAZ"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INTEGRATE_VASSAL_MIN_YEARS"
+        },
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-lithuanian-union",
+      "title": "Jak dostać unię personalną z Litwą",
+      "patterns": [
+        "^(?!.*\\b(?:rzeczpospol\\w*|rzeczypospol\\w*|commonwealth|cesj\\w*|lubelsk\\w*|lublin|integr\\w*|dziedzicz\\w*|ch\\w* woln\\w*|liberty desire)\\b).*(?:\\b(?:uni[aei]\\w*|pu|union)\\b.*\\b(?:litw\\w*|litw[aeu]|litwe|lithuania)\\b|\\b(?:litw\\w*|litwe|lithuania)\\b.*\\b(?:uni[aei]\\w*|pu|union)\\b)",
+        "\\b(?:litw\\w*|litwe|lithuania)\\b.*\\b(?:jagiell\\w*|kazimierz|casimir)\\b|\\b(?:jagiell\\w*|kazimierz|casimir)\\b.*\\b(?:litw\\w*|litwe|lithuania)\\b"
+      ],
+      "symbols": [
+        "flavor_pol.18",
+        "flavor_lit.16",
+        "flavor_pol.20"
+      ],
+      "text": "Jeżeli w wydarzeniu wybierzesz Jagiellona, Litwa sterowana przez komputer zgodzi się zostać młodszym partnerem Polski w unii personalnej. Zostań w regencji i wypatruj wyboru Kazimierza przed 1450, gdy niezależną Litwą nadal rządzi Jagiellon.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        },
+        {
+          "path": "events/flavorLIT.txt",
+          "symbol": "flavor_lit.16"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.20"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-local-noble",
+      "title": "Jagiellon czy miejscowy szlachcic",
+      "patterns": [
+        "\\b(?:miejscow\\w*|lokaln\\w*|local)\\b\\s+(?:szlachcic\\w*|noble)\\b",
+        "\\b(?:jagiell\\w*|kazimierz|casimir)\\b.*\\b(?:czy|or|wybrac|choose)\\b|\\b(?:wybrac|choose)\\b.*\\b(?:jagiell\\w*|kazimierz|casimir)\\b"
+      ],
+      "symbols": [
+        "flavor_pol.18",
+        "flavor_lit.16",
+        "pol_varna_aftermath"
+      ],
+      "text": "Jagiellon otwiera unię z Litwą, a miejscowy szlachcic daje Polsce własnego władcę bez tej unii. W pierwszej kampanii wybierz Jagiellona, a po szlachcica sięgnij, jeśli z Lions of the North wolisz walczyć o unię z Czechami.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        },
+        {
+          "path": "events/flavorLIT.txt",
+          "symbol": "flavor_lit.16"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_varna_aftermath"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-trade-nodes",
+      "title": "Handel Polski: Kraków i Bałtyk",
+      "patterns": [
+        "\\b(?:handel|handl\\w*|wez\\w* handlow\\w*|trade(?: nodes?)?|merchants?|kupc\\w*|kupie\\w*)\\b.*\\b(?:pols[ck]\\w*|poland|krako\\w*|cracow|balt\\w*|gdan\\w*|danzig)\\b|\\b(?:pols[ck]\\w*|poland|krako\\w*|cracow|balt\\w*|gdan\\w*|danzig)\\b.*\\b(?:handel|handl\\w*|wez\\w* handlow\\w*|trade(?: nodes?)?|merchants?|kupc\\w*|kupie\\w*)\\b",
+        "\\b(?:krakow|cracow)\\b.*\\b(?:balt\\w*|wieden|vienna|sakson\\w*|saxony)\\b"
+      ],
+      "symbols": [
+        "krakow",
+        "baltic_sea",
+        "pol_embellish_gdansk"
+      ],
+      "text": "Polska automatycznie zbiera handel w Krakowie, a Gdańsk daje siłę handlową w węźle Morza Bałtyckiego. Zbieraj w Krakowie i rozważ przeniesienie głównego portu po zdobyciu silnej pozycji na Bałtyku.",
+      "refs": [
+        {
+          "path": "history/countries/POL - Poland.txt",
+          "symbol": "capital = 262"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "krakow"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "baltic_sea"
+        },
+        {
+          "path": "history/provinces/43 - Danzig.txt",
+          "symbol": "center_of_trade = 2"
+        },
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_22"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-expansion",
+      "title": "Pierwszy kierunek ekspansji Polski",
+      "patterns": [
+        "\\b(?:pols[ck]\\w*|poland|polish)\\b.*\\b(?:pierwsz\\w* wojn\\w*|pierwsz\\w* podboj\\w*|first war|first conquest|co podbic|where to expand|kier\\w* ekspansj\\w*|where should i expand|opening targets?)\\b|\\b(?:pierwsz\\w* wojn\\w*|pierwsz\\w* podboj\\w*|first war|first conquest|co podbic|where to expand|kier\\w* ekspansj\\w*|where should i expand|opening targets?)\\b.*\\b(?:pols[ck]\\w*|poland|polish)\\b",
+        "\\b(?:kogo zaatakowac|kogo podbic|who to attack|who should i attack|whom to attack)\\b.*\\b(?:pols[ck]\\w*|poland)\\b"
+      ],
+      "symbols": [
+        "pol_commonwealth",
+        "conquer_warmia",
+        "pol_prussia_confederation"
+      ],
+      "text": "Prusy Zachodnie to dobry pierwszy cel Polski, bo Gdańsk i Malbork są potrzebne do utworzenia Rzeczypospolitej. Przed wypowiedzeniem wojny sprawdź sojusze zakonu i czy Litwa z unii może ci pomóc.",
+      "refs": [
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "missions/Polish_Missions.txt",
+          "symbol": "conquer_warmia"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_prussia_confederation"
+        },
+        {
+          "path": "history/provinces/43 - Danzig.txt",
+          "symbol": "owner = TEU"
+        },
+        {
+          "path": "history/provinces/1841 - Marienburg.txt",
+          "symbol": "owner = TEU"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-prussia",
+      "title": "Gdańsk, Malbork i Konfederacja Pruska",
+      "patterns": [
+        "\\b(?:konfederacj\\w* prusk\\w*|prusk\\w* konfederacj\\w*|prussian confederation)\\b",
+        "\\b(?:zdobyc|przejac|wziac|anekt\\w*|aneks\\w*|wasal\\w*|get|take|conquer|vassaliz\\w*|annex\\w*)\\b.*\\b(?:gdan\\w*|danzig|malbork\\w*|marienburg|prusy zachodnie|west prussia)\\b",
+        "\\b(?:gdan\\w*|danzig|malbork\\w*|marienburg|prusy zachodnie|west prussia)\\b.*\\b(?:zdobyc|przejac|wziac|wasal\\w*|get|take|conquer|vassaliz\\w*|annex\\w*)\\b"
+      ],
+      "symbols": [
+        "pol_prussia_confederation",
+        "prussian_confederation_mission_pol",
+        "flavor_teu.1",
+        "flavor_teu.3",
+        "pol_commonwealth"
+      ],
+      "text": "Gdańsk otwiera dostęp do Bałtyku, a Gdańsk i Malbork są potrzebne do utworzenia Rzeczypospolitej. Zdobądź je na Krzyżakach lub wybierz Prusy Książęce w nagrodzie Konfederacji, by przejąć te miasta od swoich poddanych.",
+      "refs": [
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.1"
+        },
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.2"
+        },
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.3"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_prussia_confederation"
+        },
+        {
+          "path": "map/area.txt",
+          "symbol": "west_prussia_area"
+        },
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "localisation/scandinavia_l_english.yml",
+          "symbol": "Ducal Prussia"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-form-plc",
+      "title": "Jak utworzyć Rzeczpospolitą przez unię z Litwą",
+      "patterns": [
+        "^(?!.*\\b(?:stolic\\w*|capital|ide\\w*)\\b).*?^(?!.*\\b(?:lubelsk\\w*|lublin|cesj\\w*|ruthen\\w*|bez unii|without (?:a |the )?union|wymuszon\\w*|enforced)\\b).*\\b(?:utworz\\w*|stworz\\w*|zaloz\\w*|powol\\w*|form\\w*|zrobic|warunk\\w*|wymag\\w*|requirements?|kiedy|when)\\b.*\\b(?:rzeczpospol\\w*|rzeczypospol\\w*|commonwealth|plc)\\b",
+        "^(?!.*\\b(?:stolic\\w*|capital|ide\\w*)\\b).*?^(?!.*\\b(?:lubelsk\\w*|lublin|cesj\\w*|ruthen\\w*|bez unii|without (?:a |the )?union|wymuszon\\w*|enforced)\\b).*\\b(?:rzeczpospol\\w*|rzeczypospol\\w*|commonwealth|plc)\\b.*\\b(?:utworz\\w*|stworz\\w*|zaloz\\w*|powol\\w*|form\\w*|zrobic|warunk\\w*|wymag\\w*|requirements?|kiedy|when)\\b"
+      ],
+      "symbols": [
+        "pol_commonwealth",
+        "commonwealth_enforced"
+      ],
+      "text": "Unijna decyzja pozwala od razu odziedziczyć Litwę, gdy jej chęć wolności jest poniżej 25%. Utrzymaj unię i pokój, włącz Mazowsze, osiągnij stabilność +1 i zwykle technologię administracyjną 10 oraz zdobądź polskie rdzenie na Krakowie, Warszawie, Gdańsku i Malborku.",
+      "refs": [
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.32"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-elective",
+      "title": "Monarchia elekcyjna po przyjęciu unii",
+      "patterns": [
+        "\\b(?:monarchi\\w* elekcyjn\\w*|elective monarchy|woln\\w* elekcj\\w*|wspier\\w* kandydat\\w* do tronu)\\b",
+        "\\b(?:pols[ck]\\w*|poland|polish)\\b.*\\b(?:elekcj\\w*|elections?|sukcesj\\w*|succession)\\b|\\b(?:elekcj\\w*|elections?|sukcesj\\w*|succession)\\b.*\\b(?:pols[ck]\\w*|poland|polish)\\b"
+      ],
+      "symbols": [
+        "polish_elective_monarchy",
+        "flavor_pol.20",
+        "SUPPORT_OWN_HEIR_PRESTIGE_COST"
+      ],
+      "text": "Unia z wydarzenia o Kazimierzu daje Polsce monarchię elekcyjną, a Res Publica włącza rywalizację kandydatów do tronu. Przy aktywnej elekcji wydaj 10 prestiżu na swojego kandydata, jeśli chcesz podnieść jego poparcie o 5.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.20"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_elective_monarchy"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "SUPPORT_OWN_HEIR_PRESTIGE_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "SUPPORT_OWN_HEIR_SUPPORT_BONUS"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-golden-liberty",
+      "title": "Złota Wolność i polska szlachta",
+      "patterns": [
+        "\\b(?:zlot\\w* wolnos\\w*|golden liberty)\\b",
+        "\\b(?:pols[ck]\\w*|poland|polish)\\b.*\\b(?:przywilej\\w* szlachec\\w*|przywilej\\w* szlacht\\w*|nobles? (?:estate )?privileges?)\\b|\\b(?:przywilej\\w* szlachec\\w*|przywilej\\w* szlacht\\w*|nobles? (?:estate )?privileges?)\\b.*\\b(?:pols[ck]\\w*|poland|polish)\\b"
+      ],
+      "symbols": [
+        "estate_nobles_golden_liberty",
+        "polish_elective_monarchy",
+        "plc_golden_liberty"
+      ],
+      "text": "Startowa Złota Wolność daje Polsce +33% zasobów ludzkich kosztem limitu absolutyzmu. Korzystaj z rezerw na początku, a o odwołaniu pomyśl przy stabilności +3, absolutyzmie co najmniej 70 i bez regencji.",
+      "refs": [
+        {
+          "path": "history/countries/POL - Poland.txt",
+          "symbol": "estate_nobles_golden_liberty"
+        },
+        {
+          "path": "common/estate_privileges/02_noble_privileges.txt",
+          "symbol": "estate_nobles_golden_liberty"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "plc_golden_liberty"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-dlc",
+      "title": "DLC do Polski: misje, elekcja i parlament",
+      "patterns": [
+        "\\b(?:dlc|dodat\\w*|expansion\\w*)\\b.*\\b(?:pols[ck]\\w*|poland|polish|rzeczpospol\\w*|commonwealth|misj\\w* pols[ck]\\w*|polish missions)\\b|\\b(?:pols[ck]\\w*|poland|polish|rzeczpospol\\w*|commonwealth)\\b.*\\b(?:dlc|dodat\\w*|expansion\\w*)\\b",
+        "\\b(?:pols[ck]\\w*|poland|polish)\\b.*\\b(?:misj\\w*|missions?)\\b.*\\b(?:lions of the north|dodatek|dlc)\\b"
+      ],
+      "symbols": [
+        "pol_varna_aftermath",
+        "polish_elective_monarchy",
+        "polish_great_sejm",
+        "POL_ideas"
+      ],
+      "text": "Lions of the North dodaje Polsce rozgałęzione misje i husarię jako oddział specjalny. Jeśli zależy ci na wyborach w monarchii elekcyjnej, włącz Res Publica, a dla parlamentu sprawdź Common Sense lub Domination.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_varna_aftermath"
+        },
+        {
+          "path": "missions/Polish_Missions.txt",
+          "symbol": "polish_missions_main_slot"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_elective_monarchy"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_great_sejm"
+        },
+        {
+          "path": "patchnotes/1.34 Patchnotes.txt",
+          "symbol": "Caroleans' and 'Winged Hussars"
+        }
+      ]
+    },
+    {
+      "id": "beginner-pol-winged-hussars",
+      "title": "Jak odblokować skrzydlatą husarię",
+      "patterns": [
+        "\\b(?:husari\\w*|husarz\\w*|winged hussars?)\\b",
+        "\\b(?:pols[ck]\\w*|poland|polish|rzeczpospol\\w*|commonwealth)\\b.*\\bhussars?\\b|\\bhussars?\\b.*\\b(?:pols[ck]\\w*|poland|polish|rzeczpospol\\w*|commonwealth)\\b"
+      ],
+      "symbols": [
+        "POL_ideas",
+        "PLC_ideas",
+        "winged_hussars",
+        "estate_nobles_sponsor_hussars"
+      ],
+      "text": "Narodowa idea Skrzydlata Husaria daje Polsce +30% zdolności bojowej kawalerii. Odblokuj tę ideę, a z Lions of the North będziesz mógł rekrutować także specjalne pułki husarii.",
+      "refs": [
+        {
+          "path": "common/ideas/00_country_ideas.txt",
+          "symbol": "POL_ideas"
+        },
+        {
+          "path": "common/ideas/00_country_ideas.txt",
+          "symbol": "winged_hussars"
+        },
+        {
+          "path": "patchnotes/1.34 Patchnotes.txt",
+          "symbol": "Caroleans' and 'Winged Hussars"
+        }
+      ]
+    },
+    {
+      "id": "beginner-advisors",
+      "title": "Po co zatrudniać doradców",
+      "patterns": [
+        "\\b(?:po co|co daja|co daje|warto).{0,20}\\b(?:mi )?doradc\\w*",
+        "\\bwhat (?:do|are) advisors\\b",
+        "\\b(?:jedne\\w*|tani\\w*|drogi\\w*|ktoreg\\w*|wybrac)\\b.{0,33}\\bdoradc\\w*|\\bdoradc\\w*\\b.{0,33}\\b(?:ktorego|wybrac|pensj)"
+      ],
+      "text": "Doradcy dają co miesiąc punkty w swojej kategorii i pobierają pensję, którą sprawdzisz przy zatrudnianiu. Jeśli na przykład brakuje ci punktów na rdzenie, zacznij od taniego doradcy administracyjnego.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ADVISOR_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "ADVISOR_COST"
+        }
+      ],
+      "symbols": [
+        "HINT_ADVISOR_TEXT",
+        "ADVISOR_COST"
+      ]
+    },
+    {
+      "id": "beginner-manpower",
+      "title": "Uzupełnianie armii po walce",
+      "patterns": [
+        "\\b(?:wojsk\\w*|armi\\w*|pulk\\w*).{0,30}\\b(?:wolno sie uzupeln|sie nie uzupeln|nie uzupelniaja sie)",
+        "\\b(?:why|czemu|dlaczego).{0,55}\\b(?:slow(?:ly)? reinforce|wolno sie uzupeln\\w*)"
+      ],
+      "text": "Zwykłe pułki po bitwie stopniowo uzupełniają straty z rezerwy rekrutów. Sprawdź u góry ekranu liczbę rekrutów i ustawienie suwaka utrzymania, zanim ocenisz, kiedy armia będzie znów gotowa.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MANPOWER_TEXT"
+        },
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_BAS_CHAPTER03_PAGE04_TEXT"
+        }
+      ],
+      "symbols": [
+        "HINT_MANPOWER_TEXT",
+        "TUT_BAS_CHAPTER03_PAGE04_TEXT"
+      ]
+    },
+    {
+      "id": "beginner-make-cores",
+      "title": "Tworzenie rdzeni na zdobytych ziemiach",
+      "patterns": [
+        "\\b(?:po co|dlaczego|czemu|why).{0,25}\\b(?:robic|zrobic|tworzyc|utworzyc|make)\\b.{0,12}\\b(?:rdzeni\\w*|rdzen\\w*|cores?)\\b",
+        "\\bwhy (?:should i )?core\\b"
+      ],
+      "text": "Utworzenie rdzeni na zdobytych ziemiach zmniejsza nadmierną ekspansję. Sprawdź w panelu stabilności listę prowincji do urdzenienia i zostaw na to punkty administracyjne.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_OVEREXTENSION_TEXT"
+        },
+        {
+          "path": "localisation/powers_and_ideas_l_english.yml",
+          "symbol": "MAKECORECOST_INFO"
+        }
+      ],
+      "symbols": [
+        "HINT_OVEREXTENSION_TEXT",
+        "MAKECORECOST_INFO"
+      ]
+    },
+    {
+      "id": "beginner-peace-money",
+      "title": "Gotówka czy reparacje",
+      "patterns": [
+        "(?:gotowk|kase|pieniadz|cash|ducats|money).{0,60}reparac|reparac.{0,60}(?:gotowk|kase|pieniadz|cash|ducats|money)"
+      ],
+      "text": "Gotówka w traktacie pokojowym trafia do skarbca od razu i może pomóc spłacić dług. Reparacje zwiększają wpływy w kolejnych miesiącach, więc rozważ je przy bogatym przeciwniku, jeśli bardziej potrzebujesz długotrwałego dochodu.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "PEACE_COST_GOLD_MAX"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_FACTOR"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_YEARS"
+        }
+      ],
+      "symbols": [
+        "PEACE_COST_GOLD_MAX",
+        "WAR_REPARATIONS_FACTOR",
+        "WAR_REPARATIONS_YEARS"
+      ]
+    },
+    {
+      "id": "beginner-breaking-truce",
+      "title": "Dlaczego zaczekać do końca rozejmu",
+      "patterns": [
+        "\\b(?:zlam|zryw|zerw|atak|wojn|break|attack)\\w*.{0,60}\\b(?:rozejm\\w*|truce)\\b|\\b(?:rozejm\\w*|truce)\\b.{0,45}\\b(?:zlam|zryw|zerw|atak|break|attack)\\w*"
+      ],
+      "text": "Możesz wypowiedzieć wojnę w trakcie rozejmu, ale jego zerwanie obniży stabilność. Przed deklaracją odczytaj ostrzeżenia w oknie wojny i sprawdź w dyplomacji, kiedy rozejm wygaśnie.",
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "STABHIT_FROM_TRUCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRUCE_YEARS"
+        }
+      ],
+      "symbols": [
+        "STABHIT_FROM_TRUCE",
+        "TRUCE_YEARS"
+      ]
+    },
+    {
+      "id": "beginner-gdansk-benefits",
+      "title": "Dlaczego Polsce przydaje się Gdańsk",
+      "patterns": [
+        "\\b(?:po co|dlaczego|czemu|why).{0,30}\\b(?:gdan\\w*|danzig)\\b.{0,25}\\b(?:polsk\\w*|poland)\\b",
+        "\\b(?:polsk\\w*|poland)\\b.{0,30}\\b(?:po co|dlaczego|czemu)\\b.{0,30}\\b(?:gdan\\w*|danzig)\\b"
+      ],
+      "text": "Gdańsk ma centrum handlu i ujście Wisły w węźle Bałtyku, więc zwiększa tam twoją siłę. Zdobądź prowincję i zrób na niej rdzeń, jeśli planujesz utworzyć Rzeczpospolitą.",
+      "refs": [
+        {
+          "path": "history/provinces/43 - Danzig.txt",
+          "symbol": "vistula_estuary_modifier"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "baltic_sea"
+        },
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        }
+      ],
+      "symbols": [
+        "vistula_estuary_modifier",
+        "baltic_sea",
+        "pol_commonwealth"
+      ]
+    },
+    {
+      "id": "trade-merchant-orders",
+      "title": "Kupiec — zbieranie albo przekierowanie",
+      "patterns": [
+        "\\b(?:co (?:robi|daje|moze zrobic) kupiec|jak dziala(?:ja)? kup(?:iec|cy)|what (?:does|can) a merchant do|how do merchants work)\\b",
+        "\\b(?:jak (?:uzyc|wyslac|ustawic) kupca|how (?:to|do i) (?:send|use|assign) a merchant)\\b",
+        "\\bpo co (?:mi |sa )?kup(?:iec|cy|ca)\\b"
+      ],
+      "symbols": [
+        "HINT_MERCHANT_TEXT",
+        "TRADER_IN_RANGE",
+        "TUT_ADV_CHAPTER02_PAGE03_TEXT"
+      ],
+      "text": "Kupcy zbierają dochód handlowy albo kierują wartość handlu dalej po strzałkach. Na początek wyślij kupca do węzła zasilającego twój główny węzeł i wybierz przekazywanie handlu w jego kierunku.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MERCHANT_TEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADER_IN_RANGE"
+        },
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_ADV_CHAPTER02_PAGE03_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "trade-network-direction",
+      "title": "Strzałki i kierunek przepływu handlu",
+      "patterns": [
+        "\\b(?:kierun(?:ek|k\\w*) (?:przeplywu |sieci )?handlu|strzalk\\w* (?:na mapie )?handlu|(?:cofnac|odwrocic) (?:kierunek )?handel|(?:skad|dokad|w ktora strone).{0,22}(?:plynie|przeplywa) handel)\\b",
+        "\\b(?:trade flow direction|(?:can i|how to) steer trade upstream|end[- ]nodes?|where does trade flow)\\b"
+      ],
+      "symbols": [
+        "TUT_ADV_CHAPTER03_PAGE06_TEXT",
+        "english_channel"
+      ],
+      "text": "Wartość handlu płynie tylko zgodnie ze strzałkami, a węzły końcowe nie mają odpływu. Otwórz mapę handlu i sprawdź, czy strzałki prowadzą do węzła, w którym zbierasz dochód.",
+      "refs": [
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_ADV_CHAPTER03_PAGE06_TEXT"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "english_channel"
+        }
+      ]
+    },
+    {
+      "id": "trade-collect-home",
+      "title": "Zbieranie w głównym węźle",
+      "patterns": [
+        "\\b(?:kupiec|kupc\\w*|zbier\\w*|pobier\\w*).{0,38}\\b(?:domow\\w*|glown\\w*|stoleczn\\w*) we(?:z|zl)\\w*",
+        "\\b(?:domow\\w*|glown\\w*|stoleczn\\w*) we(?:z|zl)\\w*.{0,30}\\b(?:kupiec|kupc\\w*|automatycz\\w*)\\b",
+        "\\b(?:collect\\w*|merchant).{0,32}\\b(?:home (?:trade )?node|main trade city)\\b"
+      ],
+      "symbols": [
+        "LOADING_TIP_22",
+        "TRADE_MERCHANT_PRESENT"
+      ],
+      "text": "Główny węzeł handlowy zbiera dochód automatycznie, a obecność kupca daje tam premię do dochodu. Porównaj tę premię z zyskiem z wysłania kupca do węzła, który zasila główny.",
+      "refs": [
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_22"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_MERCHANT_PRESENT"
+        }
+      ]
+    },
+    {
+      "id": "trade-collect-outside",
+      "title": "Zbieranie poza głównym węzłem",
+      "patterns": [
+        "\\b(?:zbier\\w*|pobier\\w*).{0,34}\\bpoza (?:domow\\w*|glown\\w*|stoleczn\\w*|wlasn\\w*) (?:wezl\\w*|port\\w*|miast\\w*)\\b",
+        "\\bcollect\\w*.{0,32}\\b(?:outside (?:the |my |your )?(?:home|main) (?:trade )?(?:node|city)|non[- ]home (?:trade )?node)\\b"
+      ],
+      "symbols": [
+        "TRADE_MISSION_OFFICE_DESC",
+        "TRADE_NON_CAPITAL_OFFICE"
+      ],
+      "text": "Poza głównym węzłem dochód zbierasz tylko z kupcem i dostajesz tam karę −50% do siły handlowej. Spróbuj zbierać w drugim węźle, jeśli masz w nim silną pozycję, i porównaj łączny dochód.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MISSION_OFFICE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_NON_CAPITAL_OFFICE"
+        }
+      ]
+    },
+    {
+      "id": "trade-compare-orders",
+      "title": "Jak porównać zbieranie i przekierowanie",
+      "patterns": [
+        "\\b(?:zbier\\w*|collect\\w*).{0,32}\\b(?:czy|vs|or|versus|zamiast)\\s+(?:kierow\\w*|przekier\\w*|przesyl\\w*|przekaz\\w*|transfer\\w*|steer\\w*)\\b",
+        "\\b(?:kierow\\w*|przekier\\w*|przekaz\\w*|transfer\\w*|steer\\w*).{0,32}\\b(?:czy|vs|or|versus|zamiast)\\s+(?:zbier\\w*|collect\\w*)\\b",
+        "\\b(?:porown\\w*|sprawdz\\w*|compare|test).{0,28}\\b(?:ustawieni\\w* kupc\\w*|doch\\w* z handlu|trade income|merchant setup)\\b"
+      ],
+      "symbols": [
+        "INCOME_FROM_NODES_I",
+        "INCOME_FROM_NODES_D",
+        "TRADE_MERCHANT_ARRIVAL_TIME",
+        "TRADE_MISSION_TRANSIT_DESC"
+      ],
+      "text": "Przestawienie jednego kupca może zmienić dochód w kilku węzłach naraz. Zmień jedno polecenie, poczekaj na przybycie kupca i kolejny miesiąc, a potem porównaj całkowity dochód z handlu.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "INCOME_FROM_NODES_I"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "INCOME_FROM_NODES_D"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MERCHANT_ARRIVAL_TIME"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MISSION_TRANSIT_DESC"
+        }
+      ]
+    },
+    {
+      "id": "trade-light-ships",
+      "title": "Lekkie okręty i ochrona handlu",
+      "patterns": [
+        "^(?!.*(?:kapr|privateer)).*?\\b(?:lekk\\w* (?:okret\\w*|statk\\w*|flot\\w*)|ochron\\w* handlu|light ships?|protect trade)\\b"
+      ],
+      "symbols": [
+        "TRADE_NAVY_MISSION_DESC",
+        "HINT_LIGHTSHIPS_TEXT",
+        "LOADING_TIP_73"
+      ],
+      "text": "Lekkie okręty na misji Ochrona handlu zwiększają twoją siłę w wybranym węźle. Skieruj je do ważnego węzła i przed budową kolejnych porównaj przyrost dochodu z ich utrzymaniem.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_NAVY_MISSION_DESC"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LIGHTSHIPS_TEXT"
+        },
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_73"
+        }
+      ]
+    },
+    {
+      "id": "trade-inland-caravans",
+      "title": "Handel lądowy i siła karawan",
+      "patterns": [
+        "\\b(?:sil\\w* karawan\\w*|handel ladowy|handl\\w* ladow\\w*|we(?:zel|zl\\w*) ladow\\w*|inland trade|caravan power)\\b"
+      ],
+      "symbols": [
+        "MERCHANT_INLAND_DESC",
+        "CARAVAN_POWER_DESC2"
+      ],
+      "text": "Kupiec zbierający w węźle lądowym lub przekierowujący do niego dostaje dodatkową siłę karawan. Jeśli handlujesz w głębi lądu, ustaw kupca i w oknie węzła sprawdź, ile siły dają karawany.",
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MERCHANT_INLAND_DESC"
+        },
+        {
+          "path": "localisation/powers_and_ideas_l_english.yml",
+          "symbol": "CARAVAN_POWER_DESC2"
+        }
+      ]
+    },
+    {
+      "id": "trade-center-investment",
+      "title": "Centra handlu i targowiska",
+      "patterns": [
+        "\\b(?:co daje|warto|gdzie|rozwijan\\w*|rozbudow\\w*|ulepsz\\w*|budow\\w*|stawia\\w*).{0,35}\\b(?:centr(?:um|a|ow|ach) handl(?:u|ow\\w*)|ujsc\\w* rzek\\w*)\\b",
+        "\\b(?:upgrade|build|where|what does|why improve).{0,27}\\b(?:cent(?:er|re)s? of trade|estuaries)\\b"
+      ],
+      "symbols": [
+        "entrepot",
+        "world_port",
+        "marketplace",
+        "TUT_ADV_CHAPTER03_PAGE02_TEXT"
+      ],
+      "text": "Rozbudowa centrum podnosi jego siłę handlową, a targowisko procentowo zwiększa siłę całej prowincji. Najpierw porównaj inwestycje w centrach i ujściach rzek w węźle, z którego czerpiesz dochód.",
+      "refs": [
+        {
+          "path": "common/centers_of_trade/00_centers_of_trade.txt",
+          "symbol": "entrepot"
+        },
+        {
+          "path": "common/centers_of_trade/00_centers_of_trade.txt",
+          "symbol": "world_port"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "marketplace"
+        },
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_ADV_CHAPTER03_PAGE02_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "trade-company-extra-merchant",
+      "title": "Kupiec z kompanii handlowej",
+      "patterns": [
+        "\\b(?:kompani\\w* handlow\\w*|trade compan(?:y|ies)).{0,48}\\b(?:kupca|kupiec|kupcy|kupc\\w*|merchant\\w*|51%)",
+        "\\b(?:kupca|kupiec|kupcy|kupc\\w*|merchant\\w*|51%).{0,45}\\b(?:kompani\\w* handlow\\w*|trade compan(?:y|ies))\\b"
+      ],
+      "symbols": [
+        "TRADE_COMPANY_STRONG_LIMIT",
+        "trade_company_strong",
+        "SV_TRADE_COMPANY_CONTROL"
+      ],
+      "text": "Kompania daje dodatkowego kupca, gdy jej prowincje mają co najmniej 51% siły handlowej pochodzącej z prowincji w regionie. Dodaj kwalifikujące się prowincje o dużej sile i sprawdź udział w oknie kompanii.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_COMPANY_STRONG_LIMIT"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "trade_company_strong"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "SV_TRADE_COMPANY_CONTROL"
+        }
+      ]
+    },
+    {
+      "id": "trade-goods-quantity-and-price",
+      "title": "Towary, cena i wielkość produkcji",
+      "patterns": [
+        "\\b(?:towar\\w* handlow\\w*|trade goods?).{0,40}\\b(?:cen\\w*|produkc\\w*|wartosc\\w*|price|production|value)\\b",
+        "\\b(?:cen\\w*|ilosc\\w* produkcj\\w*|price|quantity).{0,30}\\b(?:towar\\w*|trade goods?)\\b",
+        "\\b(?:gdzie (?:warto )?(?:budow\\w*|staw\\w*) manufaktur\\w*|where (?:to|should i) build manufactor\\w*)\\b"
+      ],
+      "symbols": [
+        "HINT_TRADEVALUE_TEXT",
+        "manufactory",
+        "cloth"
+      ],
+      "text": "Cena towaru pomnożona przez ilość produkcji tworzy wartość handlową prowincji i jest podstawą jej dochodu z produkcji. Przy wyborze miejsca na manufakturę porównaj cenę towaru i przewidywany przyrost dochodu.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "manufactory"
+        },
+        {
+          "path": "common/prices/00_prices.txt",
+          "symbol": "cloth"
+        }
+      ]
+    },
+    {
+      "id": "trade-embargo-rivals",
+      "title": "Embargo handlowe na rywali",
+      "patterns": [
+        "\\b(?:embarg\\w*|embargoes|sankcj\\w* handlow\\w*|trade sanctions)\\b"
+      ],
+      "symbols": [
+        "WE_EMBARGO",
+        "alert_costly_trade_embargoes_delayed",
+        "RIVAL_BENEFITS_TRADE"
+      ],
+      "text": "Embargo obniża siłę handlową celu w węzłach, w których konkurujecie. Nakładaj je przede wszystkim na rywali, bo embargo na inne państwo obniża też twoją efektywność handlu.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "WE_EMBARGO"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "alert_costly_trade_embargoes_delayed"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "RIVAL_BENEFITS_TRADE"
+        }
+      ]
+    },
+    {
+      "id": "trade-power-value-efficiency",
+      "title": "Siła handlowa, wartość handlu i efektywność",
+      "patterns": [
+        "\\b(?:co (?:to|oznacza|daje)|roznic\\w*|rozni\\w*).{0,60}\\b(?:sil\\w* handlow\\w*|wartos\\w* handlu|efektywnos\\w* handlu)\\b",
+        "\\b(?:sil\\w* handlow\\w*|wartos\\w* handlu|efektywnos\\w* handlu).{0,45}\\b(?:a|vs|czy) (?:sil\\w* handlow\\w*|wartos\\w* handlu|efektywnos\\w* handlu)\\b",
+        "\\b(?:what is|difference between).{0,30}\\btrade (?:power|value|efficiency)\\b"
+      ],
+      "symbols": [
+        "HINT_TRADEPOWER_TEXT",
+        "HINT_TRADEVALUE_TEXT",
+        "HINT_TRADEEFF_TEXT"
+      ],
+      "text": "Wartość handlu to pula do podziału, siła handlowa wpływa na twój udział, a efektywność zwiększa dochód z tego udziału. Sprawdź je osobno, żeby ustalić, czy potrzebujesz bogatszego szlaku, większego udziału, czy premii do dochodu.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEPOWER_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEEFF_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-roszczenie-a-rdzen",
+      "title": "Roszczenie a rdzeń",
+      "patterns": [
+        "\\b(?:roszczeni\\w*|claims?)\\b.{0,55}\\b(?:rdze\\w*|cores?)\\b",
+        "\\b(?:rdze\\w*|cores?)\\b.{0,55}\\b(?:roszczeni\\w*|claims?)\\b",
+        "\\b(?:co to (?:jest )?|czym jest )(?:rdzen|roszczenie)\\b",
+        "\\broszczeni\\w*\\b.{0,40}\\b(?:czy|jest|juz)\\b.{0,18}\\b(?:moja|moj|nalezy)\\b"
+      ],
+      "symbols": [
+        "cb_conquest",
+        "cb_core",
+        "take_claim",
+        "take_core"
+      ],
+      "text": "Roszczenie do cudzej prowincji daje powód do podboju, własny rdzeń pozwala użyć pretekstu odzyskania, a prowincja nadal należy do właściciela. Wybierz właściwy powód wojny i zażądaj prowincji w pokoju.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_conquest"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_core"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_core"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-fabrykowanie-roszczenia",
+      "title": "Jak uzyskać roszczenie",
+      "patterns": [
+        "\\b(?:fabryk\\w*|sfabryk\\w*|fabricat\\w*|wyrobic|zdobyc|uzyskac)\\b.{0,36}\\b(?:roszczeni\\w*|claims?)\\b",
+        "\\b(?:sieci\\w* szpiegowsk\\w*|siec szpiegowsk\\w*|spy network)\\b.{0,45}\\b(?:roszczeni\\w*|claims?)\\b",
+        "\\b(?:get|make|create)\\b.{0,20}\\b(?:a claim|claims)\\b"
+      ],
+      "symbols": [
+        "FABRICATE_CLAIM_COST",
+        "FABRICATE_CLAIM_SELECT_DESC",
+        "cb_conquest"
+      ],
+      "text": "Fabrykowanie roszczenia zamienia część sieci szpiegowskiej na roszczenie do prowincji. Wyślij dyplomatę, by budował sieć u sąsiada, a gdy przycisk fabrykowania stanie się dostępny, wskaż prowincję.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "FABRICATE_CLAIM_COST"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "FABRICATE_CLAIM_SELECT_DESC"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-casus-belli",
+      "title": "Co daje casus belli",
+      "patterns": [
+        "^(?:casus belli|cb|pretekst do wojny)[? .]*$",
+        "\\b(?:co to(?: jest)?|czym jest|what is|what does)\\s+(?:a\\s+)?(?:casus belli|cb|pretekst(?: do wojny)?)\\b",
+        "\\b(?:jak(?:i|ie)?|ktory|which)\\s+(?:wybrac\\s+)?(?:casus belli|cb|pretekst)\\b"
+      ],
+      "symbols": [
+        "cb_conquest",
+        "cb_core",
+        "take_claim",
+        "take_core"
+      ],
+      "text": "Casus belli to powód wypowiedzenia wojny, który określa cel i wpływa na warunki pokoju. W oknie wypowiedzenia wybierz pretekst pasujący do tego, co chcesz uzyskać, na przykład podbój pod roszczenie lub odzyskanie własnego rdzenia.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_conquest"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_core"
+        },
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "WARSCORE_COST_DESC"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-okupacja-a-cesja",
+      "title": "Zajęcie prowincji a jej przejęcie",
+      "patterns": [
+        "\\b(?:zajalem|zajelam|zajal|zajecie|okupacj\\w*|occupied|occupation)\\b.{0,60}\\b(?:prowincj\\w*|province|pokoj\\w*|peace)\\b",
+        "\\b(?:prowincj\\w*|province)\\b.{0,55}\\b(?:po zajeciu|okupowan\\w*|nie jest moj\\w*|become mine|becomes mine)\\b",
+        "\\b(?:jak|how to)\\b.{0,22}\\b(?:przejac|wziac|anektowac|annex|claim)\\b.{0,32}\\b(?:zajet\\w*|okupowan\\w*|occupied)\\b",
+        "\\b(?:zajalem|zajelam|okupuje)\\b.{0,30}\\b(?:ziemie|ziemia|teren)\\b.{0,40}\\b(?:moja|moj|wlasnosc|pokoj)"
+      ],
+      "symbols": [
+        "po_demand_provinces",
+        "WARSCORE_OCCUPATION",
+        "TRANSFER_OCCUPATION_SHIELD_DESC",
+        "PEACE_PROVINCE_CORING_COST"
+      ],
+      "text": "Zajęcie prowincji daje kontrolę wojskową i wpływa na wynik wojny, a własność przechodzi dopiero w wyniku cesji. Jeśli chcesz zatrzymać ziemię, wskaż ją w żądaniach pokojowych i po zawarciu pokoju sprawdź, czy musisz utworzyć na niej rdzeń.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "WARSCORE_OCCUPATION"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "TRANSFER_OCCUPATION_SHIELD_DESC"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_claim"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "PEACE_PROVINCE_CORING_COST"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-wynik-wojny",
+      "title": "Wynik wojny i żądania pokoju",
+      "patterns": [
+        "^(?:war ?score|wynik wojny|punkty wyniku wojny)[? .]*$",
+        "\\b(?:co to(?: jest)?|czym jest|jak dziala|jak zwiekszyc|how to (?:increase|get)|what is)\\s+(?:war ?score|wynik wojny)\\b",
+        "\\b(?:war ?score|wynik\\w* wojny)\\b.{0,40}\\b(?:za mal\\w*|nie wystarcz\\w*|pokoj\\w*|peace deal|too low)\\b"
+      ],
+      "symbols": [
+        "WARSCORE_OCCUPATION",
+        "WAR_OVERVIEW_BATTLESCORE",
+        "WAR_OVERVIEW_TICKING_WARSCORE_WG",
+        "DIPLO_HIGH_DEMANDS"
+      ],
+      "text": "Wynik wojny pokazuje przewagę z walk, okupacji i realizacji celu oraz wpływa na to, na jakie warunki pokoju zgodzi się przeciwnik. Jeśli odrzuca kosztowne żądania, zajmij dalsze cele albo zmniejsz warunki i sprawdź powody odmowy w oknie pokoju.",
+      "refs": [
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "WAR_OVERVIEW_BATTLESCORE"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "WAR_OVERVIEW_TICKING_WARSCORE_WG"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "WARSCORE_OCCUPATION"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_HIGH_DEMANDS"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-cel-wojny",
+      "title": "Cel wojny i narastający wynik",
+      "patterns": [
+        "^(?:cel wojny|war goal|wargoal|ticking war ?score)[? .]*$",
+        "\\b(?:co to|czym jest|jak dziala|what is)\\b.{0,18}\\b(?:cel wojny|war goal|wargoal|ticking war ?score)\\b",
+        "\\b(?:cel\\w* (?:wojny|wojenn\\w*)|war goal)\\b.{0,46}\\b(?:nalicz\\w*|utrzym\\w*|narastaj\\w*|ticking)\\b",
+        "\\b(?:cel(?:em)? podboju|cel wojny|war goal)\\b.{0,50}\\b(?:trzym\\w*|narast\\w*|utrzym\\w*)"
+      ],
+      "symbols": [
+        "DEFAULT_WARGOAL_TICKINGWARSCORE_BONUS",
+        "WAR_OVERVIEW_TICKING_WARSCORE_WG",
+        "war_goal_take_province_desc",
+        "war_goal_superiority_desc"
+      ],
+      "text": "Gdy celem jest podbój wskazanej prowincji, jej utrzymanie daje z czasem dodatkowy wynik wojny. Pilnuj, by przeciwnik jej nie odbił, i sprawdzaj cel oraz naliczany wynik w oknie trwającej wojny.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "DEFAULT_WARGOAL_TICKINGWARSCORE_BONUS"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "war_goal_take_province_desc"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "war_goal_superiority_desc"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-oblezenie-fortu",
+      "title": "Oblężenie fortu i liczebność oblegających",
+      "patterns": [
+        "\\b(?:jak|how to|dlaczego|czemu|why)\\b.{0,32}\\b(?:oblegac|oblez\\w*|oblezen\\w*|besiege|siege|zdobyc fort)\\b",
+        "\\b(?:obleg\\w*|oblez\\w*|besieg\\w*|siege)\\b.{0,42}\\b(?:fort\\w*|artyleri\\w*|artillery|nie postepuje|stuck)\\b",
+        "\\b(?:za malo (?:ludzi|zolnierzy|wojska)|too few men)\\b.{0,45}\\b(?:oblez\\w*|obleg\\w*|siege)\\b",
+        "\\bfort\\b.{0,45}\\b(?:nie pada|nie upada|nie ma postepu|nie widze postepu|nie ma progresu)"
+      ],
+      "symbols": [
+        "SIEGE_TO_FEW_MEN",
+        "SIEGE_BONUS_LEADER",
+        "SIEGE_BONUS_ARTILLERY",
+        "DAYS_PER_SIEGE_PHASE"
+      ],
+      "text": "Do prowadzenia oblężenia potrzebujesz dostatecznie licznych sił, a artyleria i dowódca z punktami oblężenia poprawiają postęp. Kliknij oblegany fort, sprawdź komunikat i w razie braku ludzi doślij żołnierzy.",
+      "refs": [
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_TO_FEW_MEN"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_BONUS_ARTILLERY"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_BONUS_LEADER"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DAYS_PER_SIEGE_PHASE"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-utrzymanie-i-posilki",
+      "title": "Utrzymanie armii i uzupełnianie strat",
+      "patterns": [
+        "\\b(?:suwak utrzymania|utrzymani\\w* armii|arm(?:y|ies) maintenance|maintenance slider)\\b",
+        "\\b(?:dlaczego|czemu|jak|why|how)\\b.{0,43}\\b(?:uzupeln\\w* (?:strat\\w*|pulk\\w*)|reinforc\\w* (?:regiments|troops))\\b",
+        "\\b(?:pulk\\w*|regiments?)\\b.{0,40}\\b(?:nie uzupeln\\w*|nie dostaj\\w* posilk\\w*|not reinforc\\w*)\\b"
+      ],
+      "symbols": [
+        "LOADING_TIP_38",
+        "MONTHLY_REINFORCE",
+        "MORALE_RECOVERY_SPEED",
+        "MIN_ARMY_MAINTENANCE"
+      ],
+      "text": "Suwak utrzymania armii wpływa na liczbę miesięcznych uzupełnień w osłabionych pułkach. Przed wojną podnieś utrzymanie i daj armii czas na odzyskanie morale oraz uzupełnienie strat.",
+      "refs": [
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_38"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MONTHLY_REINFORCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MORALE_RECOVERY_SPEED"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-osobny-pokoj",
+      "title": "Jak działa osobny pokój",
+      "patterns": [
+        "\\b(?:osobn\\w* pokoj\\w*|oddzieln\\w* pokoj\\w*|separatystyczn\\w* pokoj\\w*|separate peace)\\b",
+        "\\b(?:pokoj\\w*|peace)\\b.{0,42}\\b(?:z sojusznikiem wroga|z jednym przeciwnikiem|with (?:one|an enemy ally))\\b"
+      ],
+      "symbols": [
+        "NEGOTIATE_SEPARATE_PEACE_WITH",
+        "WAR_OVERVIEW_NO_PEACE",
+        "PEACE_DEAL_SUBJECTS",
+        "TRUST_HIT_FROM_SEPARATE_PEACE"
+      ],
+      "text": "Osobny pokój pozwala wyłączyć wybranego uczestnika z wojny, która trwa dalej z pozostałymi. Wybierz tego uczestnika w oknie wojny i sprawdź dostępność negocjacji, bo nie z każdym można zawrzeć osobny pokój.",
+      "refs": [
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "NEGOTIATE_SEPARATE_PEACE_WITH"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "WAR_OVERVIEW_NO_PEACE"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "PEACE_DEAL_SUBJECTS"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-agresywna-ekspansja",
+      "title": "Agresywna ekspansja w oknie pokoju",
+      "patterns": [
+        "^(?:ae|agresywna ekspansja|aggressive expansion)[? .]*$",
+        "\\b(?:co to|czym jest|jak dziala|jak zmniejszyc|how to reduce|what is)\\b.{0,12}\\b(?:agresywn\\w* ekspansj\\w*|aggressive expansion|ae)\\b",
+        "\\b(?:agresywn\\w* ekspansj\\w*|aggressive expansion)\\b.{0,42}\\b(?:pokoj\\w*|peace|zanik\\w*|decay)\\b",
+        "\\b(?:okn\\w* pokoj\\w*|podpis\\w* pokoj\\w*|warunk\\w* pokoj\\w*)\\b.{0,45}\\b(?:koalicj\\w*|ae|coalition)\\b"
+      ],
+      "symbols": [
+        "aggressive_expansion",
+        "AE_COALITION_THRESHOLD",
+        "AE_DISTANCE_BASE",
+        "AE_SAME_RELIGION"
+      ],
+      "text": "Agresywna ekspansja to kara do opinii innych państw o tobie, która może wzrosnąć po podboju i z czasem maleje. Przed podpisaniem pokoju sprawdź ostrzeżenie o koalicji i ogranicz żądania, jeśli przybywa groźnych przeciwników.",
+      "refs": [
+        {
+          "path": "common/opinion_modifiers/00_opinion_modifiers.txt",
+          "symbol": "aggressive_expansion"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_COALITION_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_DISTANCE_BASE"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-koalicja",
+      "title": "Koalicja i ryzyko po podboju",
+      "patterns": [
+        "^(?:koalicja|coalition)[? .]*$",
+        "\\b(?:unikn\\w*|zapobiec|avoid|prevent|co to|czym jest|what is|dlaczego)\\b.{0,38}\\b(?:koalicj\\w*|coalitions?)\\b",
+        "\\b(?:koalicj\\w*|coalitions?)\\b.{0,42}\\b(?:po podboju|po pokoju|sie tworzy|powstaj\\w*|form\\w*|after conquest)\\b",
+        "\\bsasi\\w*\\b.{0,55}\\b(?:wkurz|wrog|gniew|nie lub|zlos)\\w*.{0,30}\\b(?:podbo\\w*|poko\\w*)"
+      ],
+      "symbols": [
+        "AE_COALITION_THRESHOLD",
+        "NO_TRUCE_COALITION",
+        "cb_super_badboy",
+        "DIPLOMATIC_ACTION_COALITION_RELATIONS_FACTOR"
+      ],
+      "text": "Sprawdź w dyplomacji opinię sąsiadów i karę za agresywną ekspansję, bo może z niej powstać koalicja. Wyślij dyplomatów do poprawy stosunków i zaczekaj z kolejnym podbojem, jeśli zagrożenie jest duże.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_super_badboy"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_COALITION_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOMATIC_ACTION_COALITION_RELATIONS_FACTOR"
+        },
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "NO_TRUCE_COALITION"
+        }
+      ]
+    },
+    {
+      "id": "poczatki-wezwanie-sojusznika",
+      "title": "Przysługi i obietnica ziem dla sojusznika",
+      "patterns": [
+        "\\b(?:przyslug\\w*|favo[u]?rs?)\\b.{0,48}\\b(?:sojusz\\w*|ally|wojn\\w*|war)\\b",
+        "\\b(?:jak|czemu|dlaczego|how|why)\\b.{0,48}\\b(?:wezwac sojusznik\\w*|sojusznik\\w* nie (?:chce|dolacza)|call (?:an? )?ally)\\b",
+        "\\b(?:obietnic\\w* ziem\\w*|obiecac ziemi\\w*|promise land|wspolne interesy|vital interest)\\b"
+      ],
+      "symbols": [
+        "FAVORS_DESC",
+        "CALL_FAVORS_COST",
+        "PROMISE_LAND",
+        "DESIRE_PROV_VITAL_DESC",
+        "TRUST_PENALTY_FOR_NO_LAND"
+      ],
+      "text": "Przysługi pomagają wezwać sojusznika do wojny bez obietnicy ziem, a zainteresowanego prowincjami może przekonać obietnica udziału w zdobyczach. Sprawdź w oknie wypowiedzenia wojny, czy przyjmie wezwanie i które ziemie rzeczywiście mu oddasz, jeśli je obiecasz.",
+      "refs": [
+        {
+          "path": "localisation/cossacks_l_english.yml",
+          "symbol": "FAVORS_DESC"
+        },
+        {
+          "path": "localisation/cossacks_l_english.yml",
+          "symbol": "CALL_FAVORS_COST"
+        },
+        {
+          "path": "localisation/cossacks_l_english.yml",
+          "symbol": "PROMISE_LAND"
+        },
+        {
+          "path": "localisation/cossacks_l_english.yml",
+          "symbol": "DESIRE_PROV_VITAL_DESC"
+        }
+      ]
+    },
+    {
+      "id": "estate-privileges-monthly-monarch-power",
+      "title": "Przywileje stanowe dające miesięczny punkt",
+      "patterns": [
+        "\\b(?:przywilej\\w*|privileges?)\\b.{0,48}(?:\\+1\\b|\\b(?:pkt|punk\\w*|miesiecz\\w*|monthly|monarch power|mana)\\b)",
+        "(?:\\+1\\b|\\b(?:jeden|one)\\b).{0,38}\\b(?:przywilej\\w*|stanow\\w*|estates?|privileges?)\\b",
+        "\\b(?:religious state|primacy of the nobility|land of commerce)\\b"
+      ],
+      "symbols": [
+        "estate_church_religious_state",
+        "estate_nobles_nobility_primacy",
+        "estate_burghers_land_of_commerce",
+        "can_select_monarch_power_privilege"
+      ],
+      "text": "Duchowieństwo, szlachta i mieszczanie mają standardowe przywileje dające po jednym punkcie miesięcznie, odpowiednio ADM, MIL i DIP, kosztem ziemi koronnej. Wybierz przywilej dla kategorii, której brakuje, po sprawdzeniu, do jakiego poziomu spadnie udział korony.",
+      "refs": [
+        {
+          "path": "common/estate_privileges/01_church_privileges.txt",
+          "symbol": "estate_church_religious_state"
+        },
+        {
+          "path": "common/estate_privileges/02_noble_privileges.txt",
+          "symbol": "estate_nobles_nobility_primacy"
+        },
+        {
+          "path": "common/estate_privileges/03_burgher_privileges.txt",
+          "symbol": "estate_burghers_land_of_commerce"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers_estates.txt",
+          "symbol": "can_select_monarch_power_privilege"
+        }
+      ]
+    },
+    {
+      "id": "estate-loyalty-vs-influence",
+      "title": "Lojalność stanu i jego wpływ",
+      "patterns": [
+        "\\b(?:lojalnos\\w*|loyalty)\\b.{0,48}\\b(?:wplyw\\w*|influence|rownowag\\w*|equilibrium)\\b",
+        "\\b(?:wplyw\\w*|influence)\\b.{0,45}\\b(?:lojalnos\\w*|loyalty|stanow\\w*|stanow|estates?)\\b",
+        "\\b(?:lojalnos\\w* (?:stanu|stanow|mieszczan|szlachty|duchowienstwa)|estate loyalty)\\b"
+      ],
+      "symbols": [
+        "ESTATE_LOYALTY_VS_INFLUENCE_GREATER_THAN",
+        "PRIVILEGE_LOYALTY_CHANGE",
+        "ESTATE_LOYALTY_DECAY_BASE_MIN",
+        "estate_burghers_disaster"
+      ],
+      "text": "Lojalność stanu zmienia się w kierunku równowagi, a wpływ opisuje jego siłę i przy bardzo wysokiej wartości może sprzyjać katastrofie. Przed cofnięciem przywileju porównaj bieżącą lojalność z wpływem, a przy nadawaniu nowych sprawdź również, jak zmienią równowagę lojalności.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "ESTATE_LOYALTY_DECAY_BASE_MIN"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "ESTATE_LOYALTY_VS_INFLUENCE_GREATER_THAN"
+        },
+        {
+          "path": "localisation/emperor_estates_l_english.yml",
+          "symbol": "PRIVILEGE_LOYALTY_CHANGE"
+        },
+        {
+          "path": "common/disasters/estate_burghers_disaster.txt",
+          "symbol": "estate_burghers_disaster"
+        }
+      ]
+    },
+    {
+      "id": "crownland-low-effects",
+      "title": "Niski udział ziemi koronnej",
+      "patterns": [
+        "\\b(?:niski\\w*|malo|mniej|progi|low|little)\\b.{0,28}\\b(?:ziem\\w* koronn\\w*|crown ?land)\\b",
+        "\\b(?:ziem\\w* koronn\\w*|crown ?land)\\b.{0,36}\\b(?:niski\\w*|malo|kary|prog\\w*|podatk\\w*|skutek|low|penalt\\w*|threshold)\\b",
+        "\\b(?:co daje|co to|what is)\\b.{0,15}\\b(?:ziem\\w* koronn\\w*|crown ?land)\\b"
+      ],
+      "symbols": [
+        "crown_land_level_0",
+        "crown_land_level_3",
+        "crown_land_level_4",
+        "ESTATES_CROWNLAND_TITLE"
+      ],
+      "text": "Przy niskim udziale ziemi koronnej spadają podatki i limit absolutyzmu, a przy bardzo niskim może rosnąć autonomia. Jeśli po nadaniu przywilejów udział korony spadnie, sprawdź kary w panelu stanów i zaplanuj stopniowe odzyskanie ziemi.",
+      "refs": [
+        {
+          "path": "common/estate_crown_land/00_bonuses.txt",
+          "symbol": "crown_land_level_0"
+        },
+        {
+          "path": "common/estate_crown_land/00_bonuses.txt",
+          "symbol": "crown_land_level_3"
+        },
+        {
+          "path": "common/estate_crown_land/00_bonuses.txt",
+          "symbol": "crown_land_level_4"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "ESTATES_CROWNLAND_TITLE"
+        }
+      ]
+    },
+    {
+      "id": "seize-land-estate-loyalty",
+      "title": "Przejmowanie ziemi od stanów",
+      "patterns": [
+        "\\b(?:seize land|odzysk\\w* ziem\\w* koronn\\w*|przejec\\w* ziem\\w* koronn\\w*)\\b",
+        "\\b(?:przejm\\w*|przejec\\w*|przejac|odebr\\w*|odbier\\w*|zabierz\\w*|zabrac)\\b.{0,22}\\bziem\\w*\\b.{0,22}\\b(?:stanom|stanow|mieszczan\\w*|szlach\\w*|duchowienstw\\w*)\\b"
+      ],
+      "symbols": [
+        "seize_land",
+        "ESTATES_SEIZE_LAND_DESC",
+        "seize_land_rebels_tt",
+        "spawn_rebels_seize_land_switch"
+      ],
+      "text": "Przejęcie ziemi (Seize Land) standardowo oddaje koronie 5 punktów procentowych udziału w ziemi kosztem lojalności stanów. Sprawdź lojalność po zapowiadanym spadku i zaczekaj, jeśli zejście poniżej 30 grozi buntem, którego nie jesteś gotów stłumić.",
+      "refs": [
+        {
+          "path": "common/estate_crown_land/00_interactions.txt",
+          "symbol": "seize_land"
+        },
+        {
+          "path": "localisation/emperor_estates_l_english.yml",
+          "symbol": "ESTATES_SEIZE_LAND_DESC"
+        },
+        {
+          "path": "localisation/emperor_estates_l_english.yml",
+          "symbol": "seize_land_rebels_tt"
+        },
+        {
+          "path": "common/scripted_effects/01_scripted_effects_for_estates.txt",
+          "symbol": "spawn_rebels_seize_land_switch"
+        }
+      ]
+    },
+    {
+      "id": "provincial-unrest-rebel-progress",
+      "title": "Skąd biorą się powstania",
+      "patterns": [
+        "\\b(?:skad|dlaczego|czemu|przyczyna|why|what causes)\\b.{0,30}\\b(?:bunt\\w*|powstan\\w*|niepok\\w*|rebels?|rebellions?|unrest)\\b",
+        "\\b(?:niepok\\w*|unrest|bunt\\w*|powstan\\w*)\\b.{0,27}\\b(?:po podboj\\w*|po podbic\\w*|separatyz\\w*|przyczyn\\w*|rosn\\w*|czemu|after conquest)\\b"
+      ],
+      "symbols": [
+        "UNREST_REVOLT_FACTOR",
+        "UPRISING_INCREASE",
+        "nationalism",
+        "negative_stability",
+        "war_exhaustion",
+        "over_extension"
+      ],
+      "text": "Dodatni niepokój sprzyja narastaniu postępu frakcji, często przez separatyzm po podboju, niską stabilność lub wyczerpanie wojną. Najedź na niepokój w zagrożonej prowincji i usuń najważniejszą przyczynę, na przykład kończąc tworzenie rdzeni, gdy problemem jest nadmierna ekspansja.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "UNREST_REVOLT_FACTOR"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "nationalism"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "negative_stability"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "war_exhaustion"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "over_extension"
+        }
+      ]
+    },
+    {
+      "id": "preparing-for-rebels-harsh-treatment",
+      "title": "Jak reagować na zbliżający się bunt",
+      "patterns": [
+        "\\b(?:surow\\w* traktowani\\w*|harsh treatment|suppress rebels|tlumi\\w* bunt\\w*|tlumienie rebel\\w*)\\b",
+        "\\b(?:co zrobic z|jak (?:pokonac|powstrzymac|zatrzymac|opanowac|poradzic sobie z)|how to (?:stop|fight|suppress|prevent))\\b.{0,38}\\b(?:bunt\\w*|powstan\\w*|rebels?|rebellions?)\\b",
+        "\\b(?:frakcj\\w* bunt\\w*|rebel faction)\\b.{0,33}\\b(?:postep|zaraz|wybuch\\w*|progress|uprising|about to)\\b"
+      ],
+      "symbols": [
+        "PS_HARSH_TREATMENT_COST",
+        "PS_HARSH_TREATMENT_REDUCE",
+        "MORALE_RECOVERY_SPEED",
+        "HARSH_EXPLAIN_BUY",
+        "CV_REBEL_OCCPROV_DESC"
+      ],
+      "text": "Surowe traktowanie wydaje punkty wojskowe na cofnięcie postępu powstania, więc przede wszystkim kupuje czas. Jeśli bunt i tak jest bliski, przygotuj armię z odzyskanym morale w pobliżu zagrożonego obszaru i w miarę możliwości obniż niepokój.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_HARSH_TREATMENT_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_HARSH_TREATMENT_REDUCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MORALE_RECOVERY_SPEED"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "HARSH_EXPLAIN_BUY"
+        }
+      ]
+    },
+    {
+      "id": "stability-negative-and-recovery",
+      "title": "Stabilność i kiedy ją podnosić",
+      "patterns": [
+        "\\b(?:stabilnos\\w*|stability)\\b.{0,31}\\b(?:ujemn\\w*|nisk\\w*|kary|co daje|podnie\\w*|wzros\\w*|negative|boost|raise|penalt\\w*)\\b",
+        "\\b(?:co daje|co to(?: jest)?|jak (?:podniesc|zwiekszyc|odzyskac)|boost|raise|negative|low|what is)\\b.{0,26}\\b(?:stabilnos\\w*|stability)\\b"
+      ],
+      "symbols": [
+        "positive_stability",
+        "negative_stability",
+        "PS_BOOST_STABILITY",
+        "HINT_STABILITY_TEXT"
+      ],
+      "text": "Ujemna stabilność zwiększa niepokój, a dodatnia pomaga utrzymać spokój i daje więcej podatków. Gdy masz ujemną stabilność, rozważ podniesienie jej za punkty administracyjne, zanim wydasz je na rozwój.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "positive_stability"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "negative_stability"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_BOOST_STABILITY"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_STABILITY_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "war-exhaustion-peace-and-reduction",
+      "title": "Wyczerpanie wojną i jego obniżenie",
+      "patterns": [
+        "\\b(?:wyczerpani\\w* wojn\\w*|zmecz\\w* wojn\\w*|war exhaustion)\\b"
+      ],
+      "symbols": [
+        "war_exhaustion",
+        "peace",
+        "PS_REDUCE_WAREXHAUSTION",
+        "WAREXHAUSTION_REDUCTION"
+      ],
+      "text": "Wyczerpanie wojną zwiększa niepokój, podnosi koszt tworzenia rdzeni i zmniejsza produkcję towarów. Pozwól mu spadać w pokoju albo wydaj punkty dyplomatyczne na obniżenie, gdy kary utrudniają pilny podbój lub odbudowę kraju.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "war_exhaustion"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "peace"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_REDUCE_WAREXHAUSTION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAREXHAUSTION_REDUCTION"
+        }
+      ]
+    },
+    {
+      "id": "institutions-tech-price-penalty",
+      "title": "Brak instytucji i koszt technologii",
+      "patterns": [
+        "\\b(?:instytucj\\w*|institutions?|renesans\\w*|feudaliz\\w*)\\b.{0,46}\\b(?:kar\\w*|cen\\w* technolog\\w*|koszt\\w* technolog\\w*|tech penalty|tech cost|technology cost)\\b",
+        "\\b(?:kara|kar\\w*|droga|drogie|koszt\\w*|penalt\\w*|expensive)\\b.{0,45}\\b(?:instytucj\\w*|institutions?|feudaliz\\w*|renesans\\w*)\\b"
+      ],
+      "symbols": [
+        "expects_institution",
+        "INSTITUTION_PENALTY_INFO",
+        "adm:5",
+        "adm:6",
+        "adm:7",
+        "renaissance"
+      ],
+      "text": "Brak instytucji zwiększa koszt tych poziomów technologii, które jej oczekują, a wysokość kary zależy od poziomu. Odczytaj składniki ceny następnej technologii i przyjmij brakującą instytucję przed zakupem, jeśli technologia może zaczekać.",
+      "refs": [
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:5"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:6"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:7"
+        },
+        {
+          "path": "localisation/institutions_l_english.yml",
+          "symbol": "INSTITUTION_PENALTY_INFO"
+        }
+      ]
+    },
+    {
+      "id": "institutions-spread-province-development",
+      "title": "Rozprzestrzenianie instytucji i rozwój prowincji",
+      "patterns": [
+        "\\b(?:instytucj\\w*|institutions?|renesans\\w*)\\b.{0,48}\\b(?:rozprzestrzen\\w*|rozwoj\\w*|przyjac|przyjec\\w*|spread\\w*|develop\\w*|embrac\\w*)\\b",
+        "\\b(?:rozprzestrzen\\w*|rozwin\\w*|przyjac|przyjec\\w*|przyjm\\w*|spread|develop|embrace)\\b.{0,38}\\b(?:instytucj\\w*|institutions?|renesans\\w*)\\b"
+      ],
+      "symbols": [
+        "INSTITUTION_SPREAD_HELP",
+        "INSTITUTION_BONUS_FROM_IMP_DEVELOPMENT",
+        "INSTI_NOT_ENOUGH_HOLD",
+        "EMBRACE_INSTITUTION_COST"
+      ],
+      "text": "Instytucja może rozchodzić się między prowincjami, a zwiększenie rozwoju dokłada jej postęp w wybranej prowincji. Sprawdź przewidywane tempo rozprzestrzeniania i rozważ rozwój taniej prowincji, gdy naturalny postęp jest za wolny, a przyjęcie instytucji zaoszczędzi ci punkty.",
+      "refs": [
+        {
+          "path": "localisation/institutions_l_english.yml",
+          "symbol": "INSTITUTION_SPREAD_HELP"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INSTITUTION_BONUS_FROM_IMP_DEVELOPMENT"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "INSTI_NOT_ENOUGH_HOLD"
+        }
+      ]
+    },
+    {
+      "id": "ideas-versus-technology-priority",
+      "title": "Kiedy brać idee, a kiedy technologię",
+      "patterns": [
+        "\\b(?:ide[aei]\\w*|idea groups?|ideas)\\b.{0,37}\\b(?:czy|zamiast|przed|lub|versus|or|before)\\b.{0,15}\\b(?:technolog\\w*|tech\\w*)\\b",
+        "\\b(?:technolog\\w*|tech\\w*)\\b.{0,35}\\b(?:czy|zamiast|przed|lub|versus|or|before)\\b.{0,15}\\b(?:ide[aei]\\w*|idea groups?|ideas)\\b",
+        "\\b(?:pierwsz\\w* grup\\w* idei|first idea group)\\b.{0,36}\\b(?:kiedy|odblok\\w*|when|unlock\\w*)\\b"
+      ],
+      "symbols": [
+        "adm:5",
+        "mil:4",
+        "IDEA_TO_TECH",
+        "TECH_AHEAD_OF_TIME",
+        "TECH_EXPL_YEARS_AHEAD"
+      ],
+      "text": "Idee zużywają punkty z tej samej puli co odpowiadająca im technologia, a kolejne miejsca na grupy idei odblokowuje technologia administracyjna. Przed wojną daj pierwszeństwo ważnej technologii wojskowej, a idee rozważ, gdy kolejny poziom jest drogi przez zakup przed czasem albo nie jest pilny.",
+      "refs": [
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:5"
+        },
+        {
+          "path": "common/technologies/mil.txt",
+          "symbol": "mil:4"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "IDEA_TO_TECH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TECH_AHEAD_OF_TIME"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "TECH_EXPL_YEARS_AHEAD"
+        }
+      ]
+    },
+    {
+      "id": "one-time-cash-sale-of-titles",
+      "title": "Jednorazowa gotówka ze sprzedaży tytułów",
+      "patterns": [
+        "\\b(?:sprzedaz tytul\\w*|sprzed\\w* ziem\\w* koronn\\w*|sale of titles|sell titles|sell crown ?land)\\b",
+        "\\b(?:zastrzyk\\w* gotowk\\w*|gotowk\\w* od reki|ducats immediately|immediate cash|quick cash)\\b",
+        "\\b(?:szybko (?:zdobyc|uzyskac|dostac)|get .*quickly)\\b.{0,26}\\b(?:gotowk\\w*|dukat\\w*|ducats)\\b"
+      ],
+      "symbols": [
+        "sale_of_titles",
+        "ESTATES_SALE_OF_TITLES_DESC",
+        "crown_land_level_4"
+      ],
+      "text": "Sprzedaż tytułów (Sale of Titles) zasila skarbiec od razu kosztem części ziemi koronnej. Sprawdź wypłatę i wynikający udział korony, a jednorazowe dukaty przeznacz na pilny wydatek lub spłatę długu.",
+      "refs": [
+        {
+          "path": "common/estate_crown_land/00_interactions.txt",
+          "symbol": "sale_of_titles"
+        },
+        {
+          "path": "localisation/emperor_estates_l_english.yml",
+          "symbol": "ESTATES_SALE_OF_TITLES_DESC"
+        },
+        {
+          "path": "common/estate_crown_land/00_bonuses.txt",
+          "symbol": "crown_land_level_4"
+        }
+      ]
+    },
+    {
+      "id": "bankruptcy-decision-for-beginners",
+      "title": "Bankructwo i koszt wyjścia z długu",
+      "patterns": [
+        "\\b(?:bankructw\\w*|bankrupt\\w*)\\b.{0,43}\\b(?:skut\\w*|kary|oglos\\w*|unik\\w*|co daje|effects?|penalt\\w*|declare|avoid)\\b",
+        "\\b(?:czy|kiedy|jak uniknac|co daje|co sie dzieje|when|what happens|should i|declare)\\b.{0,34}\\b(?:bankructw\\w*|bankrupt\\w*)\\b"
+      ],
+      "symbols": [
+        "bankruptcy",
+        "BANKRUPTCY_DURATION",
+        "CV_GO_BANKRUPT_TEXT"
+      ],
+      "text": "Bankructwo umarza pożyczki, ale odbiera stabilność, doradców i najemników oraz na kilka lat osłabia wojsko. Przed ogłoszeniem sprawdź, czy da się ograniczyć wydatki i spłacić zadłużenie, a jeśli wybierasz bankructwo, uwzględnij zagrożenie wojną i buntem.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_GO_BANKRUPT_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANKRUPTCY_DURATION"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "bankruptcy"
+        }
+      ]
+    },
+    {
+      "id": "accepted-culture-economic-impact",
+      "title": "Czy promować kulturę do akceptowanej",
+      "patterns": [
+        "\\b(?:kultur\\w* akceptowan\\w*|akceptowan\\w* kultur\\w*|accepted cultures?|promote culture)\\b",
+        "\\b(?:promow\\w*|promuj\\w*|zaakcept\\w*|promot\\w*|accept\\w*)\\b.{0,31}\\b(?:kultur\\w*|culture)\\b",
+        "\\b(?:nieakceptowan\\w* kultur\\w*|non.accepted culture)\\b"
+      ],
+      "symbols": [
+        "non_accepted_culture",
+        "same_culture_group",
+        "CULTURE_MIN_DEVELOPMENT_TO_PROMOTE",
+        "PS_ADD_ACCEPTED_CULTURE",
+        "CULTURE_VIEW_IS_ACCEPTED_CULTURE"
+      ],
+      "text": "Akceptacja kultury usuwa jej kary do podatków i zasobów ludzkich w odpowiednich prowincjach. Jeśli masz wolne miejsce na akceptowaną kulturę, rozważ promocję tej, która obejmuje dużo rozwoju w twoich stanach.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "non_accepted_culture"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "same_culture_group"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "CULTURE_MIN_DEVELOPMENT_TO_PROMOTE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_ADD_ACCEPTED_CULTURE"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "ADD_ACC_CULTURE_TOO_WEAK"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CULTURE_VIEW_IS_ACCEPTED_CULTURE"
+        }
+      ]
+    },
+    {
+      "id": "religious-unity-conversion-tolerance",
+      "title": "Jedność religijna i wybór prowincji do nawrócenia",
+      "patterns": [
+        "\\b(?:jednos\\w* religijn\\w*|religious unity)\\b",
+        "\\b(?:nawroc\\w*|convert)\\b.{0,26}\\b(?:prowincj\\w*|province\\w*)\\b",
+        "\\b(?:tolerancj\\w* religijn\\w*|tolerance of (?:heretics|heathens))\\b"
+      ],
+      "symbols": [
+        "religious_unity",
+        "inverse_religious_unity",
+        "intolerance",
+        "active_missionary",
+        "estate_burghers_enforced_interfaith_dialogue"
+      ],
+      "text": "Niska jedność religijna podnosi niepokój i koszt stabilności, a czynny misjonarz tymczasowo zwiększa niepokój w nawracanej prowincji. Przed nawracaniem porównaj jego czas i koszt z dostępnymi sposobami podniesienia tolerancji.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "inverse_religious_unity"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "active_missionary"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "intolerance"
+        },
+        {
+          "path": "common/estate_privileges/03_burgher_privileges.txt",
+          "symbol": "estate_burghers_enforced_interfaith_dialogue"
+        }
+      ]
+    },
+    {
+      "id": "state-prosperity-vs-devastation",
+      "title": "Dobrobyt stanu i odbudowa po dewastacji",
+      "patterns": [
+        "\\b(?:dobrobyt\\w*|prosperity)\\b.{0,40}\\b(?:stan\\w*|state\\w*|dewastac\\w*|devastat\\w*|co daje|uzysk\\w*|gain|grow\\w*)\\b",
+        "\\b(?:co daje|jak (?:uzyskac|zwiekszyc|odzyskac|obnizyc|usunac)|how to (?:gain|reduce)|why .*losing)\\b.{0,29}\\b(?:dobrobyt\\w*|dewastac\\w*|prosperity|devastation)\\b",
+        "\\b(?:dewastac\\w*|devastation)\\b.{0,26}\\b(?:spad\\w*|zmniejsz\\w*|po wojnie|declin\\w*|after war|decay)\\b"
+      ],
+      "symbols": [
+        "prosperity",
+        "devastation",
+        "PROSPEROUS_HOW",
+        "PROSPERITY_ONLY_IN_STATES",
+        "FORT_DEVASTATION_IMPACT"
+      ],
+      "text": "Dobrobyt stanu zwiększa produkcję towarów i obniża koszt rozwoju, a jego narastanie wymaga dodatniej stabilności i braku dewastacji w stanie. Po wojnie sprawdź dewastację i rozważ utrzymanie pobliskiego fortu, który pomaga prowincjom w strefie jego działania odbudować się.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "prosperity"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "devastation"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "PROSPEROUS_HOW"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "PROSPERITY_ONLY_IN_STATES"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "FORT_DEVASTATION_IMPACT"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-reduce-liberty-desire",
+      "title": "Jak obniżyć chęć wolności poddanego",
+      "patterns": [
+        "\\b(?:zbi\\w*|obniz\\w*|zmniejsz\\w*|uspoko\\w*|reduce|lower|decrease|manage)\\b.*\\b(?:che\\w* wolnos\\w*|che\\w* niepodleg\\w*|liberty desire|ld)\\b",
+        "\\b(?:wysok\\w* che\\w* wolnos\\w*|high liberty desire|zbuntowan\\w* poddan\\w*|disloyal (?:subject|vassal|junior partner))\\b"
+      ],
+      "symbols": [
+        "LIBERTY_DESIRE_POSITIVE_OPINION",
+        "LIBERTY_DESIRE_RELATIVE_POWER",
+        "PAY_SUBJECT_DEBT_LIBERTY_DESIRE_REDUCTION"
+      ],
+      "text": "Lepsza opinia poddanego o tobie i twoja przewaga wojskowa zmniejszają jego chęć wolności. Poprawiaj relacje, wzmacniaj armię lub spłać jego długi, co odejmuje 5 punktów chęci wolności za każdą spłaconą pożyczkę.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "LIBERTY_DESIRE_POSITIVE_OPINION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "LIBERTY_DESIRE_RELATIVE_POWER"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PAY_SUBJECT_DEBT_LIBERTY_DESIRE_REDUCTION"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-annexation-integration",
+      "title": "Aneksja wasala i integracja młodszego partnera unii",
+      "patterns": [
+        "\\b(?:anekt\\w*|aneks\\w*|z?integ\\w*|wciel\\w*|annex\\w*|integrat\\w*)\\b.*\\b(?:wasal\\w*|poddane\\w*|poddany\\w*|mlodsz\\w* partner\\w*|litw\\w*|uni[ie]\\w*|vassal\\w*|subject\\w*|junior partners?|lithuania|personal union)\\b",
+        "\\b(?:wasal\\w*|poddane\\w*|poddany\\w*|mlodsz\\w* partner\\w*|litw\\w*|vassal\\w*|subject\\w*|junior partners?|lithuania|personal union)\\b.*\\b(?:anekt\\w*|aneks\\w*|z?integ\\w*|wciel\\w*|annex\\w*|integrat\\w*)\\b"
+      ],
+      "symbols": [
+        "INTEGRATE_VASSAL_MIN_YEARS",
+        "INTEGRATE_UNION_MIN_YEARS",
+        "DIPLOANNEX_LIBERTY_THRESHOLD"
+      ],
+      "text": "Zwykła aneksja pozwala włączyć wasala po 10 latach, a dyplomatyczna integracja partnera unii jest możliwa po 50 latach. Popraw jego opinię o tobie do co najmniej +190 i utrzymuj chęć wolności poniżej 50%, żeby utrzymać postęp.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "INTEGRATE_VASSAL_MIN_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INTEGRATE_UNION_MIN_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOANNEX_LIBERTY_THRESHOLD"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "ANNEX_TOO_LOW"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "INTEGRATEDESC"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-union-break",
+      "title": "Czemu rozpadła się unia personalna",
+      "patterns": [
+        "\\b(?:uni[aeiy]\\w*|personal union|pu)\\b.*\\b(?:rozpad\\w*|zerwa\\w*|zryw\\w*|koncz\\w*|skoncz\\w*|p[ea]k\\w*|break\\w*|broke|ended?|dissolv\\w*)\\b",
+        "\\b(?:rozpad\\w*|zerwa\\w*|utrac\\w*|strac\\w*|broke|lost|dissolv\\w*)\\b.*\\b(?:uni[aeiy]\\w*|personal union|pu)\\b"
+      ],
+      "symbols": [
+        "MDEATH_PU_BREAKS_OPINION",
+        "UNION_BREAK_OPINION",
+        "cb_restore_personal_union"
+      ],
+      "text": "Ujemna opinia młodszego partnera o seniorze może zerwać unię po śmierci wspólnego władcy. Przed sukcesją popraw opinię poddanego o tobie powyżej zera i sprawdź przewidywany skutek śmierci władcy w podpowiedzi gry.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "MDEATH_PU_BREAKS_OPINION"
+        },
+        {
+          "path": "localisation/nw_l_english.yml",
+          "symbol": "UNION_BREAK_OPINION"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MDEATH_PU_BREAKS"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_restore_personal_union"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-subject-types",
+      "title": "Wasal, unia personalna i marchia",
+      "patterns": [
+        "\\b(?:roznic\\w*|porown\\w*|difference|versus|vs)\\b.*\\b(?:wasal\\w*|marchy?\\w*|vassal\\w*|personal union|marchia|march)\\b",
+        "\\b(?:wasal\\w*|vassal\\w*|marchia|march|personal union)\\b\\s+(?:a|czy|or|vs|versus)\\s+(?:wasal\\w*|uni\\w*|marchi\\w*|vassal\\w*|personal union|march)\\b",
+        "\\b(?:czym jest marchi\\w*|co (?:to|daje|jest) (?:jest )?marchi\\w*|what is (?:a |the )?march|(?:anekt\\w*|aneks\\w*|annex\\w*)\\s+(?:(?:a|my)\\s+)?march\\w*)\\b"
+      ],
+      "symbols": [
+        "vassal",
+        "personal_union",
+        "march",
+        "march_bonus"
+      ],
+      "text": "Wasal płaci część dochodu, młodszy partner unii dzieli z tobą władcę, a marchia jest poddanym nastawionym na wojsko. Wybierz zwykłego wasala pod aneksję, a marchię pod ochronę granicy, bo przed aneksją musisz przywrócić jej status wasala.",
+      "refs": [
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "pays_overlord = 1.0"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "has_overlords_ruler = yes"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "military_focus = 1.5"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "ASKMARCHDESC"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "CANCELMARCHDESC"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-transfer-subject",
+      "title": "Przejęcie poddanego w pokoju",
+      "patterns": [
+        "\\b(?:przej[ae]\\w*|przenies\\w*|transfer\\w*|take)\\b.*\\b(?:poddan\\w*|wasal\\w*|subject|vassalage|vassal)\\b.*\\b(?:pokoj\\w*|trakta\\w*|peace|treaty)\\b",
+        "\\b(?:transfer subject|transfer vassalage|transfer vassal|przeniesienie poddanego)\\b"
+      ],
+      "symbols": [
+        "ab_transfer_vassal_wargoal",
+        "PEACEOFFER_TRANSFER",
+        "can_transfer_vassal_wargoal"
+      ],
+      "text": "Przejęcie poddanego w traktacie pokojowym zmienia jego zwierzchnika i pozostawia mu własne państwo. Wybierz opcję „Przejmij poddanego”, jeśli pokazuje ją ekran pokoju, a jego ziemie włącz później przez aneksję.",
+      "refs": [
+        {
+          "path": "common/ages/00_default.txt",
+          "symbol": "ab_transfer_vassal_wargoal"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "PEACEOFFER_TRANSFER"
+        },
+        {
+          "path": "common/peace_treaties/00_claim_norwegian_throne.txt",
+          "symbol": "a transfer subject peace treaty breaks the PU"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "ANNEXNEWDESC"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-royal-marriage",
+      "title": "Po co zawierać małżeństwa królewskie",
+      "patterns": [
+        "\\b(?:malzenstw\\w* krolewsk\\w*|krolewsk\\w* malzenstw\\w*|royal marriages?|royal wedding)\\b",
+        "\\b(?:poslub\\w*|marry|marriage|malzenstw\\w*)\\b.*\\b(?:dynasti\\w*|dynasty|tronu|throne|sukcesj\\w*|succession)\\b"
+      ],
+      "symbols": [
+        "HINT_ENTERPERSONALUNION_TEXT",
+        "HINT_LEGITIMACY_TEXT",
+        "MDEATH_PU_STARTS"
+      ],
+      "text": "Małżeństwo królewskie może przenieść dynastię i otworzyć drogę do unii, gdy władca umrze bez następcy. Zawieraj małżeństwa z wybranymi monarchiami i sprawdzaj prognozę sukcesji w podpowiedzi władcy.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LEGITIMACY_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ENTERPERSONALUNION_TEXT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MDEATH_PU_STARTS"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-independence-guarantee-support",
+      "title": "Gwarancja niepodległości a wsparcie niepodległości",
+      "patterns": [
+        "\\b(?:gwarancj\\w* niepodleg\\w*|gwarant\\w* niepodleg\\w*|guarantee independence|guarantee of independence|guaranteeing independence)\\b",
+        "\\b(?:wspier\\w* niepodleg\\w*|wspar\\w* niepodleg\\w*|support(?:ing| for)? independence)\\b"
+      ],
+      "symbols": [
+        "GUARANTNEWDESC",
+        "ASKSUPPORTINDEPENDENCENEWDESC",
+        "SUPPORT_INDEPENDENCE_ONLY_VASSAL_NONVASSAL"
+      ],
+      "text": "Gwarancja wzywa cię do obrony państwa, gdy ktoś je zaatakuje, a wsparcie niepodległości wzywa cię do wojny poddanego z własnym seniorem. Użyj gwarancji do ochrony sąsiada albo zaoferuj wsparcie poddanemu, któremu chcesz pomóc się uniezależnić.",
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "GUARANTNEWDESC"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "OFFERSUPPORTINDEPENDENCENEWDESC"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "SUPPORT_INDEPENDENCE_ONLY_VASSAL_NONVASSAL"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-hre-emperor-defense",
+      "title": "Kiedy cesarz Rzeszy broni jej członka",
+      "patterns": [
+        "\\b(?:cesarz\\w*|emperor)\\b.*\\b(?:hre|rzesz\\w*|holy roman empire|imperial princes?)\\b|\\b(?:hre|rzesz\\w*|holy roman empire|imperial princes?)\\b.*\\b(?:cesarz\\w*|emperor)\\b",
+        "\\b(?:zaatak\\w*|atak\\w*|attack\\w*)\\b.*\\b(?:czlonk\\w* rzesz\\w*|czlonk\\w* hre|hre member|imperial member)\\b"
+      ],
+      "symbols": [
+        "HINT_HRE_TEXT",
+        "HINT_EMPEROR_TEXT"
+      ],
+      "text": "Atak z zewnątrz na członka Świętego Cesarstwa Rzymskiego daje cesarzowi wezwanie do obrony. Przed wojną sprawdź na ekranie wypowiedzenia, czy dołączą cesarz i jego sojusznicy.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_HRE_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_EMPEROR_TEXT"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "COBELLIGERENT_CALL"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-hre-princes-war",
+      "title": "Wojna z książętami Rzeszy i współwalczący",
+      "patterns": [
+        "\\b(?:wojn\\w*|atak\\w*|podb\\w*|war|attack\\w*|conquer\\w*)\\b.*\\b(?:ksia\\w* rzesz\\w*|ksia\\w* hre|hre prince\\w*|imperial prince\\w*)\\b",
+        "\\b(?:wspolwalcz\\w*|wspolwoj\\w*|co belligerent|cobelligerent|co belligerency|co belligerents)\\b"
+      ],
+      "symbols": [
+        "COBELLIGERENT_CALL",
+        "NOT_COBELLIGERENT_CALL",
+        "ALLY_PEACE_COST_MULT",
+        "ALLY_AE_MULT"
+      ],
+      "text": "Za ziemie zwykłego sojusznika przeciwnika płacisz dwukrotnie więcej wyniku wojny i dostajesz o 50% więcej agresywnej ekspansji. Jeśli chcesz jego ziem, rozważ oznaczenie go jako współwalczącego, ale sprawdź też jego sojuszników, których może wezwać.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "ALLY_PEACE_COST_MULT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "ALLY_AE_MULT"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "COBELLIGERENT_CALL"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "NOT_COBELLIGERENT_CALL"
+        }
+      ]
+    },
+    {
+      "id": "extended-diplo-ally-call",
+      "title": "Dlaczego sojusznik nie dołącza do wojny",
+      "patterns": [
+        "\\b(?:sojuszni\\w*|allies|ally)\\b.*\\b(?:nie dolacz\\w*|nie wchodzi\\w*|nie przystap\\w*|odmaw\\w*|odmow\\w*|refus\\w*|wont join|won t join|doesn t join|won t help|did not join|cannot call)\\b",
+        "\\b(?:wezw\\w*|wezwac|call|invite|zapros\\w*)\\b.*\\b(?:sojuszni\\w*|allies|ally)\\b.*\\b(?:wojn\\w*|war)\\b",
+        "\\b(?:wont|won t|doesn t|cannot|can t|nie moze)\\b.*\\b(?:ally|allies|sojuszni\\w*)\\b.*\\b(?:join|dolacz\\w*|help|pomoc)\\b"
+      ],
+      "symbols": [
+        "CALL_TO_ARMS_COST",
+        "DIPLO_NOT_ENOUGH_FAVORS",
+        "DIPLO_FIGHTING_OTHER_WAR",
+        "DIPLO_ENEMIES_TOO_FAR_AWAY"
+      ],
+      "text": "Wezwanie sojusznika do wojny ofensywnej bez obietnicy ziemi kosztuje zwykle 10 przysług, a sojusznik może odmówić przez inną wojnę lub odległość. Najedź na jego znacznik na ekranie wypowiedzenia wojny, żeby sprawdzić powody odmowy.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "CALL_TO_ARMS_COST"
+        },
+        {
+          "path": "localisation/cossacks_l_english.yml",
+          "symbol": "CALL_FAVORS_COST_2"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_NOT_ENOUGH_FAVORS"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_FIGHTING_OTHER_WAR"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_ENEMIES_TOO_FAR_AWAY"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "CALL_CHECKBOX_CANNOT_CALL_DESC"
+        }
+      ]
+    },
+    {
+      "id": "extended-pol-plc-ideas-switch",
+      "title": "Czy przyjąć idee Rzeczypospolitej po jej utworzeniu",
+      "patterns": [
+        "\\b(?:idee|idei\\w*|ideas)\\b.*\\b(?:rzeczpospol\\w*|rzeczypospol\\w*|commonwealth|plc)\\b",
+        "\\b(?:rzeczpospol\\w*|rzeczypospol\\w*|commonwealth|plc)\\b.*\\b(?:idee|idei\\w*|ideas)\\b"
+      ],
+      "symbols": [
+        "pol_commonwealth",
+        "ideagroups.1",
+        "POL_ideas",
+        "PLC_ideas"
+      ],
+      "text": "Po utworzeniu Rzeczypospolitej możesz zachować polskie idee narodowe albo przyjąć nowe z dotychczasowym postępem. Wybierz idee Rzeczypospolitej dla większej produkcji i dodatkowego punktu administracyjnego lub zostań przy polskich dla tańszej kawalerii i wyższego morale.",
+      "refs": [
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "events/IdeaGroups.txt",
+          "symbol": "id = ideagroups.1"
+        },
+        {
+          "path": "common/ideas/00_country_ideas.txt",
+          "symbol": "POL_ideas"
+        },
+        {
+          "path": "common/ideas/00_country_ideas.txt",
+          "symbol": "PLC_ideas"
+        }
+      ]
+    },
+    {
+      "id": "extended-pol-moldavia-march",
+      "title": "Jak zdobyć Mołdawię jako marchię przez wydarzenie",
+      "patterns": [
+        "\\b(?:moldaw\\w*|moldavia|moldova)\\b.*\\b(?:marchi\\w*|march|poddan\\w*|wasal\\w*|subject|vassal\\w*|roman\\w*)\\b",
+        "\\b(?:marchi\\w*|march|wasal\\w*|vassal\\w*|roman\\w*)\\b.*\\b(?:moldaw\\w*|moldavia|moldova)\\b|\\b(?:poprze\\w*|popar\\w*|support)\\s+roman\\w*\\b"
+      ],
+      "symbols": [
+        "flavor_mol.1",
+        "flavor_mol.2",
+        "flavor_mol.3"
+      ],
+      "text": "Mołdawia może zgodzić się zostać polską marchią, jeśli przed 1448 poprzesz Romana w wydarzeniu o jej tronie. Utrzymaj gwarancję dla Mołdawii i po pojawieniu się wydarzenia poprzyj Romana pieniędzmi albo rezerwami ludzkimi.",
+      "refs": [
+        {
+          "path": "events/flavorMOL.txt",
+          "symbol": "flavor_mol.1"
+        },
+        {
+          "path": "events/flavorMOL.txt",
+          "symbol": "flavor_mol.2"
+        },
+        {
+          "path": "events/flavorMOL.txt",
+          "symbol": "flavor_mol.3"
+        },
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MOL"
+        }
+      ]
+    },
+    {
+      "id": "extended-pol-krakow-university",
+      "title": "Misja rozbudowy uniwersytetu w Krakowie",
+      "patterns": [
+        "\\b(?:uniwersytet\\w*|university)\\b.*\\b(?:krak\\w*|cracow)\\b|\\b(?:krak\\w*|cracow)\\b.*\\b(?:uniwersytet\\w*|university)\\b"
+      ],
+      "symbols": [
+        "pol_expand_krakow_university",
+        "flavor_pol.28",
+        "pol_krakow_university_modifier"
+      ],
+      "text": "Misja ułatwia rozwój instytucji w Krakowie i daje uniwersytet, jeśli go jeszcze nie masz. Z Lions of the North zalicz wymagane misje i rozwiń Kraków do 40 albo zbuduj w nim uniwersytet.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_expand_krakow_university"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.28"
+        },
+        {
+          "path": "common/event_modifiers/01_mission_modifiers.txt",
+          "symbol": "pol_krakow_university_modifier"
+        }
+      ]
+    },
+    {
+      "id": "extended-pol-nieszawa-privileges",
+      "title": "Przyjąć czy odrzucić przywileje nieszawskie",
+      "patterns": [
+        "\\b(?:przywilej\\w* nieszaw\\w*|nieszawsk\\w* przywilej\\w*|nieszawa privileges|nieszawa conventions)\\b",
+        "\\b(?:nieszaw\\w*)\\b.*\\b(?:przyjac|odrzuc\\w*|accept|reject|technology|technologi\\w*)\\b"
+      ],
+      "symbols": [
+        "flavor_pol.3467",
+        "estate_nobles_nieszawa_privileges"
+      ],
+      "text": "Przywileje nieszawskie obniżają koszt stabilności o 20% i podnoszą koszt technologii o 5%. Odrzuć je, jeśli wolisz uniknąć droższej technologii i masz armię gotową stłumić bunt szlachty.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.3467"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "polish_noble_rebels = 3"
+        },
+        {
+          "path": "common/estate_privileges/02_noble_privileges.txt",
+          "symbol": "estate_nobles_nieszawa_privileges"
+        }
+      ]
+    },
+    {
+      "id": "coalition-war-participation",
+      "title": "Wspólne wejście koalicji do wojny",
+      "patterns": [
+        "\\b(?:atak\\w*|wojn\\w*|attack\\w*)\\b.{0,40}\\b(?:czlon\\w*|panstw\\w*|member\\w*)\\b.{0,22}\\b(?:koalicj\\w*|coalition)\\b|\\b(?:koalicj\\w*|coalition)\\b.{0,50}\\b(?:dolacz\\w*|wezwan\\w*|call\\w* to arms)\\b"
+      ],
+      "symbols": [
+        "COALITIONWITHAGAINST",
+        "JOIN_COALITION_AGAINST",
+        "WARDEC_COBELLI_FOR_COALITION"
+      ],
+      "text": "Wojna między celem koalicji a jednym z jej członków może wciągnąć pozostałych po stronie koalicji. Przed rozpoczęciem wojny sprawdź listę uczestników oraz łączną siłę przeciwników w oknie wypowiedzenia.",
+      "refs": [
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "COALITIONWITHAGAINST"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "JOIN_COALITION_AGAINST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WARDEC_COBELLI_FOR_COALITION"
+        }
+      ]
+    },
+    {
+      "id": "trade-privateer-choice",
+      "title": "Kaprować czy chronić handel",
+      "patterns": [
+        "\\b(?:co daje|po co|czy warto|jak dziala|kiedy|when (?:should|to)|what (?:is|does)).{0,25}\\b(?:kaprow\\w*|kapr(?:zy|ow|em|ami)|privateer\\w*)\\b",
+        "\\b(?:kaprow\\w*|privateer\\w*).{0,32}\\b(?:czy|zamiast|vs|or|versus) (?:ochron\\w* handlu|chronic handel|protect(?:ing)? trade)\\b"
+      ],
+      "symbols": [
+        "HINT_PRIVATEERING_TEXT",
+        "START_PRIVATEER_MISSION_DESC",
+        "CV_ECONOMY_PRIVATEERS"
+      ],
+      "text": "Kaprowanie daje łup z handlu w węźle, a ochrona wzmacnia twój udział w tym węźle. Chroń flotą własny dochodowy węzeł, a kaprów kieruj tam, gdzie zarabia konkurent.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_PRIVATEERING_TEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_NAVY_MISSION_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PRIVATEER_INCOME_COLLECTION_EFF"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_ECONOMY_PRIVATEERS"
+        }
+      ]
+    },
+    {
+      "id": "trade-move-main-port",
+      "title": "Kiedy przenieść główny port handlowy",
+      "patterns": [
+        "\\b(?:przen\\w*|zmien\\w*|przeprowadz\\w*).{0,40}\\b(?:glown\\w* |stolic\\w* |miast\\w* )?(?:port\\w* handl\\w*|stolic\\w* handl\\w*|miast\\w* handl\\w*)\\b",
+        "\\b(?:move|relocate|change).{0,26}\\b(?:main trade (?:port|city)|trade (?:capital|port))\\b"
+      ],
+      "symbols": [
+        "PS_MOVE_TRADE_PORT",
+        "MOVE_TRADE_PORT_SHORT_CORE",
+        "CONFIRMMOVETRADEPORTTEXT"
+      ],
+      "text": "Główny port handlowy możesz przenieść bez ruszania stolicy do własnej prowincji z rdzeniem za bazowe 200 punktów dyplomatycznych. Zrób to, jeśli nowy węzeł jest bogatszy i możesz zdobyć w nim dobry udział.",
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "CONFIRMMOVETRADEPORTTEXT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MOVE_TRADE_PORT_SHORT_CORE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_MOVE_TRADE_PORT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "MOVE_TRADE_PORT_LONG"
+        }
+      ]
+    },
+    {
+      "id": "trade-end-node-advantage",
+      "title": "Czy warto zbierać w węźle końcowym",
+      "patterns": [
+        "\\b(?:warto|oplac\\w*|lepsz\\w*|zbier\\w*|zarabi\\w*).{0,40}\\b(?:we(?:zel|zl\\w*) koncow\\w*|koncow\\w* we(?:zel|zl\\w*))\\b",
+        "\\b(?:is|are|should i|worth).{0,30}\\bend[- ]nodes?\\b.{0,24}\\b(?:better|worth|income|collect\\w*)\\b"
+      ],
+      "symbols": [
+        "LOADING_TIP_19",
+        "TRADE_POWER_TAKE_PART"
+      ],
+      "text": "Węzeł końcowy zatrzymuje całą wartość do podziału między zbierających. Rozważ zbieranie w Genui, Wenecji lub kanale La Manche, gdy potrafisz zapewnić sobie znaczący udział w tym węźle.",
+      "refs": [
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_19"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "genua"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "venice"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "english_channel"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_POWER_TAKE_PART"
+        }
+      ]
+    },
+    {
+      "id": "trade-upstream-merchant-priority",
+      "title": "Jak wybrać węzeł do przekierowania handlu",
+      "patterns": [
+        "\\b(?:w ktor\\w* wezl\\w*|gdzie).{0,28}\\b(?:najlepiej |warto )?(?:przekier\\w*|przekaz\\w*|przesyl\\w*|kierow\\w*) hande[lm]\\b",
+        "\\b(?:which upstream node|where (?:should i|to) steer trade|which node to steer trade from)\\b"
+      ],
+      "symbols": [
+        "STEER_NO_TRADER",
+        "STEER_NO_POWER",
+        "TRADE_POWER_DIRECT_DESC"
+      ],
+      "text": "Kupiec może skierować przekazywaną wartość na wybraną strzałkę wychodzącą z węzła. Nadaj priorytet bogatemu węzłowi, gdzie masz siłę, a konkurencyjna droga odciąga handel od miejsca, w którym zbierasz.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "STEER_NO_TRADER"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "STEER_NO_POWER"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_POWER_DIRECT_DESC"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MISSION_TRANSIT_DESC"
+        }
+      ]
+    },
+    {
+      "id": "trade-production-income-vs-trade-income",
+      "title": "Dochód z produkcji a dochód z handlu",
+      "patterns": [
+        "\\b(?:doch\\w*|przychod\\w*) z produkcji.{0,48}\\b(?:doch\\w* z handlu|handl\\w*)\\b",
+        "\\b(?:doch\\w*|przychod\\w*) z handlu.{0,48}\\bprodukcj\\w*\\b",
+        "\\b(?:production income.{0,30}trade income|trade income.{0,30}production income)\\b"
+      ],
+      "symbols": [
+        "HINT_INCOME_TEXT",
+        "workshop",
+        "TRADE_INCOME_IRO"
+      ],
+      "text": "Dochód z produkcji dostajesz z własnych prowincji, a dochód z handlu ze zbierania wartości w węźle. Gdy chcesz zwiększyć dochód prowincji, sprawdź warsztat, a gdy chcesz zarobić więcej z węzła, sprawdź swój udział.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_INCOME_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "workshop"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "TRADE_INCOME_IRO"
+        }
+      ]
+    },
+    {
+      "id": "trade-colonial-extra-merchant",
+      "title": "Kupiec z dużego państwa kolonialnego",
+      "patterns": [
+        "\\b(?:panstw\\w* kolonialn\\w*|koloni\\w*|colonial nation\\w*).{0,42}\\b(?:kupiec|kupc\\w*|merchant\\w*)\\b",
+        "\\b(?:kupiec|kupc\\w*|merchant\\w*).{0,35}\\b(?:panstw\\w* kolonialn\\w*|koloni\\w*|colonial nation\\w*)\\b"
+      ],
+      "symbols": [
+        "LARGE_COLONIAL_NATION_LIMIT",
+        "large_colonial_nation",
+        "cities_required_for_bonuses"
+      ],
+      "text": "Podległe państwo kolonialne z co najmniej dziesięcioma ukończonymi prowincjami daje seniorowi kupca. Jeśli jest blisko progu, pomóż mu urosnąć, zanim rozproszysz kolonistów po innych regionach.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "LARGE_COLONIAL_NATION_LIMIT"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "large_colonial_nation"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "cities_required_for_bonuses"
+        }
+      ]
+    },
+    {
+      "id": "trade-colonial-route-choice",
+      "title": "Kolonizacja pod własny szlak handlowy",
+      "patterns": [
+        "\\b(?:gdzie|dokad|warto|kierun\\w*).{0,28}\\bkoloniz\\w*.{0,50}\\b(?:handel|handl\\w*|zasieg\\w*|szlak\\w*)\\b",
+        "\\b(?:coloniz\\w*|colonis\\w*).{0,35}\\b(?:trade route|trade income|colonial range)\\b"
+      ],
+      "symbols": [
+        "HINT_COLONIALRANGE_TEXT",
+        "COL_MAPMODE_CAN_COLONIZE"
+      ],
+      "text": "Kolonista potrzebuje prowincji w zasięgu, a finansową wartość portu zmienia dostęp do twojego szlaku. Wybierz port z drogą do miejsca zbierania, na przykład Przylądek Dobrej Nadziei przez Wybrzeże Kości Słoniowej do kanału La Manche.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_COLONIALRANGE_TEXT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "COL_MAPMODE_CAN_COLONIZE"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "cape_of_good_hope"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "ivory_coast"
+        }
+      ]
+    },
+    {
+      "id": "trade-mercantilism-provincial-power",
+      "title": "Kiedy podnosić merkantylizm",
+      "patterns": [
+        "\\b(?:co (?:daje|robi|to)|czym jest|warto|oplaca\\w*|podnies\\w*|zwieksz\\w*).{0,25}\\bmerkantylizm\\w*\\b",
+        "\\b(?:what does|what is|why|should i).{0,24}\\bmercantilism\\b"
+      ],
+      "symbols": [
+        "mercantilism",
+        "HINT_MERCANTILISM_TEXT",
+        "PS_PROMOTE_MERCANTILISM"
+      ],
+      "text": "Merkantylizm wzmacnia siłę handlową z prowincji, więc pomaga tam, gdzie masz własne ziemie. Korzystaj z tanich premii, a przed wydaniem punktów dyplomatycznych sprawdź, czy nie potrzebujesz ich do technologii.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "mercantilism"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_PROMOTE_MERCANTILISM"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_PROMOTE_MERCANTILISM_DESC"
+        }
+      ]
+    },
+    {
+      "id": "trade-peace-transfer-power",
+      "title": "Przekazanie siły handlowej w pokoju",
+      "patterns": [
+        "\\b(?:przekaz\\w*|przenosz\\w*|transfer\\w*|take|get|demand|zabrac|brac).{0,28}\\b(?:sil\\w* handlow\\w*|trade power).{0,30}\\b(?:pokoj\\w*|rozejm\\w*|peace|truce|reparac\\w*)\\b",
+        "\\b(?:pokoj\\w*|rozejm\\w*|peace|truce|reparac\\w*).{0,40}\\b(?:sil\\w* handlow\\w*|trade power)\\b"
+      ],
+      "symbols": [
+        "PO_TRADE_POWER_AMOUNT",
+        "TRANSFER_TRADE_POWER_TO_DESC",
+        "PEACE_COST_TRADE_POWER"
+      ],
+      "text": "Wymuszone w pokoju przekazanie siły oddaje przez rozejm 50% siły pokonanego we wspólnych węzłach. Żądaj go dla wartościowych wspólnych węzłów, a gdy potrzebujesz środków do skarbca, porównaj gotówkę i reparacje.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "PO_TRADE_POWER_AMOUNT"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "TRANSFER_TRADE_POWER_TO_DESC"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "WAR_REPARATIONS_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PEACE_COST_GOLD_STEP"
+        }
+      ]
+    },
+    {
+      "id": "trade-local-vs-global-power",
+      "title": "Lokalna a globalna siła handlowa",
+      "patterns": [
+        "\\b(?:lokaln\\w*|globaln\\w*).{0,32}\\bsil\\w* handlow\\w*.{0,40}\\b(?:globaln\\w*|lokaln\\w*|statk\\w*|prowincj\\w*)\\b",
+        "\\b(?:local|global|provincial).{0,23}\\btrade power.{0,31}\\b(?:local|global|provincial|ship)\\b"
+      ],
+      "symbols": [
+        "PROVINCE_TRADE_VALUE",
+        "MODIFIER_GLOBAL_TRADE_POWER",
+        "GLOBAL_PROV_TRADE_POWER_MODIFIER"
+      ],
+      "text": "Lokalna premia do siły wzmacnia konkretną prowincję, a globalna siła handlowa działa w całej sieci. Przy porównywaniu premii sprawdź, czy dotyczy tylko prowincji, floty, czy całej twojej siły.",
+      "refs": [
+        {
+          "path": "localisation/modifers_l_english.yml",
+          "symbol": "PROVINCE_TRADE_VALUE"
+        },
+        {
+          "path": "localisation/modifers_l_english.yml",
+          "symbol": "MODIFIER_GLOBAL_TRADE_POWER"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "GLOBAL_PROV_TRADE_POWER_MODIFIER"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_SHIPS_SORT"
+        }
+      ]
+    },
+    {
+      "id": "trade-node-read-market",
+      "title": "Jak odczytać rynek węzła",
+      "patterns": [
+        "\\b(?:odczyt\\w*|czyt\\w*|sprawdz\\w*|oznacza\\w*).{0,48}\\b(?:rynek wezl\\w*|okn\\w* wezl\\w*|naplyw\\w* i odplyw\\w* handlu)\\b",
+        "\\b(?:how to read|how do i read|what does).{0,30}\\b(?:trade node (?:window|panel)|incoming trade value|outgoing trade value)\\b"
+      ],
+      "symbols": [
+        "TN_LOCAL_VALUE",
+        "TN_INCOMING_VALUE",
+        "TN_OUTGOING_VALUE",
+        "TN_INCOME_SHARING"
+      ],
+      "text": "Okno węzła pokazuje wartość lokalną, napływ, odpływ i podział wartości zatrzymanej między zbierających. Sprawdź, ile wartości zostaje i kto ją zbiera, zanim dołożysz kupca albo flotę.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TN_LOCAL_VALUE"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TN_INCOMING_VALUE"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TN_OUTGOING_VALUE"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_POWER_TAKE_PART"
+        }
+      ]
+    },
+    {
+      "id": "trade-barques-fleet-upgrade",
+      "title": "Barki i modernizacja floty handlowej",
+      "patterns": [
+        "\\b(?:bark\\w*|barques?).{0,36}\\b(?:handl\\w*|trad\\w*|fregat\\w*|frigat\\w*|ulepsz\\w*|upgrad\\w*)\\b",
+        "\\b(?:z?moderniz\\w*|modernis\\w*|upgrade\\w*|ulepsz\\w*).{0,35}\\b(?:flot\\w* handlow\\w*|lekk\\w* okret\\w*|light ships?|trade fleet)\\b"
+      ],
+      "symbols": [
+        "barque",
+        "early_frigate",
+        "UPGRADE_SHIPS_DESC"
+      ],
+      "text": "Przy ochronie handlu barka daje bazowo 2 punkty siły, a wczesna fregata 3. Modernizuj flotę w bezpiecznym porcie, bo ulepszone okręty spadają do 1% stanu i wymagają naprawy.",
+      "refs": [
+        {
+          "path": "common/units/barque.txt",
+          "symbol": "trade_power"
+        },
+        {
+          "path": "common/units/early_frigate.txt",
+          "symbol": "trade_power"
+        },
+        {
+          "path": "localisation/tmm_l_english.yml",
+          "symbol": "UPGRADE_SHIPS_DESC"
+        }
+      ]
+    },
+    {
+      "id": "trade-company-or-state",
+      "title": "Kompania handlowa czy stan",
+      "patterns": [
+        "\\b(?:kompani\\w* handlow\\w*|trade compan(?:y|ies)).{0,32}\\b(?:czy|vs|a|or|zamiast)\\s+(?:stan\\w*|states?)\\b",
+        "\\b(?:stan\\w*|states?).{0,32}\\b(?:czy|vs|a|or|zamiast)\\s+(?:kompani\\w* handlow\\w*|trade compan(?:y|ies))\\b",
+        "\\b(?:utworz\\w*|tworz\\w*|make).{0,35}\\b(?:stan\\w*|state).{0,35}\\b(?:kompani\\w*|compan\\w*)\\b"
+      ],
+      "symbols": [
+        "CONFIRMMAKESTATETEXT",
+        "TRADE_COMPANY_ADD"
+      ],
+      "text": "Utworzenie stanu poprawia podatki i rekrutację po obniżeniu autonomii, ale automatycznie usuwa jego prowincje z kompanii. Przed zmianą sprawdź wykorzystanie limitu zarządzania i czy kompania zachowa dodatkowego kupca.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CONFIRMMAKESTATETEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_COMPANY_ADD"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "SV_TRADE_COMPANY_NAME_DESC"
+        }
+      ]
+    },
+    {
+      "id": "trade-rival-power-projection",
+      "title": "Projekcja siły z rywalizacji handlowej",
+      "patterns": [
+        "\\b(?:embarg\\w*|kaprow\\w*|privateer\\w*|sankcj\\w*).{0,37}\\b(?:projekcj\\w* sil\\w*|power projection)\\b",
+        "\\b(?:projekcj\\w* sil\\w*|power projection).{0,37}\\b(?:embarg\\w*|kaprow\\w*|privateer\\w*|sankcj\\w*)\\b"
+      ],
+      "symbols": [
+        "embargoing_rival",
+        "privateering_rival",
+        "POWERPROJ_HOWTO_GAIN"
+      ],
+      "text": "Embargo lub kaprowanie handlu rywala może podnieść projekcję siły. Najedź na wskaźnik projekcji, żeby sprawdzić, czy wybrane działanie daje ci punkty.",
+      "refs": [
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "embargoing_rival"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "privateering_rival"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "POWER_PROJ_IRO"
+        },
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_ADV_CHAPTER01_PAGE07_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "marsz-straty-i-zaopatrzenie",
+      "title": "Straty w marszu i limit zaopatrzenia",
+      "patterns": [
+        "\\b(?:limit\\w* zaopatrzenia|supply limit|land attrition)\\b",
+        "\\b(?:strat\\w*|gin\\w*|ubyw\\w*|attrition)\\b.{0,40}\\b(?:marszu|bez bitwy|bez walki|marching|without battle)\\b",
+        "\\b(?:wojsk\\w*|armi\\w*|army)\\b.{0,40}\\b(?:traci ludzi|traci zolnierzy|loses men)\\b"
+      ],
+      "symbols": [
+        "SUPPLYLIMIT_BASE_MULTIPLIER",
+        "HINT_ATTRITION_TEXT"
+      ],
+      "text": "Ciężar armii przekraczający limit zaopatrzenia prowincji powoduje straty, a zima i klimat mogą je nasilać. Sprawdź zaopatrzenie na trasie i prowadź duże siły sąsiednimi prowincjami, łącząc je na czas bitwy.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "SUPPLYLIMIT_BASE_MULTIPLIER"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ATTRITION_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "wymuszony-odwrot-i-regeneracja-morale",
+      "title": "Wymuszony odwrót i odzyskiwanie morale",
+      "patterns": [
+        "\\b(?:wymuszon\\w* odwrot\\w*|shattered retreat|rozbit\\w* armi\\w*)\\b",
+        "\\b(?:odbud\\w*|odnow\\w*|odnawi\\w*|odzyska\\w*|regener\\w*|recover\\w*)\\b.{0,24}\\bmorale\\b",
+        "\\b(?:armia ucieka|wojsko ucieka|army is retreating|odzyskiwanie morale|morale recovery)\\b"
+      ],
+      "symbols": [
+        "SHATTERED_RETREAT_DESC",
+        "LOW_MORALE_DESC",
+        "MORALE_RECOVER",
+        "MORALE_RECOVERY_SPEED_OWN_TERRITORY"
+      ],
+      "text": "Załamanie morale może wywołać wymuszony odwrót z ustalonym celem marszu, a morale wraca co miesiąc i szybciej na kontrolowanym terenie. Sprawdź cel odwrotu i poczekaj na uzupełnienie morale, zanim poślesz armię do następnej bitwy.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SHATTERED_RETREAT_DESC"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "MORALE_RECOVER"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "LOW_MORALE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MORALE_RECOVERY_SPEED_OWN_TERRITORY"
+        }
+      ]
+    },
+    {
+      "id": "fort-wylom-i-szturm",
+      "title": "Wyłom, ostrzał i szturm na fort",
+      "patterns": [
+        "\\b(?:wylom\\w* w murach|szturm\\w* (?:na )?fort\\w*|breach\\w* (?:in )?(?:the )?walls|assault\\w* (?:a |the )?fort)\\b",
+        "\\b(?:jak|czemu|dlaczego|how|why)\\b.{0,36}\\b(?:szturmowac|zrobic wylom|storm a fort|assault a fort)\\b"
+      ],
+      "symbols": [
+        "NOAS_NO_BREACH",
+        "ORDER_NAVAL_BARRAGE_COST",
+        "ASSAULT_WIDTH",
+        "PS_ARTILLERY_BARRAGE",
+        "HINT_SIEGE_TEXT"
+      ],
+      "text": "Do szturmu potrzebujesz wyłomu w murach, a nawet z wyłomem piechota może ponieść duże straty. Jeśli naprawdę musisz szybko zdobyć fort, sprawdź garnizon i stan swojej piechoty przed użyciem przycisku szturmu.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NOAS_NO_BREACH"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "ASSAULT_WIDTH"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_SIEGE_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "artyleria-w-bitwie",
+      "title": "Artyleria w pierwszym i drugim szeregu",
+      "patterns": [
+        "\\b(?:artyleri\\w*|artillery|cannons)\\b.{0,42}\\b(?:bitw\\w*|battle|front\\w*|tyln\\w*|back row|front row)\\b",
+        "\\b(?:tyln\\w* szere\\w*|back (?:row|line)|rear row)\\b.{0,35}\\b(?:artyleri\\w*|artillery|cannons)\\b"
+      ],
+      "symbols": [
+        "HINT_ARTILLERY_TEXT",
+        "FRONT_LINE_MODIFIER",
+        "BACK_LINE_MODIFIER"
+      ],
+      "text": "Artyleria może zadawać obrażenia z tylnego szeregu, a trafiając na front jest bardziej podatna na straty. Dobierz do dział dość piechoty i utrzymuj świeże pułki pod ręką, by osłaniały artylerię, gdy front się przerzedzi.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ARTILLERY_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BACK_LINE_MODIFIER"
+        }
+      ]
+    },
+    {
+      "id": "artyleria-pod-fortem",
+      "title": "Działa pod fortem i koszt wyłomu",
+      "patterns": [
+        "\\b(?:ile|how many)\\b.{0,16}\\b(?:dzial|pulkow artylerii|cannons|artillery)\\b.{0,42}\\b(?:fort\\w*|oblez\\w*|siege|barrage|ostrzal\\w*)\\b",
+        "\\b(?:premi\\w* artyleri\\w*|artillery bonus)\\b.{0,35}\\b(?:fort\\w*|oblez\\w*|siege)\\b",
+        "\\b(?:dziala pod fortem|artyleria pod fortem|cannons for a siege|artillery barrage|ostrzal mur\\w*)\\b"
+      ],
+      "symbols": [
+        "SIEGE_BONUS_ARTILLERY",
+        "SIEGE_BONUS_FORT",
+        "NOAB_NOT_ENOUGH_ART",
+        "PS_ARTILLERY_BARRAGE"
+      ],
+      "text": "Artyleria daje premię do postępu oblężenia, którą zobaczysz w oknie fortu. Jeśli chcesz zrobić wyłom ostrzałem, sprawdź dostępność przycisku, stan punktów wojskowych i czy masz co najmniej jeden pełny pułk artylerii na poziom fortu.",
+      "refs": [
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_BONUS_ARTILLERY"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NOAB_NOT_ENOUGH_ART"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NOAB_NOT_LEADING"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_ARTILLERY_BARRAGE"
+        }
+      ]
+    },
+    {
+      "id": "general-i-manewr",
+      "title": "Dobór generała do bitwy, marszu i oblężenia",
+      "patterns": [
+        "\\b(?:jakiego|ktorego|po co|what does|which)\\b.{0,33}\\b(?:general\\w*|general|dowodc\\w*|leader)\\b",
+        "\\b(?:general\\w*|dowodc\\w*|leader)\\b.{0,36}\\b(?:manewr\\w*|maneuver|manoeuvre|punkty|pips)\\b",
+        "\\b(?:manewr\\w*|maneuver|manoeuvre)\\b.{0,25}\\b(?:general\\w*|dowodc\\w*|leader)\\b"
+      ],
+      "symbols": [
+        "HINT_LEADERFIRE_TEXT",
+        "HINT_LEADERSHOCK_TEXT",
+        "HINT_LEADERMANEUVER_TEXT",
+        "HINT_LEADERSIEGE_TEXT",
+        "PS_BUY_GENERAL"
+      ],
+      "text": "Ostrzał i uderzenie generała pomagają w odpowiednich fazach bitwy, manewr ułatwia marsz i uzupełnienia, a punkty oblężenia pomagają pod fortem. Przypisz armii generała przed akcją i dobierz jego najmocniejszą cechę do zadania.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LEADERFIRE_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LEADERSHOCK_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LEADERMANEUVER_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LEADERSIEGE_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "szerokosc-walki",
+      "title": "Szerokość walki i obsada szeregu",
+      "patterns": [
+        "\\b(?:szerokosc(?:i)? (?:walki|bitwy|bojowa)|combat width)\\b",
+        "\\b(?:ile|how many)\\b.{0,18}\\b(?:pulkow|regiments)\\b.{0,30}\\b(?:pierwsz\\w* szere\\w*|front row|front line)\\b"
+      ],
+      "symbols": [
+        "COMBAT_WIDTH",
+        "BASE_COMBAT_WIDTH",
+        "MAX_COMBAT_WIDTH",
+        "mil:2"
+      ],
+      "text": "Szerokość walki określa liczbę miejsc na pułki w jednym szeregu i rośnie z technologią wojskową. Sprawdź aktualną szerokość i zaplanuj piechotę z kawalerią na pierwszy szereg oraz artylerię za nim.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "COMBAT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MAX_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/technologies/mil.txt",
+          "symbol": "mil:2"
+        }
+      ]
+    },
+    {
+      "id": "fort-zoc-po-zdobyciu",
+      "title": "Fort, strefa kontroli i trasa po zdobyciu",
+      "patterns": [
+        "\\b(?:stref\\w* kontroli|zone of control|zoc)\\b",
+        "\\b(?:fort\\w* blokuj\\w*|fort blocks|po zdobyciu fortu|captured fort)\\b",
+        "\\b(?:armia|wojsko|army)\\b.{0,30}\\b(?:nie moze przejsc|cannot pass)\\b.{0,30}\\b(?:fort\\w*|zoc)\\b"
+      ],
+      "symbols": [
+        "HINT_ZONEOFCONTROL_TEXT",
+        "PROVINCE_IN_HOSTILE_FORT_ZONE_OF_CONTROL",
+        "FORT_FLIPPING_TIME"
+      ],
+      "text": "Obsadzony wrogi fort może blokować ruch przez sąsiednie prowincje i odzyskiwać kontrolę nad opuszczonymi ziemiami w swojej strefie. Jeśli droga jest zamknięta, zdobądź blokujący fort i sprawdź trasę ponownie, bo w pobliżu mogą działać inne forty.",
+      "refs": [
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "HINT_ZONEOFCONTROL_TEXT"
+        },
+        {
+          "path": "localisation/common_sense_l_english.yml",
+          "symbol": "PROVINCE_IN_HOSTILE_FORT_ZONE_OF_CONTROL"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "FORT_FLIPPING_TIME"
+        }
+      ]
+    },
+    {
+      "id": "rezerwy-w-bitwie",
+      "title": "Rezerwy, które tracą morale także poza szeregiem",
+      "patterns": [
+        "\\b(?:rezerw\\w*|reserves?)\\b.{0,32}\\b(?:bitw\\w*|battle|morale|szere\\w*)\\b",
+        "\\b(?:bitw\\w*|battle|morale)\\b.{0,25}\\b(?:rezerw\\w*|reserves?)\\b",
+        "\\b(?:doslac posilki do bitwy|reinforce a battle)\\b"
+      ],
+      "symbols": [
+        "COMBAT_IN_RESERVES",
+        "RESERVE_DAILY_MORALE_DAMAGE",
+        "BATTLE_DAILY_MORALE_DAMAGE"
+      ],
+      "text": "Pułki czekające w rezerwie w trwającej bitwie też tracą morale. Jeśli masz już dość pełnych pułków na front, trzymaj część posiłków w pobliżu i doślij je, gdy walczący zaczną słabnąć.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "RESERVE_DAILY_MORALE_DAMAGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BATTLE_DAILY_MORALE_DAMAGE"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "COMBAT_IN_RESERVES"
+        }
+      ]
+    },
+    {
+      "id": "najemnicy-wlasne-zasoby",
+      "title": "Najemnicy i ich osobna pula uzupełnień",
+      "patterns": [
+        "\\b(?:najemni\\w*|mercenar\\w*)\\b.{0,46}\\b(?:manpower|zasob\\w* ludzk\\w*|uzupeln\\w*|reinforc\\w*|oplaca\\w*)\\b",
+        "\\b(?:jak|kiedy|czy warto|when|how)\\b.{0,28}\\b(?:wynajac najemni\\w*|zatrudni\\w* najemni\\w*|hire mercenar\\w*)\\b",
+        "^(?:najemnicy|mercenaries)[? .]*$"
+      ],
+      "symbols": [
+        "MERCENARY_COMPANY_MANPOWER_DELAYED",
+        "MERCENARY_COMPANY_HIRING_COST_MONTHS",
+        "MERCENARY_COMPANY_HIRED_MANPOWER_RECOVERY_MOD"
+      ],
+      "text": "Kompania najemna uzupełnia straty z własnej puli ludzi, więc oszczędza krajowe zasoby ludzkie. Gdy twoje rezerwy są niskie, porównaj koszt zatrudnienia i utrzymania kompanii z liczbą ludzi w jej puli.",
+      "refs": [
+        {
+          "path": "localisation/emperor_mercs_l_english.yml",
+          "symbol": "MERCENARY_COMPANY_MANPOWER_DELAYED"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MERCENARY_COMPANY_HIRING_COST_MONTHS"
+        },
+        {
+          "path": "localisation/loadingtips_l_english.yml",
+          "symbol": "LOADING_TIP_51"
+        }
+      ]
+    },
+    {
+      "id": "transport-wojska-morzem",
+      "title": "Transport wojsk morzem i liczba potrzebnych statków",
+      "patterns": [
+        "\\b(?:przewiezc|przetransportowac|transportowac|ferry|transport)\\b.{0,38}\\b(?:armi\\w*|wojsk\\w*|army|troops|regiments)\\b",
+        "\\b(?:ile|jak|how many|how to)\\b.{0,23}\\b(?:transportowc\\w*|transport ships|zaladowac wojsko|przewiezc armie)\\b",
+        "\\b(?:transport morski wojsk|army transport|naval transport)\\b"
+      ],
+      "symbols": [
+        "HINT_TRANSPORTS_TEXT",
+        "ARMY_ATTRITION_AT_COAST",
+        "ARMY_ATTRITION_AT_SEA",
+        "NO_FRIENDLY_TRANSPORT_SHIPS_IN_PORT"
+      ],
+      "text": "Jeden transportowiec przewozi jeden pułk, także niepełny, a na otwartym morzu przewożone wojsko ponosi większe straty niż przy brzegu. Policz pułki przed załadunkiem i prowadź transport eskortowaną, możliwie krótką trasą.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRANSPORTS_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "ARMY_ATTRITION_AT_COAST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "ARMY_ATTRITION_AT_SEA"
+        }
+      ]
+    },
+    {
+      "id": "flota-rodzaje-okretow",
+      "title": "Do czego służą cztery rodzaje okrętów",
+      "patterns": [
+        "\\b(?:rodzaj\\w* okret\\w*|typ\\w* okret\\w*|ship types|types of ships)\\b",
+        "\\b(?:galer\\w*|galleys?)\\b.{0,35}\\b(?:ciezki\\w*|heavy ships?|ocean|open sea|inland sea)\\b",
+        "\\b(?:jakie|ktore|which)\\b.{0,24}\\b(?:okret\\w*|ships?)\\b.{0,30}\\b(?:budowac|walcz\\w*|build|use)\\b"
+      ],
+      "symbols": [
+        "HINT_HEAVYSHIPS_TEXT",
+        "HINT_LIGHTSHIPS_TEXT",
+        "HINT_GALLEYS_TEXT",
+        "HINT_TRANSPORTS_TEXT",
+        "GALLEY_BONUS_COASTAL_SEA",
+        "GALLEY_BONUS_INLAND_SEA",
+        "NAVAL_SUPPLY_RANGE"
+      ],
+      "text": "Ciężkie okręty walczą, galery zyskują premię przy wybrzeżu i na morzach śródlądowych, lekkie chronią handel, a transportowce przewożą wojsko. Dobierz okręty do zadania i podczas rejsu sprawdzaj typ akwenu oraz zasięg zaopatrzenia.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_HEAVYSHIPS_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_LIGHTSHIPS_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_GALLEYS_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRANSPORTS_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_BONUS_COASTAL_SEA"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_BONUS_INLAND_SEA"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAVAL_SUPPLY_RANGE"
+        }
+      ]
+    },
+    {
+      "id": "blokada-portow",
+      "title": "Blokada portu a oblężenie",
+      "patterns": [
+        "\\b(?:blokad\\w* (?:port\\w*|morsk\\w*)|blockade\\w* (?:a |the )?ports?|naval blockade)\\b",
+        "\\b(?:jak|how to)\\b.{0,20}\\b(?:zablokowac port|blockade a port)\\b",
+        "\\b(?:blokad\\w*|blockad\\w*)\\b.{0,22}\\b(?:oblez\\w*|obleg\\w*|siege)\\b"
+      ],
+      "symbols": [
+        "BLOCKADE_FACTOR",
+        "HINT_BLOCKADE_TEXT",
+        "SIEGE_BONUS_NOBLOCKADE",
+        "blockaded"
+      ],
+      "text": "Blokada osłabia portową prowincję i pomaga przy oblężeniu nadmorskiego fortu. Ustaw flotę na sąsiednim akwenie, sprawdź stan blokady i doślij okręty, jeśli brakuje jej siły.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BLOCKADE_FACTOR"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "blockaded"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_BLOCKADE_TEXT"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_BONUS_NOBLOCKADE"
+        }
+      ]
+    },
+    {
+      "id": "podatki-wojenne-i-pladrowanie",
+      "title": "Podatki wojenne i łup z prowincji",
+      "patterns": [
+        "\\b(?:pod[a-z]*k\\w* wojenn\\w*|war taxes|wartax\\w*)\\b",
+        "\\b(?:pladrow\\w*|grabiez\\w*|loot\\w*)\\b.{0,34}\\b(?:prowincj\\w*|province|dukat\\w*|dukats?|wojnie)\\b",
+        "\\b(?:skad|jak|how)\\b.{0,25}\\b(?:zdobyc lup|pladrowac prowincj\\w*|loot a province)\\b"
+      ],
+      "symbols": [
+        "war_taxes",
+        "PS_RAISE_WAR_TAXES",
+        "LOOT_DESC",
+        "LOOT_EMPTY"
+      ],
+      "text": "Podatki wojenne obniżają koszty utrzymania, zwykle za punkty wojskowe, a plądrowanie daje dukaty z ograniczonej puli prowincji. W czasie wojny porównaj koszt podatków z oszczędnością i sprawdź w prowincji, czy zostało jeszcze coś do złupienia.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "war_taxes"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_RAISE_WAR_TAXES"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "LOOT_DESC"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "LOOT_EMPTY"
+        }
+      ]
+    },
+    {
+      "id": "kawaleria-ryzyko-i-wsparcie",
+      "title": "Kawaleria i ryzyko niewystarczającego wsparcia",
+      "patterns": [
+        "\\b(?:wskaznik kawalerii|cavalry ratio|insufficient support|niewystarczajac\\w* wsparci\\w*)\\b",
+        "\\b(?:kawaleri\\w*|cavalry)\\b.{0,36}\\b(?:za duzo|kar\\w*|penalt\\w*|ratio|stosunek|szarz\\w*)\\b",
+        "\\b(?:szarz\\w*|charg\\w*)\\b.{0,18}\\b(?:kawaleri\\w*|cavalry)\\b"
+      ],
+      "symbols": [
+        "COMBATVIEW_CAVALRY_DESC",
+        "INSUFFICIENT_SUPPORT",
+        "HINT_CAVALRY_TEXT"
+      ],
+      "text": "Kawaleria walczy w pierwszym szeregu i dostaje karę, gdy jej udział względem piechoty jest za wysoki. Zostaw zapas piechoty i sprawdź proporcję w trwającej walce, bo straty piechoty mogą ją pogorszyć.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "COMBATVIEW_CAVALRY_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_CAVALRY_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "najazd-floty-na-wybrzeze",
+      "title": "Napad floty na wybrzeże",
+      "patterns": [
+        "\\b(?:najazd\\w*|napad\\w*|pladrow\\w*)\\b.{0,30}\\b(?:wybrzez\\w*|coasts?)\\b",
+        "\\b(?:raid coasts?|coastal raid\\w*)\\b",
+        "\\b(?:jak|how to)\\b.{0,35}\\b(?:najechac wybrzez\\w*|zrabowac wybrzez\\w*|raid the coast)\\b"
+      ],
+      "symbols": [
+        "SLAVE_RAID_DESC",
+        "SLAVERAID_FLEET_NEEDS_TO_BE_AT_SEA",
+        "SLAVERAID_UNTIL",
+        "pirate_republic_reform",
+        "barbary_eyalet_government"
+      ],
+      "text": "Państwo z odpowiednią zdolnością może napaść flotą na wybrzeże i zdobyć dukaty oraz marynarzy, a polowanie na piratów ogranicza łup. Wyślij flotę na morze i sprawdź w podpowiedzi akcji dostępne cele, bo niedawno splądrowanego brzegu nie napadniesz od razu ponownie.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SLAVE_RAID_DESC"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SLAVERAID_FLEET_NEEDS_TO_BE_AT_SEA"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SLAVERAID_UNTIL"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "barbary_eyalet_government"
+        }
+      ]
+    },
+    {
+      "id": "national-focus-adm-dip-mil",
+      "title": "Fokus krajowy i niedobór punktów monarchii",
+      "patterns": [
+        "\\b(?:fokus\\w*|focus\\w*)\\b.{0,45}\\b(?:punkt\\w*|adm|mil|dip|monarch)\\b|\\b(?:punkt\\w*|adm|mil|dip|narodow\\w*|krajow\\w*)\\b.{0,50}\\b(?:fokus\\w*|focus\\w*)\\b",
+        "\\b(?:co daje|po co|what does) (?:fokus|(?:national )?focus)\\b"
+      ],
+      "symbols": [
+        "NAT_FOCUS_CHANGE_DESC",
+        "NAT_FOCUS_INCREASE",
+        "NAT_FOCUS_DECREASE",
+        "NAT_FOCUS_YEARS"
+      ],
+      "text": "Fokus daje więcej punktów co miesiąc w wybranej kategorii i zmniejsza przyrost w dwóch pozostałych. Ustaw go na kategorię, której będzie ci brakować przez dłuższy czas, i sprawdź w podpowiedzi, kiedy możesz go zmienić.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NAT_FOCUS_CHANGE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAT_FOCUS_INCREASE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAT_FOCUS_DECREASE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAT_FOCUS_YEARS"
+        }
+      ]
+    },
+    {
+      "id": "starting-merchants-placement",
+      "title": "Pierwszy kupiec • w głównym węźle czy przed nim",
+      "patterns": [
+        "\\b(?:kupc\\w*|merchant)\\b.{0,65}\\b(?:u siebie|home|przed moj\\w*|upstream)\\b"
+      ],
+      "symbols": [
+        "TRADE_SEND_MERCHANT_DESC",
+        "HINT_MERCHANT_TEXT"
+      ],
+      "text": "W głównym węźle zbierasz automatycznie, więc najpierw spróbuj ustawić kupca w węźle, który zasila miejsce zbierania. Porównaj z ustawieniem kupca u siebie po przybyciu i przeliczeniu całego miesięcznego dochodu z handlu.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_SEND_MERCHANT_DESC"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MERCHANT_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "trade-share-small-income",
+      "title": "Duży udział w węźle i mały dochód",
+      "patterns": [
+        "\\b(?:udzial\\w*|share|sile)\\b.{0,50}\\b(?:wezl\\w*|node)\\b.{0,35}\\b(?:zysk\\w*|dochod\\w*|income)\\b|\\b(?:mal\\w*|nisk\\w*|small|low) (?:dochod\\w*|zysk\\w*|income).{0,35}(?:wezl|node)"
+      ],
+      "symbols": [
+        "HINT_TRADEVALUE_TEXT",
+        "HINT_TRADEPOWER_TEXT",
+        "TRADE_MISSION_OFFICE_DESC"
+      ],
+      "text": "Duży udział w węźle daje tylko część zgromadzonej w nim wartości, więc w ubogim węźle możesz dostać niewiele. Sprawdź osobno wartość węzła, czy rzeczywiście w nim zbierasz, oraz dokąd odpływa przekazywany handel.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEVALUE_TEXT"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEPOWER_TEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MISSION_OFFICE_DESC"
+        }
+      ]
+    },
+    {
+      "id": "gold-is-not-trade",
+      "title": "Złoto a zbieranie handlu",
+      "patterns": [
+        "\\b(?:kupc\\w*|merchant\\w*|handel|trade)\\b.{0,50}\\b(?:zloto|zlota|zlotem|gold)\\b|\\b(?:zloto|zlota|zlotem|gold)\\b.{0,40}\\b(?:kupc\\w*|merchant\\w*|handel|trade)\\b"
+      ],
+      "symbols": [
+        "HINT_TRADEGOODS_TEXT",
+        "GOLD_INFLATION",
+        "gold"
+      ],
+      "text": "Złoto z kopalni trafia bezpośrednio do dochodu państwa, więc do jego zbierania nie potrzebujesz kupca. Zobacz osobną pozycję złota w panelu gospodarki i pilnuj inflacji przy zwiększaniu produkcji kopalni.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEGOODS_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GOLD_INFLATION"
+        },
+        {
+          "path": "common/tradegoods/00_tradegoods.txt",
+          "symbol": "gold"
+        }
+      ]
+    },
+    {
+      "id": "selecting-rivals",
+      "title": "Jak dobrać rywala na początku",
+      "patterns": [
+        "\\b(?:kogo|wybrac|ustawic|choose|pick|select)\\b.{0,35}\\b(?:rywal\\w*|rivals?)\\b|\\b(?:rywal\\w*|rivals?)\\b.{0,35}\\b(?:wybrac|ustawic|wybierac|choose|pick|select)\\b"
+      ],
+      "symbols": [
+        "RIVALS_DESC",
+        "HINT_POWERPROJECTION_TEXT",
+        "PS_REPLACE_RIVAL"
+      ],
+      "text": "Wybierz spośród dostępnych państw takie, z którym przewidujesz rywalizację i na którym możesz zdobywać projekcję siły. Przed wyborem sprawdź, czy nie jest ci potrzebne jako sojusznik i czy masz sposób osłabiania go, na przykład embargo albo korzystny pokój.",
+      "refs": [
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "RIVALS_DESC"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_POWERPROJECTION_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_REPLACE_RIVAL"
+        }
+      ]
+    },
+    {
+      "id": "warsaw-capital-for-commonwealth",
+      "title": "Warszawa jako rdzeń przy tworzeniu Rzeczypospolitej",
+      "patterns": [
+        "\\b(?:stolic\\w*|capital)\\b.{0,60}\\b(?:warszaw\\w*|warsaw)\\b.{0,45}\\b(?:rzeczpospolit\\w*|commonwealth|plc)\\b|\\b(?:rzeczpospolit\\w*|commonwealth|plc)\\b.{0,55}\\b(?:stolic\\w*|capital)\\b"
+      ],
+      "symbols": [
+        "pol_commonwealth",
+        "move_capital_to_warsawa"
+      ],
+      "text": "Do utworzenia Rzeczypospolitej potrzebujesz polskiego rdzenia na Warszawie bez obowiązku przenoszenia tam stolicy. Zdobądź Warszawę i sprawdź warunki w decyzji o utworzeniu państwa, bo decyzja o stolicy działa oddzielnie.",
+      "refs": [
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "decisions/Poland.txt",
+          "symbol": "move_capital_to_warsawa"
+        }
+      ]
+    },
+    {
+      "id": "poland-moldavia-guarantee",
+      "title": "Polska zaczyna z gwarancją dla Mołdawii",
+      "patterns": [
+        "\\b(?:moldawi\\w*|moldovi\\w*|moldavia)\\b.{0,35}\\b(?:od razu|na starcie|wasal\\w*|1444|guarantee)\\b|\\b(?:wasal\\w*|na starcie|vassal\\w*|guarantee)\\b.{0,35}\\b(?:moldawi\\w*|moldovi\\w*|moldavia)\\b"
+      ],
+      "symbols": [
+        "second = MOL",
+        "GUARANTEE"
+      ],
+      "text": "Na starcie Polska gwarantuje niepodległość Mołdawii, a Mołdawia pozostaje samodzielna. Sprawdź gwarancję w jej dyplomacji, bo może wezwać Polskę do obrony, ale nie daje kontroli nad jej polityką.",
+      "refs": [
+        {
+          "path": "history/diplomacy/Baltic_alliances.txt",
+          "symbol": "second = MOL"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "GUARANTEE"
+        }
+      ]
+    },
+    {
+      "id": "building-temple-vs-workshop",
+      "title": "Kościół lub warsztat • wybór dochodu z prowincji",
+      "patterns": [
+        "\\b(?:warsztat\\w*|workshop\\w*)\\b.{0,60}\\b(?:kosciol\\w*|swiatyn\\w*|temple\\w*|church)\\b|\\b(?:kosciol\\w*|swiatyn\\w*|temple\\w*|church)\\b.{0,60}\\b(?:warsztat\\w*|workshop\\w*)\\b"
+      ],
+      "symbols": [
+        "temple",
+        "workshop"
+      ],
+      "text": "Kościół zwiększa miejscowe podatki, a warsztat miejscowy dochód z produkcji. W podglądzie budowy porównaj miesięczny przyrost każdego budynku w tej prowincji i wybierz lepszy zwrot przy twoim budżecie.",
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "temple"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "workshop"
+        }
+      ]
+    },
+    {
+      "id": "poland-regency-declare-war",
+      "title": "Polska w 1444 i blokada wypowiadania wojny",
+      "patterns": [
+        "^(?=.*\\b(?:polsk\\w*|poland)\\b).*?(?:\\b(?:polsk\\w*|poland)\\b.{0,80}\\b(?:wypowiedziec|wypowiada\\w*|zaczac|zaczyna\\w*|declare|start)\\b.{0,25}\\b(?:wojn\\w*|war)\\b)",
+        "^(?=.*\\b(?:polsk\\w*|poland)\\b).*?(?:\\b(?:regencj\\w*|bezkr[oó]lewi\\w*|regency)\\b.{0,60}\\b(?:blok\\w*|wojn\\w*|wars?)\\b|\\b(?:wypowiedziec|wypowiada\\w*) wo[jj]n\\w*.{0,50}\\b(?:regencj\\w*|bezkr[oó]lewi\\w*)\\b)"
+      ],
+      "symbols": [
+        "NO_WAR_WHEN_REGENCY",
+        "flavor_pol.18",
+        "regent"
+      ],
+      "text": "Na starcie Polska jest w bezkrólewiu z radą regencyjną, która blokuje wypowiedzenie wojny. Poczekaj na wybór władcy i sprawdź w dyplomacji, czy ostrzeżenie o radzie regencyjnej zniknęło.",
+      "refs": [
+        {
+          "path": "history/countries/POL - Poland.txt",
+          "symbol": "regent"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "NO_WAR_WHEN_REGENCY"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        }
+      ]
     }
   ]
 }

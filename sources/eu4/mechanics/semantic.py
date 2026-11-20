@@ -143,7 +143,7 @@ def assets(directory, model_dir):
     )
 
 
-def neighbors(db_path, question, terms, limit=30):
+def neighbors(db_path, question, terms, limit=30, record_ids=None):
     root = Path(db_path).resolve().parent
     directory = root / "semantic"
     model_dir = Path(os.environ.get("EU4_EMBED_MODEL_DIR", str(root / "embedding-model")))
@@ -155,6 +155,11 @@ def neighbors(db_path, question, terms, limit=30):
         if marker["pages"] != pages:
             raise ValueError("Baza i wyszukiwanie semantyczne pochodzą z różnych wersji. Odbuduj wektory.")
         encoder, row_ids, matrix, _ = assets(directory, model_dir)
+        if record_ids is not None:
+            selected = np.flatnonzero(np.isin(row_ids, record_ids))
+            row_ids, matrix = row_ids[selected], matrix[selected]
+        if not len(row_ids):
+            return []
         queries = [f"query: {question}"]
         queries.extend(f"query: {term}" for term in terms[:5])
         vectors = encoder.encode(queries)

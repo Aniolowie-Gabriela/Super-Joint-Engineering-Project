@@ -378,6 +378,9 @@ def rule_records(path, game, version):
             refs.append({**ref, "line": line})
         if not refs or not rule["symbols"]:
             raise ValueError(f"Uzupełnij źródła i symbole w {rule['id']}.")
+        patterns = rule.get("patterns", [])
+        for pattern in patterns:
+            re.compile(pattern)
         chunk_id = f"rule:{rule['id']}"
         yield {
             "chunk_id": chunk_id,
@@ -385,6 +388,7 @@ def rule_records(path, game, version):
             "title": rule["title"],
             "symbol": rule["id"],
             "aliases": rule["symbols"],
+            **({"question_patterns": patterns} if patterns else {}),
             "scope": "",
             "section": "",
             "family": "checked_rules",
@@ -464,8 +468,11 @@ def schema(db):
         );
         CREATE INDEX record_symbol ON record(symbol);
         CREATE INDEX record_document ON record(document_id);
+        CREATE INDEX record_family ON record(family);
         CREATE TABLE alias (symbol TEXT NOT NULL COLLATE NOCASE, record_id INTEGER NOT NULL,
                             PRIMARY KEY(symbol, record_id));
+        CREATE TABLE guide_pattern (pattern TEXT NOT NULL, record_id INTEGER NOT NULL,
+                                    PRIMARY KEY(record_id, pattern));
         CREATE VIRTUAL TABLE lookup USING fts5(
             title, symbol, location, body, tokenize='unicode61 remove_diacritics 2'
         );
@@ -491,6 +498,8 @@ def insert(db, handle, record):
                (row.lastrowid, *indexing_row(record)))
     db.executemany("INSERT OR IGNORE INTO alias VALUES (?, ?)",
                    ((symbol, row.lastrowid) for symbol in record.get("aliases", ())))
+    for pattern in record.get("question_patterns", ()):
+        db.execute("INSERT INTO guide_pattern VALUES (?, ?)", (pattern, row.lastrowid))
     handle.write(payload + "\n")
 
 

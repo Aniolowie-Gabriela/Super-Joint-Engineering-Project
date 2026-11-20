@@ -5,7 +5,7 @@ import asyncio
 from pathlib import Path
 
 from ask import resolve_db_path
-from search import context, find_symbol, read_record, trace_flag
+from search import context, find_symbol, guide_context, read_record, trace_flag, trade_route
 
 
 def create_server(db_path: Path):
@@ -21,9 +21,9 @@ def create_server(db_path: Path):
     server = FastMCP("EU4 — źródła gry")
 
     @server.tool(annotations=ToolAnnotations(readOnlyHint=True))
-    async def search_eu4(query: str, limit: int = 6) -> list[dict]:
-        """Wyszukaj fragmenty w bazie wiedzy o EU4. Podaj pytanie lub temat."""
-        return await asyncio.to_thread(context, db_path, query, limit)
+    async def search_eu4(query: str, limit: int = 4) -> list[dict]:
+        """Wyszukaj krótkie fragmenty źródeł EU4. Pełny wpis otworzysz przez read_eu4_record."""
+        return await asyncio.to_thread(find_passages, db_path, query, limit)
 
     @server.tool(annotations=ToolAnnotations(readOnlyHint=True))
     def read_eu4_record(chunk_id: str) -> dict | None:
@@ -40,7 +40,32 @@ def create_server(db_path: Path):
         """Pokaż skrypty ustawiające, sprawdzające lub usuwające flagę i dokładny wiersz."""
         return trace_flag(db_path, flag)
 
+    @server.tool(annotations=ToolAnnotations(readOnlyHint=True))
+    def trace_eu4_trade(origin: str, destination: str) -> list[dict]:
+        """Pokaż trasę handlu między węzłami po identyfikatorach, np. krakow i english_channel."""
+        return trade_route(db_path, origin, destination)
+
     return server
+
+
+def find_passages(db_path, query, limit):
+    query = query.strip()
+    if not query or len(query) > 1200 or not 1 <= limit <= 8:
+        raise ValueError("Wpisz pytanie do 1200 znaków i wybierz od 1 do 8 fragmentów.")
+    guides = guide_context(db_path, query)
+    matches = context(db_path, query, limit)
+    guide_ids = {item["chunk_id"] for item in guides}
+    records = guides + [item for item in matches if item["chunk_id"] not in guide_ids]
+    fields = ("chunk_id", "title", "symbol", "source_type", "game_version", "source_path", "source_url",
+              "citation_url", "lines", "game_refs", "parent_conditions")
+    result = []
+    for record in records[:limit]:
+        text = record["text"]
+        if len(text) > 1100:
+            text = text[:1080].rsplit("\n", 1)[0] or text[:1080]
+            text += "\n[…] Pełny fragment jest dostępny przez read_eu4_record."
+        result.append({**{key: record[key] for key in fields if key in record and record[key]}, "text": text})
+    return result
 
 
 def main():

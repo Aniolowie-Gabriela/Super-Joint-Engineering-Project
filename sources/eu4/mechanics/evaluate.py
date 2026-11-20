@@ -308,6 +308,28 @@ def evaluate(db_path, model, url, limit, think):
     }
 
 
+def evaluate_holdout(path, db_path, model, url, limit, think):
+    """Run questions verbatim, preserving their rubric for manual scoring."""
+    questions = json.loads(path.read_text(encoding="utf-8-sig"))
+    if not isinstance(questions, list) or not questions:
+        raise ValueError("Zestaw ma być niepustą tablicą pytań.")
+    results = []
+    for index, item in enumerate(questions, start=1):
+        question = item["question"]
+        result = ask(question, db_path=db_path, model=model, url=url, limit=limit, think=think)
+        results.append({
+            "id": item["id"], "question": question, "expected": item["expected"],
+            "required": item["required"], "expected_sources": item["sources"], **result,
+        })
+        print(f"Zakończono próbę {index}/{len(questions)} ({item['id']}).", flush=True)
+    return {
+        "game_version": "1.37.5.0", "model": model, "thinking": think,
+        "backend": os.environ.get("EU4_LLM_BACKEND", "ollama"),
+        "method": "Każde pytanie wysłano dosłownie. Odpowiedzi i cytowania podlegają ocenie według kryteriów.",
+        "cases": results,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, required=True, help="plik bazy EU4")
@@ -315,6 +337,7 @@ def main():
     parser.add_argument("--model", default="gemma4:e4b", help="model dostępny w Ollamie")
     parser.add_argument("--limit", type=int, default=6, help="liczba fragmentów RAG na pytanie")
     parser.add_argument("--no-thinking", action="store_true", help="kontrola z wyłączonym rozumowaniem")
+    parser.add_argument("--questions", type=Path, help="własny zestaw oceniany ręcznie")
     parser.add_argument("--output", type=Path, required=True, help="nowy lokalny plik JSON")
     args = parser.parse_args()
     if args.limit < 1:
@@ -325,11 +348,12 @@ def main():
         parser.error("--output musi wskazywać nowy plik w istniejącym katalogu.")
 
     try:
-        report = evaluate(args.db.resolve(), args.model, args.url, args.limit, not args.no_thinking)
+        parameters = (args.db.resolve(), args.model, args.url, args.limit, not args.no_thinking)
+        report = evaluate_holdout(args.questions, *parameters) if args.questions else evaluate(*parameters)
         content = json.dumps(report, ensure_ascii=False, indent=2)
         with args.output.open("x", encoding="utf-8") as output:
             output.write(content + "\n")
-    except (RuntimeError, OSError) as exc:
+    except (RuntimeError, OSError, ValueError, KeyError, TypeError) as exc:
         parser.exit(2, f"Próba przerwana. {exc}\n")
     print(f"Raport zapisano w {args.output}.")
 
