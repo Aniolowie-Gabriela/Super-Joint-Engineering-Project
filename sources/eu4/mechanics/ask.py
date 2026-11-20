@@ -458,12 +458,13 @@ def main():
                 first, last = source["lines"]
                 location = f"{location}:{first}" if first == last else f"{location}:{first}–{last}"
             print(f'[{source["number"]}] {source["title"]} — {location}')
-            if source["source_type"] == "checked_game_rule":
-                for ref in source["game_refs"][1:]:
-                    print(f"    {ref['path']}:{ref['line']} · {ref['symbol']}")
-            elif source["source_type"] == "game_history":
-                for ref in source.get("game_refs", []):
-                    print(f"    {ref['path']}:{ref['line']} · {ref['symbol']}")
+            if source["source_type"] in {"checked_game_rule", "game_history"}:
+                refs = source.get("game_refs", ())
+                if source["source_type"] == "checked_game_rule" and source.get("lines"):
+                    refs = refs[1:]
+                for ref in refs:
+                    suffix = f":{ref['line']}" if "line" in ref else ""
+                    print(f"    {ref['path']}{suffix} · {ref['symbol']}")
     elif db_path is not None:
         print("\nNie znaleziono pasujących źródeł.")
 

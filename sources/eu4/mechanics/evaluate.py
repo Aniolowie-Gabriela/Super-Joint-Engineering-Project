@@ -2,6 +2,7 @@
 
 import argparse
 from dataclasses import dataclass, field
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -9,7 +10,7 @@ import re
 import sqlite3
 from time import perf_counter
 
-from ask import ask
+from ask import DEFAULT_URL, ask
 
 
 VERSION_PROMPT = "EU4 1.37.5.0, bez modów. "
@@ -316,7 +317,13 @@ def evaluate_holdout(path, db_path, model, url, limit, think):
     results = []
     for index, item in enumerate(questions, start=1):
         question = item["question"]
-        result = ask(question, db_path=db_path, model=model, url=url, limit=limit, think=think)
+        started = perf_counter()
+        try:
+            result = ask(question, db_path=db_path, model=model, url=url, limit=limit, think=think)
+        except RuntimeError as exc:
+            if not str(exc).startswith("Model "):
+                raise
+            result = {"answer": "", "sources": [], "seconds": perf_counter() - started, "model_error": str(exc)}
         results.append({
             "id": item["id"], "question": question, "expected": item["expected"],
             "required": item["required"], "expected_sources": item["sources"], **result,
@@ -324,16 +331,40 @@ def evaluate_holdout(path, db_path, model, url, limit, think):
         print(f"Zakończono próbę {index}/{len(questions)} ({item['id']}).", flush=True)
     return {
         "game_version": "1.37.5.0", "model": model, "thinking": think,
+        "url": url, "limit": limit,
         "backend": os.environ.get("EU4_LLM_BACKEND", "ollama"),
         "method": "Każde pytanie wysłano dosłownie. Odpowiedzi i cytowania podlegają ocenie według kryteriów.",
         "cases": results,
     }
 
 
+def fingerprint(db_path, questions):
+    code = Path(__file__).resolve().parent
+    paths = {
+        name: code / name for name in
+        ("evaluate.py", "ask.py", "build_index.py", "rules.json", "search.py", "semantic.py", "interpret.py")
+    }
+    paths["knowledge.sqlite3"] = db_path
+    paths["coverage.json"] = db_path.with_name("coverage.json")
+    for name in ("manifest.json", "ids.npy", "vectors.npy"):
+        paths[f"semantic/{name}"] = db_path.parent / "semantic" / name
+    if questions is not None:
+        paths["questions"] = questions
+    hashes = {}
+    for name, path in paths.items():
+        if path.is_file():
+            checksum = hashlib.sha256()
+            with path.open("rb") as source:
+                for block in iter(lambda: source.read(1024 * 1024), b""):
+                    checksum.update(block)
+            hashes[name] = checksum.hexdigest()
+    return hashes
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, required=True, help="plik bazy EU4")
-    parser.add_argument("--url", default="http://127.0.0.1:11435", help="lokalny adres Ollamy")
+    parser.add_argument("--url", default=DEFAULT_URL, help="adres lokalnego modelu")
     parser.add_argument("--model", default="gemma4:e4b", help="model dostępny w Ollamie")
     parser.add_argument("--limit", type=int, default=6, help="liczba fragmentów RAG na pytanie")
     parser.add_argument("--no-thinking", action="store_true", help="kontrola z wyłączonym rozumowaniem")
@@ -350,6 +381,7 @@ def main():
     try:
         parameters = (args.db.resolve(), args.model, args.url, args.limit, not args.no_thinking)
         report = evaluate_holdout(args.questions, *parameters) if args.questions else evaluate(*parameters)
+        report["sha256"] = fingerprint(parameters[0], args.questions)
         content = json.dumps(report, ensure_ascii=False, indent=2)
         with args.output.open("x", encoding="utf-8") as output:
             output.write(content + "\n")

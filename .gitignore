@@ -1,0 +1,5 @@
+/.eu4/
+/outputs/
+.venv/
+__pycache__/
+*.pyc

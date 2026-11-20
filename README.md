@@ -1,11 +1,26 @@
-# Super-Joint-Engineering-Project
-AI-powered assistant for Europa Universalis IV, providing game knowledge, strategic advice, and gameplay guidance.
+# Lokalny asystent Europa Universalis IV
+
+Zadawaj po polsku pytania o rozgrywkę. Asystent korzysta z naszej wiedzy o EU4 1.37.5.0 i podaje źródła. Gemma działa na twoim komputerze.
+
+## Uruchom na Windows
+
+1. Zainstaluj Python 3.12 lub nowszy oraz Ollamę. Otwórz Ollamę. [Python](https://www.python.org/downloads/) · [Ollama dla Windows](https://docs.ollama.com/windows)
+2. Pobierz repozytorium przez **Code → Download ZIP** i rozpakuj je lub użyj polecenia poniżej.
+3. Otwórz [Przygotuj-EU4.cmd](Przygotuj-EU4.cmd). Naciśnij Enter, aby użyć wspólnej wiedzy. Jeśli chcesz dołączyć reguły i historię z własnej instalacji gry, wpisz jej folder. Przy pierwszym uruchomieniu pobierane są zależności i modele.
+4. Otwórz [Zapytaj-EU4.cmd](Zapytaj-EU4.cmd) i wpisz pytanie, np. „Po co mi kupcy?”.
+
+~~~powershell
+git clone https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project.git
+cd Super-Joint-Engineering-Project
+~~~
+
+[Schemat działania i odtwarzanie testu](docs/eu4-workflow.md) · [Przykładowa rozmowa o kampanii Polską](docs/eu4-polska-demo.md) · [Materiały do bazy](sources/eu4/README.md)
 
 ## Agent skills
 
 [taf4you2/agent-skills](https://github.com/taf4you2/agent-skills) is included as a Git submodule in `agent-skills/`.
 
-Clone the project with the submodule:
+To use the agent skills, clone the project with the submodule:
 
 ```bash
 git clone --recurse-submodules https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project.git

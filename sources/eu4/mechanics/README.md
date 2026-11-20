@@ -1,5 +1,7 @@
 # Zapytaj Gemmę o EU4
 
+[Uruchomienie od zera i schemat działania](../../../docs/eu4-workflow.md)
+
 Po zbudowaniu bazy i uruchomieniu Ollamy wpisz pytanie. Odpowiedź zawiera numerowane źródła.
 
 ```powershell
@@ -21,6 +23,8 @@ Uruchom skrypt w Pythonie 3.10 lub nowszym z SQLite FTS5. Ścieżkę instalacji 
 Indeks przechowuje m.in. stałe bitew i dyplomacji, misje, wydarzenia, religie, instytucje, technologie, poddanych i handel. Zawiera również dane historyczne, sieć handlu i wybrane dane mapy. Każdy fragment lokalnych danych ma wersję, ścieżkę i zakres wierszy. Duże reguły zachowują identyfikator i warunki nadrzędne. Najważniejsze z nich uzupełniają [polskie karty mechanik](rules.json) z odsyłaczami do skryptów 1.37.5.0. Indeks dołącza [notatki z filmów](../video-notes/README.md) i [strategie z wiki i Reddita](../strategies-1.37.json).
 
 Przez `--wiki-jsonl` możesz dołączyć wcześniej zapisane lokalne artykuły wiki. Skrypt odczytuje wyłącznie wskazany plik. W artykułach pozostają identyfikatory rewizji i odsyłacze.
+
+Polecenie `build_index.py --shared-only --output .eu4/shared` tworzy bazę z kart, strategii i notatek z tego repozytorium. Źródła kart zachowują ścieżki i symbole z gry. Numery wierszy są odczytywane przy budowie z własnej instalacji.
 
 Wyszukiwanie tekstowe SQL FTS5 uzupełnia słownik polskich nazw i identyfikatorów ze skryptów. Przy pytaniach o wynik konkretnej kampanii potrzebny jest opis stanu gry lub zapis. Historia prowincji opisuje stan z danych gry. Sieć handlu pochodzi z definicji węzłów, a sąsiedztwo lądowe wszystkich prowincji wymaga odczytu mapy rastrowej.
 

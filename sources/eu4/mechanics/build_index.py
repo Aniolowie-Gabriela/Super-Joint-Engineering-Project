@@ -361,6 +361,9 @@ def rule_records(path, game, version):
             source = Path(ref["path"])
             if source.is_absolute() or ".." in source.parts:
                 raise ValueError(f"Nieprawidłowa ścieżka źródła dla {rule['id']}.")
+            if game is None:
+                refs.append(ref)
+                continue
             text, _, _ = decode(game / source)
             marker = re.escape(ref["symbol"])
             found = re.search(
@@ -394,7 +397,7 @@ def rule_records(path, game, version):
             "family": "checked_rules",
             "text": rule["text"],
             "source_path": refs[0]["path"],
-            "lines": [refs[0]["line"]] * 2,
+            "lines": [refs[0]["line"]] * 2 if game is not None else None,
             "source_type": "checked_game_rule",
             "game_version": version,
             "game_refs": refs,
@@ -504,17 +507,23 @@ def insert(db, handle, record):
 
 
 def build(game, output, notes, rules=None, strategies=None, wiki=None):
-    settings = json.loads((game / "launcher-settings.json").read_text(encoding="utf-8-sig"))
-    if settings["gameId"] != "eu4":
-        raise ValueError("Wskaż katalog instalacji Europa Universalis IV.")
-    version = settings["rawVersion"].removeprefix("v")
+    if game is None:
+        if rules is None or not rules.is_file():
+            raise ValueError("Brakuje pliku wspólnych kart mechanik.")
+        version = json.loads(rules.read_text(encoding="utf-8"))["game_version"]
+        labels, label_files = {}, 0
+    else:
+        settings = json.loads((game / "launcher-settings.json").read_text(encoding="utf-8-sig"))
+        if settings["gameId"] != "eu4":
+            raise ValueError("Wskaż katalog instalacji Europa Universalis IV.")
+        version = settings["rawVersion"].removeprefix("v")
+        labels, label_files = localization(game)
     if output.exists():
         raise ValueError("Folder wyników już istnieje. Wybierz nowy folder, żeby zachować poprzednią bazę.")
     output.parent.mkdir(parents=True, exist_ok=True)
-    labels, label_files = localization(game)
     summary = {
         "game_version": version,
-        "scope": "local_installation_without_mods",
+        "scope": "local_installation_without_mods" if game is not None else "shared_guides",
         "files_per_family": collections.Counter(),
         "chunks_per_family": collections.Counter(),
         "empty_or_no_records": [],
@@ -529,7 +538,7 @@ def build(game, output, notes, rules=None, strategies=None, wiki=None):
             "w", encoding="utf-8", newline="\n"
         ) as handle:
             schema(db)
-            for path, relative in sources(game):
+            for path, relative in sources(game) if game is not None else ():
                 try:
                     records = list(file_records(path, relative, version, labels))
                 except ValueError as error:
@@ -560,8 +569,10 @@ def build(game, output, notes, rules=None, strategies=None, wiki=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Pobierz kontekst rozgrywki z własnej instalacji EU4.")
-    parser.add_argument("--game-dir", required=True, type=Path, help="Katalog instalacji Europa Universalis IV")
+    parser = argparse.ArgumentParser(description="Przygotuj lokalne źródła rozgrywki w EU4.")
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--game-dir", type=Path, help="Katalog instalacji Europa Universalis IV")
+    source.add_argument("--shared-only", action="store_true", help="Zbuduj bazę z opracowań z repozytorium")
     parser.add_argument("--output", required=True, type=Path, help="Nowy folder dla lokalnej bazy")
     parser.add_argument("--notes", type=Path, default=Path(__file__).resolve().parent.parent / "video-notes/chunks.jsonl")
     parser.add_argument("--rules", type=Path, default=Path(__file__).resolve().with_name("rules.json"))
