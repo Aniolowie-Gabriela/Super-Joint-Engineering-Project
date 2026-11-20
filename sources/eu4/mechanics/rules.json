@@ -1,0 +1,2483 @@
+{
+  "game_version": "1.37.5.0",
+  "rules": [
+    {
+      "id": "renaissance-spawn-spread-embrace",
+      "title": "Renesans — pojawienie się, rozprzestrzenianie i przyjęcie",
+      "symbols": [
+        "renaissance",
+        "institution_events.2",
+        "EMBRACE_INSTITUTION_COST"
+      ],
+      "text": "W zwykłej kampanii Renesans (Renaissance) może rozpocząć się od 1450 roku, gdy feudalizm (Feudalism) jest już aktywny. Kandydat to niewyspiarska prowincja w regionie Włoch należąca do stanu (state), z wyłączeniem Malty, która ma co najmniej 20 rozwoju lub jest stolicą. Próg rozwoju lub status stolicy przestaje być wymagany od 1475 roku albo przy niestandardowych ustawieniach państw. Florencja jest historycznym miejscem startu, a w kampanii gra wybiera spośród kwalifikujących się prowincji. Po pojawieniu się instytucji jej postęp powiększają odrębne reguły, w tym sąsiedztwo i przyjazne połączenia przybrzeżne. Aby przyjąć Renesans, państwo musi mieć przyjęty feudalizm i spełnić ogólne warunki silnika dotyczące postępu oraz kosztu przyjęcia instytucji.",
+      "refs": [
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "renaissance"
+        },
+        {
+          "path": "events/institutions.txt",
+          "symbol": "institution_events.2"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "EMBRACE_INSTITUTION_COST"
+        }
+      ]
+    },
+    {
+      "id": "global-trade-spawn-and-embrace",
+      "title": "Handel globalny — narodziny instytucji w najcenniejszym węźle",
+      "symbols": [
+        "global_trade",
+        "institution_events.5",
+        "printing_press"
+      ],
+      "text": "Handel globalny (Global Trade) może pojawić się od 1600 roku po aktywowaniu Prasy drukarskiej (Printing Press). Prowincja startowa musi leżeć poza wyspą, w węźle o najwyższej wartości handlu, a jej właściciel musi mieć w najcenniejszym węźle największą siłę handlową. Prowincja musi być stolicą albo mieć centrum handlu poziomu 2 lub 3, a od 1630 roku kwalifikuje się także centrum poziomu 1. Holandia to historyczne miejsce startu, a w kampanii gra ocenia kandydatów na podstawie bieżącej wartości węzłów i siły handlowej. Przy rozprzestrzenianiu instytucji liczy się między innymi siła handlowa prowincji, a przyjęcie instytucji daje dodatkowego kupca.",
+      "refs": [
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "global_trade"
+        },
+        {
+          "path": "events/institutions.txt",
+          "symbol": "institution_events.5"
+        }
+      ]
+    },
+    {
+      "id": "indebted-to-the-burghers",
+      "title": "Pożyczki mieszczan — liczba, odsetki i wyjątek Bizancjum",
+      "symbols": [
+        "estate_burghers_indebted_to_burghers",
+        "BYZ_collect_our_profits",
+        "MEE_Byzantine_Events.21",
+        "BYZ_buff_burgher_loans_flag",
+        "BASE_INTERESTS",
+        "BANK_LOAN_DURATION"
+      ],
+      "text": "Przyznanie przywileju Zadłużenie u mieszczan (Indebted to the Burghers) udziela pięciu pożyczek stanowych na 60 miesięcy, każdej z oprocentowaniem 1%. Zwykła pożyczka bankowa ma bazowe oprocentowanie 4%, które mogą zmieniać modyfikatory. W drzewie misji z King of Kings Bizancjum może najpierw ukończyć Collect our Profits, co wymaga między innymi spłacenia pożyczek. Jeśli wybierze opcję negocjowania pożyczek w uruchomionym przez misję wydarzeniu, uzyska flagę BYZ_buff_burgher_loans_flag i od tej pory przywilej daje mu siedem pożyczek. Przywilej obniża efektywność handlu o 5 punktów procentowych i bazowy limit absolutyzmu o 5, a utrata merkantylizmu przy przyznaniu ma wyjątki. Cofnięcie przywileju wymaga spłacenia pożyczek stanowych.",
+      "refs": [
+        {
+          "path": "common/estate_privileges/03_burgher_privileges.txt",
+          "symbol": "estate_burghers_indebted_to_burghers"
+        },
+        {
+          "path": "missions/KoK_Byzantine_Missions.txt",
+          "symbol": "BYZ_collect_our_profits"
+        },
+        {
+          "path": "events/flavorBYZ.txt",
+          "symbol": "MEE_Byzantine_Events.21"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_INTERESTS"
+        }
+      ]
+    },
+    {
+      "id": "bankruptcy-consequences",
+      "title": "Bankructwo — skutki natychmiastowe i kary na pięć lat",
+      "symbols": [
+        "bankruptcy",
+        "BANKRUPTCY_DURATION",
+        "BANKRUPTCY_BUILDING_DESTRUCTION_THRESHOLD",
+        "BANKRUPTCY_PROVINCE_DEVASTATION_GAIN",
+        "on_bankruptcy"
+      ],
+      "text": "Bankructwo umarza pożyczki, od razu pogarsza stabilność i prestiż, kończy służbę doradców oraz najemników i przerywa trwającą budowę. Parametry silnika dodają 10 punktów dewastacji w prowincjach i obejmują niszczeniem budynki ukończone w ostatnich pięciu latach. Stan bankructwa trwa pięć lat. Aktywny modyfikator obniża morale armii i floty o 50%, tempo odzysku zasobów ludzkich i marynarzy o 100% oraz tempo rozprzestrzeniania instytucji o 50%. Silnik stosuje skutki bankructwa również wtedy, gdy skryptowy hook on_bankruptcy jest pusty.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANKRUPTCY_DURATION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANKRUPTCY_BUILDING_DESTRUCTION_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANKRUPTCY_PROVINCE_DEVASTATION_GAIN"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "bankruptcy"
+        },
+        {
+          "path": "common/on_actions/00_on_actions.txt",
+          "symbol": "on_bankruptcy"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_GO_BANKRUPT_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "overextension-modifier-and-pulse",
+      "title": "Nadmierna ekspansja — kary i pula zdarzeń przy 100%",
+      "symbols": [
+        "over_extension",
+        "OVEREXTENSION_THRESHOLD",
+        "OVEREXTENSION_FACTOR",
+        "on_overextension_pulse",
+        "overextension.1",
+        "administrative_efficiency"
+      ],
+      "text": "Nadmierna ekspansja (overextension, OE) wiąże się z posiadaniem prowincji bez własnego rdzenia i maleje po ich zrdzeniowaniu. Modyfikator over_extension obejmuje m.in. niepokój, korupcję, utratę reputacji dyplomatycznej i siły handlu za granicą. Niezależnie od tych bieżących kar silnik ma próg zdarzeń OE ustawiony na 100% i wywołuje on_overextension_pulse z pulą zdarzeń. Przykładowe overextension.1 wymaga trwającej wojny i po uruchomieniu zwiększa wyczerpanie wojną oraz odbiera część zasobów ludzkich. Wpis o wadze 100 w puli nie daje gwarancji zdarzenia ani daty jego uruchomienia.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "over_extension"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "OVEREXTENSION_THRESHOLD"
+        },
+        {
+          "path": "common/on_actions/00_on_actions.txt",
+          "symbol": "on_overextension_pulse"
+        },
+        {
+          "path": "events/Overextension.txt",
+          "symbol": "overextension.1"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_OVEREXTENSION_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "administrative-efficiency-sources",
+      "title": "Efektywność administracyjna — technologie, absolutyzm i epoka",
+      "symbols": [
+        "administrative_efficiency",
+        "adm:17",
+        "adm:23",
+        "adm:27",
+        "absolutism",
+        "ab_adm_efficiency",
+        "LIBERTY_DESIRE_ADM_EFFICIENCY"
+      ],
+      "text": "Efektywność administracyjna (administrative efficiency) zmniejsza nadmierną ekspansję z przejmowanych prowincji oraz koszt ich zrdzeniowania i żądania w pokoju. Technologie administracyjne 17, 23 i 27 dodają po 10 punktów procentowych, razem 30. Modyfikator absolutyzmu skaluje się do 30 punktów procentowych przy efektywnym absolutyzmie 100. Wybranie zdolności ab_adm_efficiency w Epoce Absolutyzmu dodaje kolejne 5 punktów procentowych. Większa efektywność podnosi też dążenie do niepodległości u zależnych państw kolonialnych. Koszt konkretnego żądania i działanie łącznych modyfikatorów oblicza silnik.",
+      "refs": [
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:17"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:23"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:27"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "absolutism"
+        },
+        {
+          "path": "common/ages/00_default.txt",
+          "symbol": "ab_adm_efficiency"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "LIBERTY_DESIRE_ADM_EFFICIENCY"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ADMINISTRATIVE_EFFICIENCY_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "vassal-union-integration-relative-power",
+      "title": "Wasal i unia personalna — siła względna i włączenie do państwa",
+      "symbols": [
+        "vassal",
+        "personal_union",
+        "INTEGRATE_VASSAL_MIN_YEARS",
+        "INTEGRATE_UNION_MIN_YEARS",
+        "DIPLOANNEX_LIBERTY_THRESHOLD",
+        "HIGH_LIBERTY_DESIRE",
+        "relative_power_class"
+      ],
+      "text": "Wasal (vassal) i junior unii personalnej (personal union) dziedziczą wspólną definicję poddanego, a każdy z nich ma własne uprawnienia. Wasal podlega aneksji dyplomatycznej i uwzględnia w porównaniu z seniorem siły innych poddanych z klasy 2 oraz odpowiednich wspierających niepodległość. Junior unii ma wspólnego władcę z seniorem, podlega integracji i w klasie 1 uwzględnia swoją siłę oraz swoich wspierających. Wymagany staż zależności to co najmniej 10 lat do aneksji wasala i co najmniej 50 lat do integracji juniora, a pozostałe warunki sprawdza silnik. Przy dążeniu wasala do niepodległości (liberty desire) wynoszącym co najmniej 50% postęp aneksji wynosi zero. Dziedziczenie unii przy zmianie władcy to procedura odrębna od integracji uruchamianej przez gracza.",
+      "refs": [
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "default"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "vassal"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "personal_union"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INTEGRATE_VASSAL_MIN_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INTEGRATE_UNION_MIN_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOANNEX_LIBERTY_THRESHOLD"
+        }
+      ]
+    },
+    {
+      "id": "burgundian-inheritance-event-chain",
+      "title": "Dziedzictwo Burgundzkie — kryzys sukcesji i wybór partnera",
+      "symbols": [
+        "burgundian_inheritance_start_effect",
+        "incidents_bur_inheritance.1000",
+        "incidents_bur_inheritance.1",
+        "on_monarch_death",
+        "bur_strongest_ally",
+        "incident_burgundian_succ_strong_ally"
+      ],
+      "text": "Dziedzictwo Burgundzkie (Burgundian Inheritance) to łańcuch wydarzeń po śmierci władcy, odrębny od zwykłego dziedziczenia unii. Skrypt wymaga aktywnego kryzysu sukcesji i niezależnej Burgundii, po czym sprawdza status cesarza oraz warunki dotyczące regencji i następcy, niskiej prawowitości albo flagi Marii. Kandydat bur_strongest_ally musi być wolnym państwem lub trybutariuszem i mieć małżeństwo królewskie z Burgundią lub zachowaną flagę takiego małżeństwa. Porównanie uprawnionych kandydatów korzysta z liczby miast, a Francja i cesarz mają własne gałęzie. Dostępność opcji wyboru silnego partnera i jej wagi AI podlegają dodatkowym warunkom, w tym dotyczącym monarchii.",
+      "refs": [
+        {
+          "path": "common/on_actions/00_on_actions.txt",
+          "symbol": "on_monarch_death"
+        },
+        {
+          "path": "common/scripted_effects/01_scripted_effects_for_on_actions.txt",
+          "symbol": "burgundian_inheritance_start_effect"
+        },
+        {
+          "path": "events/Incident_Burgundian_Inheritance.txt",
+          "symbol": "incidents_bur_inheritance.1000"
+        },
+        {
+          "path": "events/Incident_Burgundian_Inheritance.txt",
+          "symbol": "incidents_bur_inheritance.1"
+        },
+        {
+          "path": "common/imperial_incidents/00_imperial_incidents.txt",
+          "symbol": "incident_burgundian_succ_strong_ally"
+        }
+      ]
+    },
+    {
+      "id": "protestant-reformation-first-center",
+      "title": "Reformacja protestancka — pierwsze i późniejsze ośrodki",
+      "symbols": [
+        "2001",
+        "can_have_center_of_reformation_trigger",
+        "protestant",
+        "MAX_CHRISTIAN_RELIGIOUS_CENTERS"
+      ],
+      "text": "Pierwsze wydarzenie reformacji (Protestant Reformation, event 2001) może odblokować protestantyzm w katolickim państwie ze stolicą w Europie, gdy Reform Desire osiągnie 100%, religia jest jeszcze nieaktywna i państwo spełnia dodatkowe warunki. Państwo nie może być obrońcą wiary ani mieć reformy papieskiej, a co najmniej jedna jego prowincja musi przejść warunek utworzenia ośrodka. Pierwszy ośrodek (Center of Reformation) powstaje w kwalifikującej się prowincji, m.in. w obszarze stolicy, z co najmniej 10 rozwoju i bez wykluczającego sąsiedztwa, terenu lub klimatu. Po odblokowaniu religii późniejsza konwersja państwa ma własny skrypt, który może dodać ośrodek tylko poniżej limitu trzech ośrodków protestanckich i przy odpowiedniej prowincji. Warunek Emperor w bloku grafiki pierwszego eventu dotyczy jego ilustracji.",
+      "refs": [
+        {
+          "path": "events/Protestant.txt",
+          "symbol": "2001"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "can_have_center_of_reformation_trigger"
+        },
+        {
+          "path": "common/religions/00_religion.txt",
+          "symbol": "protestant"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MAX_CHRISTIAN_RELIGIOUS_CENTERS"
+        }
+      ]
+    },
+    {
+      "id": "hormuz-constantinople-trade-route",
+      "title": "Handel z Hormuzu do Konstantynopola — kierunek i odgałęzienia",
+      "symbols": [
+        "hormuz",
+        "basra",
+        "aleppo",
+        "persia",
+        "alexandria",
+        "constantinople",
+        "astrakhan",
+        "crimea",
+        "navy_tradition"
+      ],
+      "text": "Najkrótsza droga handlu z Hormuzu (Hormuz) do Konstantynopola (Constantinople) biegnie z Hormuzu do Basry, z Basry do Aleppo i z Aleppo do Konstantynopola. Z Basry można też skierować wartość do Persji, która ma połączenie z Aleppo, a z Aleppo można poprowadzić handel przez Aleksandrię do Konstantynopola. Z Persji można również skierować wartość do Astrachania, skąd trasa przez Krym prowadzi do Konstantynopola. Z Aleksandrii biegną konkurencyjne odpływy do Genui i Wenecji. Lista połączeń określa możliwe kierunki, a faktyczny podział wartości i dochód zależą od udziałów w bieżącym handlu oraz działań kupców.",
+      "refs": [
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "hormuz"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "basra"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "aleppo"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "persia"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "alexandria"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "astrakhan"
+        },
+        {
+          "path": "common/tradenodes/00_tradenodes.txt",
+          "symbol": "crimea"
+        }
+      ]
+    },
+    {
+      "id": "osmanowie-dziala-urbana",
+      "title": "The Guns of Urban: warunek doradcy, cztery działa i osobna premia",
+      "symbols": [
+        "tur_guns_of_urban",
+        "has_mil_advisor_2",
+        "large_cast_bronze_mortar",
+        "tur_early_cannons_modifier",
+        "flavor_tur.204"
+      ],
+      "text": "Osmańska misja z Domination jest dostępna z doradcą wojskowym wymienionym w has_mil_advisor_2, co najmniej na poziomie 2. Przykładowo przy technologii wojskowej 3 doradca poziomu 2 inny niż Urban wystarcza i otrzymasz cztery pułki Large Cast Bronze Mortar w stolicy. Ten wariant nagrody dotyczy technologii wojskowej poniżej 7. Od poziomu 7 skrypt tworzy cztery pułki ogólnym efektem artillery, bez wskazania modelu działa. Urbana skrypt sprawdza wyłącznie w gałęzi dodatkowej premii: zatrudniony Urban z wydarzenia przy technologii wojskowej poniżej 6 daje −100% kosztu artylerii na 3650 dni.",
+      "refs": [
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_guns_of_urban"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "has_mil_advisor_2"
+        },
+        {
+          "path": "common/units/large_cast_bronze_mortar.txt",
+          "symbol": "large_cast_bronze_mortar"
+        },
+        {
+          "path": "events/flavorTUR.txt",
+          "symbol": "flavor_tur.204"
+        },
+        {
+          "path": "common/event_modifiers/01_mission_modifiers.txt",
+          "symbol": "tur_early_cannons_modifier"
+        }
+      ]
+    },
+    {
+      "id": "janczarzy-rekrutacja-prog-misji",
+      "title": "Janczarzy: koszt rekrutacji i odmienny próg misji dla AI",
+      "symbols": [
+        "tur_train_the_janissary",
+        "ottoman_government",
+        "CREATE_JANISSARIES_MIL_COST",
+        "JANISSARIES_STARTING_STRENGTH",
+        "JANISSARIES_STARTING_MORALE"
+      ],
+      "text": "Bazowy koszt utworzenia jednego pułku janczarów to 3 punkty wojskowe. Osmańska reforma rządu włącza dostęp do jednostek z Domination albo z Cradle of Civilization bez Domination. W drzewie misji Domination Train the Janissaries sprawdza 10 pułków janczarów u gracza posiadającego atrybut stanu janczarów. Gałąź dla AI i przypadków bez tego atrybutu wymaga liczebności armii 35. Nowo utworzone pułki mają zapisane początkowe ułamki siły i morale po 0,1, więc daj im czas na uzupełnienie przed bitwą.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "CREATE_JANISSARIES_MIL_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "JANISSARIES_STARTING_STRENGTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "JANISSARIES_STARTING_MORALE"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "ottoman_government"
+        },
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_train_the_janissary"
+        }
+      ]
+    },
+    {
+      "id": "bitwa-szerokosc-fazy-odwrot",
+      "title": "Szerokość walki i kiedy można się wycofać",
+      "symbols": [
+        "BASE_COMBAT_WIDTH",
+        "MAX_COMBAT_WIDTH",
+        "mil:2",
+        "DAYS_PER_PHASE",
+        "CANNOT_RETREAT_DAYS",
+        "FRONT_LINE_MODIFIER",
+        "BACK_LINE_MODIFIER"
+      ],
+      "text": "Bazowa szerokość walki w kodzie to 15, a technologia wojskowa 2 dodaje 5, więc bez późniejszych premii masz 20. Szerokość rośnie z dalszą technologią aż do limitu 40. Faza ostrzału i faza uderzenia trwają po 3 dni, zaś ręczny odwrót wymaga upływu 12 dni walki. Dla obrażeń zadawanych przez pułk bazowy mnożnik przedniego szeregu to 1,0, a tylnego 0,5. W praktyce do bitwy przygotuj obsadę frontu i sprawdź morale przed wejściem, bo możesz być związany walką przez kilka pełnych faz.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MAX_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/technologies/mil.txt",
+          "symbol": "mil:2"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DAYS_PER_PHASE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "CANNOT_RETREAT_DAYS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "FRONT_LINE_MODIFIER"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BACK_LINE_MODIFIER"
+        }
+      ]
+    },
+    {
+      "id": "cb-reconquest-mnozniki",
+      "title": "Reconquest: cel Take Core, żądania pokoju i dwa różne mnożniki",
+      "symbols": [
+        "cb_core",
+        "take_core",
+        "cb_conquest",
+        "take_claim",
+        "po_demand_provinces",
+        "po_return_cores"
+      ],
+      "text": "Gdy przeciwnik ma twój własny rdzeń, zwykły CB Reconquest (cb_core) prowadzi do celu Take Core (take_core). Dla własnych rdzeni strony atakującej cel przewiduje żądanie prowincji i zwrot rdzeni. Agresywna ekspansja to 25% wartości bazowej (badboy_factor 0,25, czyli o 75% mniej), a koszt w wyniku wojny to 75% wartości bazowej (peace_cost_factor 0,75, czyli o 25% mniej). Sama obecność roszczenia bez rdzenia daje zwykły Conquest z celem Take Claim i mnożnikami po 100%; zakres jego uzasadnionego żądania prowincji obejmuje roszczenia lub rdzenie.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_core"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_core"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_conquest"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_claim"
+        }
+      ]
+    },
+    {
+      "id": "sojusz-odmowa-wezwania-cb",
+      "title": "Dishonored Call: pretekst za odmowę wezwania i cel przewagi",
+      "symbols": [
+        "cb_dishonored_call",
+        "superiority_insult",
+        "cb_insult",
+        "SUPERIORITY_WARGOAL_WARSCORE_THRESHOLD",
+        "WARGOAL_MAX_BONUS"
+      ],
+      "text": "Dishonored Call (cb_dishonored_call) jest przyznawany odrębnym wyzwoleniem, gdy sojusznik nie honoruje wezwania, i ma wpisany okres 96 miesięcy. Cel superiority_insult opiera się na przewadze w bitwach. Lista preferowanych warunków dla atakującego obejmuje odwołanie rdzeni, dukaty, uznanie klęski i upokorzenie rywala. Gdy zależy ci na ziemi, sprawdź, czy masz też CB uzasadniający żądanie konkretnych prowincji. Próg wyniku z bitew dla naliczania punktów przewagi to 10, a limit premii za cel wojny to 25.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_dishonored_call"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "cb_dishonored_call_desc"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "superiority_insult"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "SUPERIORITY_WARGOAL_WARSCORE_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WARGOAL_MAX_BONUS"
+        }
+      ]
+    },
+    {
+      "id": "pozny-cb-imperializm-nacjonalizm",
+      "title": "Dwa późne CB: Imperialism i Nationalism po technologii dyplomatycznej 23",
+      "symbols": [
+        "cb_imperial",
+        "take_capital_imperial",
+        "cb_nationalist",
+        "take_province_nationalist"
+      ],
+      "text": "W standardowym przypadku samodzielnego, nierewolucyjnego państwa technologia dyplomatyczna 23 odblokowuje Imperialism, z celem zajęcia stolicy i żądaniem dowolnych prowincji objętym mnożnikami 75% bazowej agresywnej ekspansji oraz 75% bazowego kosztu w wyniku wojny. Nationalism ma ten sam próg technologii, ale potrzebuje odpowiedniej prowincji z grupy kulturowej i ma cel zajęcia prowincji. Jego dwa mnożniki to po 50% dla żądań dotyczących uprawnionych prowincji z grupy kulturowej atakującego. Przed wypowiedzeniem wojny porównaj zakres planowanych zdobyczy z rodzajem celu, który łatwiej utrzymać.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_imperial"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_capital_imperial"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_nationalist"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_province_nationalist"
+        }
+      ]
+    },
+    {
+      "id": "osmanowie-ustanowienie-i-integracja-ejaletu",
+      "title": "Eyalet: od specjalnego traktatu do kosztu integracji",
+      "symbols": [
+        "cb_ottoman_subjugation_war",
+        "take_capital_eyalet_war",
+        "po_establish_eyalet",
+        "eyalet",
+        "core_eyalet",
+        "reign_in_eyalet"
+      ],
+      "text": "CB cb_ottoman_subjugation_war wskazuje cel zajęcia stolicy take_capital_eyalet_war. Ten cel pozwala żądać ustanowienia ejaletu, a osobne żądanie jego prowincji wymaga dołączenia tego traktatu. Traktat dotyczy celu wojny, ma wpisany koszt 75% sumy kosztów prowincji dawcy i pułap 60 punktów wyniku wojny. Zwykłego ejaletu nie da się bezpośrednio anektować. Zaakceptowane Rein in Eyalet tworzy core eyalet, którego bazowy koszt integracji wynosi 6 punktów dyplomatycznych za jednostkę rozwoju. Oba typy dziedziczą brak automatycznego wejścia do wojny zwierzchnika.",
+      "refs": [
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_ottoman_subjugation_war"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "take_capital_eyalet_war"
+        },
+        {
+          "path": "common/peace_treaties/00_establish_eyalet.txt",
+          "symbol": "po_establish_eyalet"
+        },
+        {
+          "path": "common/new_diplomatic_actions/00_diplomatic_actions.txt",
+          "symbol": "reign_in_eyalet"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "eyalet"
+        },
+        {
+          "path": "common/subject_types/00_subject_types.txt",
+          "symbol": "core_eyalet"
+        }
+      ]
+    },
+    {
+      "id": "osmanowie-walka-o-wladze-start",
+      "title": "Ottoman Power Struggle: kiedy może zacząć rosnąć postęp",
+      "symbols": [
+        "tur_disaster_ottoman_power_struggle",
+        "ottoman_decadence_mechanic",
+        "ottoman_government",
+        "eyalet",
+        "core_eyalet"
+      ],
+      "text": "W standardowej grze Osmanami z Domination i mechaniką dekadencji, jeśli katastrofa jeszcze nie zdarzyła się wcześniej, postęp może ruszyć przy dekadencji 100 i co najmniej jednym warunku: stabilność poniżej +3, dowolna statystyka władcy poniżej 5 albo ejalet lub core eyalet z chęcią wolności co najmniej 50%. Przy stabilności +3, władcy 5/5/5 i jednym core eyalecie próg 50% wystarcza do rozpoczęcia naliczania, a 49% nie. Uruchomienie naliczania i wybuch katastrofy są odrębnymi etapami. Nadmierna ekspansja od 25% może dokładać postęp, ale sama nie spełnia warunku początkowego.",
+      "refs": [
+        {
+          "path": "common/disasters/ottoman_power_struggle.txt",
+          "symbol": "tur_disaster_ottoman_power_struggle"
+        },
+        {
+          "path": "common/government_mechanics/07_ottoman_decadence.txt",
+          "symbol": "ottoman_decadence_mechanic"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "ottoman_government"
+        }
+      ]
+    },
+    {
+      "id": "osmanowie-walka-o-wladze-zatrzymanie-zakonczenie",
+      "title": "Ottoman Power Struggle: zatrzymanie odliczania i koniec katastrofy",
+      "symbols": [
+        "tur_disaster_ottoman_power_struggle",
+        "tur_the_mansure_reforms",
+        "tur_centralize_the_power",
+        "tur_remove_pashas_from_power",
+        "tur_the_reign_of_women",
+        "ottoman_decadence_mechanic"
+      ],
+      "text": "Warunek zatrzymania rozpoczętego odliczania wymaga łącznie dekadencji poniżej 75, stabilności +3, co najmniej 5 w każdej statystyce władcy, nadmiernej ekspansji poniżej 25%, braku armii buntowników i prowincji pod ich kontrolą oraz chęci wolności poniżej 50% u wszystkich ejaletów obu typów. Po wybuchu sprawdzane jest wykonanie każdej z obecnych misji Mansure Army, End the Eyalet Rebellions, Oppose the Pashas i Reign of Women. Potrzebny jest również brak aktywnej katastrofy Revolution i brak flagi otwartego wydarzenia tej walki o władzę. Przy dużych pokojach sprawdź bieżący etap katastrofy, zanim dołożysz nadmierną ekspansję.",
+      "refs": [
+        {
+          "path": "common/disasters/ottoman_power_struggle.txt",
+          "symbol": "tur_disaster_ottoman_power_struggle"
+        },
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_the_mansure_reforms"
+        },
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_centralize_the_power"
+        },
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_remove_pashas_from_power"
+        },
+        {
+          "path": "missions/DOM_Ottoman_Missions.txt",
+          "symbol": "tur_the_reign_of_women"
+        }
+      ]
+    },
+    {
+      "id": "koalicja-czlonkostwo-i-ofensywa",
+      "title": "Koalicja: kandydat do członkostwa i warunki karnego CB",
+      "symbols": [
+        "AE_COALITION_THRESHOLD",
+        "NO_TRUCE_COALITION",
+        "cb_super_badboy",
+        "superiority_punitive",
+        "DIPLOMATIC_ACTION_COALITION_THREAT_FACTOR"
+      ],
+      "text": "Defines podaje próg opinii z agresywnej ekspansji −50, a komunikat gry sygnalizuje blokadę formowania koalicji w rozejmie. Osobny skrypt ofensywnego karnego CB (cb_super_badboy) bada num_of_coalition_members = 3, nierewolucyjnego atakującego, wskazany cel koalicji oraz brak trwającej z nim wojny koalicyjnej. Cel superiority_punitive nagradza przewagę z bitew. Próg AE i warunki CB służą do oceny ryzyka. Do przewidzenia zachowania AI potrzebny jest stan kampanii, a same parametry nie wyznaczają gwarantowanego składu koalicji lub daty wypowiedzenia wojny.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "AE_COALITION_THRESHOLD"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DIPLOMATIC_ACTION_COALITION_THREAT_FACTOR"
+        },
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "NO_TRUCE_COALITION"
+        },
+        {
+          "path": "common/cb_types/00_cb_types.txt",
+          "symbol": "cb_super_badboy"
+        },
+        {
+          "path": "common/wargoal_types/00_wargoal_types.txt",
+          "symbol": "superiority_punitive"
+        }
+      ]
+    },
+    {
+      "id": "rozejmy-czas-i-zwloka-ai",
+      "title": "Rozejm: 5–15 lat pokoju i osobna zwłoka 5 dni dla deklaracji AI",
+      "symbols": [
+        "TRUCE_YEARS",
+        "SCALED_TRUCE_YEARS",
+        "MIN_DAYS_AFTER_TRUCE_ENDS",
+        "NO_TRUCE_COALITION",
+        "cb_super_badboy"
+      ],
+      "text": "Standardowy pokój daje 5 lat rozejmu plus do 10 lat zależnie od wykorzystanego wyniku wojny. Przy 0% jest to 5 lat, przy 50% 10 lat, przy 100% 15 lat. MIN_DAYS_AFTER_TRUCE_ENDS = 5 oznacza minimalne oczekiwanie AI przed wypowiedzeniem kolejnej wojny krajowi po wygaśnięciu wspólnego rozejmu. Stała nie określa minimalnego czasu dołączenia do koalicji i nie gwarantuje deklaracji piątego dnia. Dla konkretnej kampanii sprawdź termin w zapisie oraz bieżący stan koalicji, opinie i agresywną ekspansję.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRUCE_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "SCALED_TRUCE_YEARS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MIN_DAYS_AFTER_TRUCE_ENDS"
+        },
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "NO_TRUCE_COALITION"
+        }
+      ]
+    },
+    {
+      "id": "pol-lublin-early-commonwealth",
+      "title": "Negocjacje Lubelskie: cesja Rusi, technologia 8 i stosunki z Litwą",
+      "symbols": [
+        "flavor_pol.32",
+        "pol_commonwealth",
+        "pol_tech_8_form_plc_flag",
+        "pol_annexed_ruthenia_opinion_modifier"
+      ],
+      "text": "Cesja Rusi w Negocjacjach Lubelskich obniża minimalną technologię administracyjną dla utworzenia Rzeczypospolitej przez unię z Litwą z 10 do 8. Litwa dostaje −100 do opinii o Polsce. Oba kraje tracą wzajemną historyczną przyjaźń. Osobnym warunkiem decyzji jest chęć wolności Litwy poniżej 25%. Jeśli Polska odmówi cesji, próg pozostaje na 10, a oba kraje dostają na 15 lat −10% kosztu rozwoju i −15% kosztu stabilności.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.32"
+        },
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "common/opinion_modifiers/00_opinion_modifiers.txt",
+          "symbol": "pol_annexed_ruthenia_opinion_modifier"
+        },
+        {
+          "path": "common/event_modifiers/01_mission_modifiers.txt",
+          "symbol": "pol_shared_prosperity_modifier"
+        }
+      ]
+    },
+    {
+      "id": "pol-ruthenia-investment-triggers",
+      "title": "Rozwój Rusi: ulepszenia prowincji i wywołanie Negocjacji Lubelskich",
+      "symbols": [
+        "pol_develop_ukraine",
+        "flavor_pol.32"
+      ],
+      "text": "Z Lions of the North misja Rozwój Rusi na ścieżce unii z Litwą wymaga zaliczenia Następstw Warny. Polska lub jej poddani muszą posiadać każdą prowincję w obszarach zachodniego i wschodniego Dniepru oraz Podola i Wołynia. Każda z tych prowincji wymaga co najmniej jednego ulepszenia rozwoju, a prowincje 282, 283 i 2406 muszą być w posiadaniu Polski lub jej poddanych i mieć co najmniej po dwa ulepszenia. Kijów wymaga pięciu ulepszeń i budynku podatkowego. Z Leviathan zastępuje to Ławra Peczerska poziomu 2 lub 3. Negocjacje Lubelskie pojawiają się po zaliczeniu misji, jeśli Litwa nadal jest poddanym Polski i posiada całe oba obszary nad Dnieprem.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_develop_ukraine"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.32"
+        }
+      ]
+    },
+    {
+      "id": "pol-casimir-election-checks",
+      "title": "Wybór Kazimierza Jagiellończyka: wymagania i moment wydarzenia",
+      "symbols": [
+        "flavor_pol.18",
+        "flavor_lit.16"
+      ],
+      "text": "Wybór Kazimierza może wystąpić tylko przed 1450. Polska musi być niezależna, mieć regencję i nie mieć reformy Cesarstwa Chińskiego. Litwa musi istnieć, być niezależna i mieć dynastię Jagiellonów. Bazowy średni czas zdarzenia wynosi 12 miesięcy, a od 1447 skrypt coraz mocniej przyspiesza losowanie. Wybór Jagiellona wysyła decyzję Litwie. Litewskie AI wybiera zgodę z wagą 1 i ma wagę 0 dla odmowy.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        },
+        {
+          "path": "events/flavorLIT.txt",
+          "symbol": "flavor_lit.16"
+        }
+      ]
+    },
+    {
+      "id": "pol-casimir-election-effects",
+      "title": "Wybór Jagiellona albo miejscowego szlachcica: Litwa i polski ustrój",
+      "symbols": [
+        "flavor_pol.18",
+        "flavor_lit.16",
+        "flavor_pol.20",
+        "polish_elective_monarchy",
+        "lit_denied_birthright"
+      ],
+      "text": "Wybór Jagiellona przez Polskę uruchamia litewskie wydarzenie flavor_lit.16. Litwa sterowana przez AI wybiera przyjęcie, ponieważ opcja przyjęcia ma wagę 1, odmowy 0. Przyjęcie daje Polsce status seniora unii personalnej, a Litwie status juniora. Polska przyjmuje reformę polskiej monarchii elekcyjnej. Unia z wydarzenia działa także bez Lions of the North. Res Publica włącza właściwą mechanikę polskich elekcji w tej reformie. Wybór miejscowego szlachcica daje Polsce osobnego władcę i karę −100 do opinii Litwy o Polsce. Wybór zmienia też dostępne rozgałęzienie misji przy aktywnym Lions of the North.",
+      "refs": [
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        },
+        {
+          "path": "events/flavorLIT.txt",
+          "symbol": "flavor_lit.16"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.20"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_elective_monarchy"
+        },
+        {
+          "path": "common/opinion_modifiers/00_opinion_modifiers.txt",
+          "symbol": "lit_denied_birthright"
+        }
+      ]
+    },
+    {
+      "id": "pol-commonwealth-union-vs-enforced",
+      "title": "Utworzenie Rzeczypospolitej: rdzenie, próg Litwy i tryb bez unii",
+      "symbols": [
+        "pol_commonwealth",
+        "commonwealth_enforced",
+        "pol_tech_8_form_plc_flag"
+      ],
+      "text": "Polska może utworzyć Rzeczpospolitą i od razu odziedziczyć Litwę, jeśli jest seniorem unii. Wymaga to pokoju, stabilności co najmniej +1, technologii administracyjnej 10 albo 8 po cesji Rusi oraz posiadania Krakowa, Warszawy, Gdańska i Malborka z własnymi rdzeniami. Mazowsze musi przestać istnieć, a Litwa musi mieć najwyżej 59 miast, mniej niż 25% chęci wolności i status kraju, którym nie grał gracz. Bez unii decyzja wymuszona pozostaje na technologii 10, wymaga stabilności +3 oraz dodatkowo Wilna, Mińska, Kijowa i Turowa z polskimi rdzeniami. Decyzja wymuszona zmienia państwo w Rzeczpospolitą bez dziedziczenia reszty Litwy.",
+      "refs": [
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "pol_commonwealth"
+        },
+        {
+          "path": "decisions/TheCommonwealth.txt",
+          "symbol": "commonwealth_enforced"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.32"
+        }
+      ]
+    },
+    {
+      "id": "pol-varna-alliance-or-war",
+      "title": "Następstwa Warny: kiedy sojusz wyklucza pretekst do unii",
+      "symbols": [
+        "pol_varna_aftermath",
+        "valid_for_personal_unions_trigger",
+        "flavor_pol.18"
+      ],
+      "text": "Z Lions of the North misja Następstwa Warny może dać Polsce pretekst do wymuszenia unii z Węgrami po wyborze Jagiellona albo z Czechami po wyborze miejscowego szlachcica. Pretekst wymaga m.in. niezależności i dopuszczalnego chrześcijańskiego ustroju celu. Sojusz z celem ma pierwszeństwo w skrypcie nagrody i daje zamiast pretekstu 10 przysług oraz historyczną przyjaźń. Misja wymaga dwóch sojuszników i 90% limitu armii. Jeżeli spełniasz warunek przez rywalizację, skrypt sprawdza, czy to Czechy lub Węgry uznały Polskę za rywala.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_varna_aftermath"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "valid_for_personal_unions_trigger"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.18"
+        }
+      ]
+    },
+    {
+      "id": "pol-prussian-confederation-window",
+      "title": "Bunt Konfederacji Pruskiej: kiedy zakon może zaatakować Gdańsk",
+      "symbols": [
+        "flavor_teu.1",
+        "flavor_teu.2",
+        "prussian_confederation_disaster",
+        "curtail_prussian_confederation",
+        "teu_handle_the_prussian_confederation"
+      ],
+      "text": "Bunt Konfederacji Pruskiej może zacząć się od 1460, przed 1500. Zakon musi być niezależny, w pokoju, mieć aktywną katastrofę i co najmniej 5 miast, a sąsiadująca niezależna Polska musi mieć co najmniej 10 miast. Sojusz Polski z zakonem blokuje bunt. Gdańsk musi być w posiadaniu i pod kontrolą zakonu albo jego poddanego Gdańska. Jeżeli Krzyżacy wypowiedzą wojnę Gdańskowi, Polska dostaje opcję wsparcia, która zawiera sojusz z Gdańskiem i odblokowuje ścieżkę do nagrody z misji. Zakon może zapobiec buntowi decyzją lub odpowiednią misją.",
+      "refs": [
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.1"
+        },
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.2"
+        },
+        {
+          "path": "common/disasters/prussian_confederation.txt",
+          "symbol": "prussian_confederation_disaster"
+        },
+        {
+          "path": "decisions/PrussianConfederation.txt",
+          "symbol": "curtail_prussian_confederation"
+        },
+        {
+          "path": "missions/SCA_Teutonic_Missions.txt",
+          "symbol": "teu_handle_the_prussian_confederation"
+        }
+      ]
+    },
+    {
+      "id": "pol-confederation-reward-danzig",
+      "title": "Misja Konfederacji: próg 100 rozwoju, wasalizacja Gdańska i Prusy Książęce",
+      "symbols": [
+        "pol_prussia_confederation",
+        "prussian_confederation_mission_pol",
+        "flavor_teu.3"
+      ],
+      "text": "Po polskim poparciu Konfederacji pokój i niezależność Gdańska pozwalają zaliczyć misję. Aby uruchomić wydarzenie o wasalizacji, Gdańsk musi mieć dodatkowo mniej niż 100 rozwoju. Jeżeli Prusy jeszcze nie istnieją, druga opcja wydarzenia przekształca wasalny Gdańsk w Prusy Książęce. Ta opcja przekazuje Polsce jako własne rdzenie ziemie Prus Zachodnich należące do Polski lub jej poddanych, w tym Gdańsk i Malbork, jeśli warunek własności jest spełniony. Warunek nagrody działa tak samo w drzewie z Lions of the North i w podstawowym.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_prussia_confederation"
+        },
+        {
+          "path": "missions/Polish_Missions.txt",
+          "symbol": "prussian_confederation_mission_pol"
+        },
+        {
+          "path": "events/flavorTEU.txt",
+          "symbol": "flavor_teu.3"
+        },
+        {
+          "path": "map/area.txt",
+          "symbol": "west_prussia_area"
+        },
+        {
+          "path": "localisation/scandinavia_l_english.yml",
+          "symbol": "RPR"
+        }
+      ]
+    },
+    {
+      "id": "pol-gdansk-trade-development",
+      "title": "Rozbudowa Gdańska: próg rozwoju, port i dodatkowy kupiec",
+      "symbols": [
+        "pol_embellish_gdansk",
+        "flavor_pol.31",
+        "pol_thriving_center_of_gdansk_modifier"
+      ],
+      "text": "Misja rozbudowy Gdańska z Lions of the North wymaga wcześniejszych misji Konfederacji Pruskiej i pospolitego ruszenia. Gdańsk musi należeć do Polski lub jej poddanego oraz mieć budynek handlowy i produkcyjny. Przy aktywnym Dharma wystarczy 35 rozwoju lub centrum handlu poziomu 3. Bez Dharma potrzeba 40 rozwoju. Nagroda dodaje 1 punkt bazowej produkcji i na 25 lat daje +20% siły handlowej prowincji i dodatkowego kupca.",
+      "refs": [
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "pol_embellish_gdansk"
+        },
+        {
+          "path": "events/flavorPOL.txt",
+          "symbol": "flavor_pol.31"
+        },
+        {
+          "path": "common/event_modifiers/01_mission_modifiers.txt",
+          "symbol": "pol_thriving_center_of_gdansk_modifier"
+        }
+      ]
+    },
+    {
+      "id": "pol-golden-liberty-revocation",
+      "title": "Złota Wolność: co daje i kiedy można ją odwołać",
+      "symbols": [
+        "estate_nobles_golden_liberty",
+        "polish_elective_monarchy",
+        "polish_autocratic_monarchy",
+        "plc_golden_liberty"
+      ],
+      "text": "Polska zaczyna ze Złotą Wolnością. Przywilej daje +33% rezerw ludzkich i bazowo zmniejsza maksymalny absolutyzm o 15. Odwołanie wymaga stabilności +3 i braku regencji oraz kosztuje 3 punkty stabilności, jeśli w kraju istnieje stan szlachecki. W Polsce z monarchią elekcyjną bramkę przywileju spełnia m.in. absolutyzm co najmniej 70, ukończenie misji Złota Wolność albo co najmniej 90% ziem koronnych od 1615. Po odejściu od monarchii elekcyjnej skrypt przywileju akceptuje zmianę ustroju jako alternatywę dla tych warunków.",
+      "refs": [
+        {
+          "path": "common/estate_privileges/02_noble_privileges.txt",
+          "symbol": "estate_nobles_golden_liberty"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "plc_golden_liberty"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_elective_monarchy"
+        },
+        {
+          "path": "common/government_reforms/01_government_reforms_monarchies.txt",
+          "symbol": "polish_autocratic_monarchy"
+        }
+      ]
+    },
+    {
+      "id": "pol-pacta-conventa-revoke",
+      "title": "Pacta Conventa: decyzja znosząca przywilej",
+      "symbols": [
+        "revoke_the_pacta_conventa",
+        "estate_nobles_pacta_conventa",
+        "plc_articles_agreement"
+      ],
+      "text": "Przywilej Pacta Conventa podwyższa koszt obniżania wyczerpania wojną i inflacji o 50%. Oddzielna decyzja znosząca Pacta Conventa wymaga posiadania Warszawy. Misja o Artykułach Henrykowskich odblokowuje tę decyzję, jeśli przywilej nadal obowiązuje przy odebraniu misji. W chwili decyzji potrzeba pokoju, stabilności +3, co najmniej 60% ziem koronnych oraz braku bankructwa i deficytu. Znosząc przywilej, Polska traci 3 punkty stabilności, a szlachta traci 30 punktów lojalności i 5 punktów udziału w ziemi.",
+      "refs": [
+        {
+          "path": "decisions/Poland.txt",
+          "symbol": "revoke_the_pacta_conventa"
+        },
+        {
+          "path": "common/estate_privileges/02_noble_privileges.txt",
+          "symbol": "estate_nobles_pacta_conventa"
+        },
+        {
+          "path": "missions/SCA_Polish_Missions.txt",
+          "symbol": "plc_articles_agreement"
+        }
+      ]
+    },
+    {
+      "id": "naval-engagement-width",
+      "title": "Bitwa morska — szerokość walki i miejsce zajmowane przez okręty",
+      "symbols": [
+        "NAVAL_BASE_ENGAGEMENT_WIDTH",
+        "HEAVY_SHIP_COMBAT_WIDTH",
+        "LIGHT_SHIP_COMBAT_WIDTH",
+        "GALLEY_COMBAT_WIDTH",
+        "TRANSPORT_COMBAT_WIDTH",
+        "naval_engagement_width",
+        "dip:2"
+      ],
+      "text": "Limit zaangażowania (naval engagement width) ogranicza, ile okrętów może walczyć w danej rundzie. Ciężki okręt zajmuje 3 jednostki szerokości, a lekki okręt, galera i transportowiec po 1. Bazowa szerokość wynosi 5, a technologie dyplomatyczne ją powiększają, począwszy od premii 20 na poziomie 2. Do oceny składu użyj aktualnej szerokości floty i licz miejsca według typu okrętu. Całkowita liczba jednostek we flocie sama nie mówi, ile z nich walczy równocześnie.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAVAL_BASE_ENGAGEMENT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "HEAVY_SHIP_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "LIGHT_SHIP_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRANSPORT_COMBAT_WIDTH"
+        },
+        {
+          "path": "common/technologies/dip.txt",
+          "symbol": "dip:2"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NAVAL_ENGAGEMENT_WIDTH_DESC"
+        }
+      ]
+    },
+    {
+      "id": "galley-combat-sea-terrain",
+      "title": "Galery w bitwie — morze wewnętrzne, wybrzeże i pełne morze",
+      "symbols": [
+        "GALLEY_BONUS_INLAND_SEA",
+        "GALLEY_BONUS_COASTAL_SEA",
+        "GALLEY_DICE_MALLUS_HIGH_SEA",
+        "NAVAL_BASE_DISENGAGEMENT_CHANCE",
+        "inland_ocean",
+        "INLAND_SEA_DESC",
+        "COASTAL_SEA_DESC"
+      ],
+      "text": "Na morzu wewnętrznym (inland sea) galery zadają okrętom innych typów o 100% większe obrażenia. Na akwenie przybrzeżnym (coastal sea) ta premia wynosi 50%, a na pełnym morzu oba bonusy terenowe odpadają. Osobny parametr kary do rzutu galery na pełnym morzu ma w 1.37.5 wartość zero. Bazowa dzienna szansa na wycofanie z walki dla pozbawionego morale okrętu to 10%. Przed wyborem floty porównaj typ akwenu, szerokość zaangażowania, jakość okrętów i morale.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_BONUS_INLAND_SEA"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_BONUS_COASTAL_SEA"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GALLEY_DICE_MALLUS_HIGH_SEA"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "NAVAL_BASE_DISENGAGEMENT_CHANCE"
+        },
+        {
+          "path": "map/terrain.txt",
+          "symbol": "inland_ocean"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "INLAND_SEA_DESC"
+        },
+        {
+          "path": "localisation/tmm_l_english.yml",
+          "symbol": "COASTAL_SEA_DESC"
+        }
+      ]
+    },
+    {
+      "id": "mercenary-company-hiring-reinforcement",
+      "title": "Najemnicy — kiedy zatrudnić kompanię i z czego uzupełnia straty",
+      "symbols": [
+        "MERCENARY_COMPANY_HIRING_COST_MONTHS",
+        "MERCENARY_COMPANY_MIN_REGIMENTS",
+        "MERCENARY_COMPANY_MAX_REGIMENTS",
+        "MERCENARY_COMPANY_MANPOWER_PER_REGIMENT",
+        "MERCENARY_COMPANY_MANPOWER_RECOVERY",
+        "MERCENARY_COMPANY_HIRED_MANPOWER_RECOVERY_MOD",
+        "MERCENARY_TRADE_RANGE_MODIFIER",
+        "merc__local_free_company",
+        "CANT_SPLIT_MERCENARY_COMPANY"
+      ],
+      "text": "Najemników (mercenaries) zatrudniasz jako całą kompanię, a definicja kompanii określa między innymi liczebność względem rozwoju oraz skład pułków. Ogólny przedział liczebności to 4–60 pułków, a bazowy parametr kosztu zatrudnienia odpowiada 48 miesiącom utrzymania. Dostępność zależy od warunków danej kompanii i zasięgu rekrutacji z wybranej prowincji. Kompanii nie można rozdzielić ani złączyć z innymi oddziałami, a straty pokrywa z własnej puli ludzi, która odnawia się wolniej w służbie. Po rozwiązaniu kompanii sprawdź termin przywrócenia dostępności związany z odbudową jej rezerw.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "MERCENARY_COMPANY_HIRING_COST_MONTHS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MERCENARY_COMPANY_MIN_REGIMENTS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MERCENARY_COMPANY_MAX_REGIMENTS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MERCENARY_COMPANY_HIRED_MANPOWER_RECOVERY_MOD"
+        },
+        {
+          "path": "common/mercenary_companies/example.txt",
+          "symbol": "merc__local_free_company"
+        },
+        {
+          "path": "localisation/emperor_mercs_l_english.yml",
+          "symbol": "MERCENARY_COMPANY_TOO_FAR_PROVINCE"
+        },
+        {
+          "path": "localisation/emperor_mercs_l_english.yml",
+          "symbol": "MERCENARY_COMPANY_MANPOWER_DELAYED"
+        },
+        {
+          "path": "localisation/emperor_mercs_l_english.yml",
+          "symbol": "CANT_SPLIT_MERCENARY_COMPANY"
+        },
+        {
+          "path": "localisation/emperor_mercs_l_english.yml",
+          "symbol": "DISBAND_MERC_DRO"
+        }
+      ]
+    },
+    {
+      "id": "mercenary-professionalism-black-army",
+      "title": "Najemnicy — koszt profesjonalizmu i wyjątki Czarnej Armii",
+      "symbols": [
+        "on_mercenary_recruited",
+        "on_mercenary_recruited_effect",
+        "is_not_free_merc_company",
+        "has_not_free_mercs_trait",
+        "merc_black_army",
+        "merc_black_army_2",
+        "hun_no_prof_black_army",
+        "seasoned_veterans"
+      ],
+      "text": "Zatrudnienie zwykłej kompanii najemników obniża profesjonalizm armii (Army Professionalism) o 5 punktów procentowych, jeśli kraj i kompania spełniają warunki naliczenia kosztu. Skrypt uwzględnia zwolnione kompanie i cechy państwa, na przykład ideę Seasoned Veterans, oraz oddzielną gałąź kosztu 2,5 punktu procentowego. Czarna Armia (Black Army) i jej rezerwy są zwolnione z tego kosztu i mają premię 5% dyscypliny. Odblokowanie pierwszej kompanii zależy od odpowiedniej flagi, modyfikatora lub reformy, natomiast jej rezerwy wymagają jednej z reform Czarnej Armii. Osobna flaga hun_no_prof_black_army sprawia, że zatrudnienie jednej z tych dwóch kompanii podnosi profesjonalizm o 1 punkt procentowy.",
+      "refs": [
+        {
+          "path": "common/on_actions/00_on_actions.txt",
+          "symbol": "on_mercenary_recruited"
+        },
+        {
+          "path": "common/scripted_effects/01_scripted_effects_for_on_actions.txt",
+          "symbol": "on_mercenary_recruited_effect"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "is_not_free_merc_company"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "has_not_free_mercs_trait"
+        },
+        {
+          "path": "common/mercenary_companies/00_mercenaries.txt",
+          "symbol": "merc_black_army"
+        },
+        {
+          "path": "common/mercenary_companies/00_mercenaries.txt",
+          "symbol": "merc_black_army_2"
+        }
+      ]
+    },
+    {
+      "id": "monument-upgrade-tiers-and-boosts",
+      "title": "Wielkie projekty — poziom zabytku, koszt i przyspieszanie",
+      "symbols": [
+        "alhambra",
+        "GREAT_PROJECT_MANPOWER_REQUIRED_FOR_CONSTRUCTION_BOOST",
+        "GREAT_PROJECT_MANPOWER_CONSTRUCTION_BOOST_AMOUNT_IN_DAYS",
+        "GREAT_PROJECT_MONEY_REQUIRED_FOR_CONSTRUCTION_BOOST",
+        "GREAT_PROJECT_MONEY_CONSTRUCTION_BOOST_AMOUNT_IN_DAYS",
+        "can_upgrade_trigger",
+        "can_use_modifiers_trigger"
+      ],
+      "text": "Projekt (great project) ma poziom początkowy, warunki ulepszenia i oddzielne modyfikatory każdego poziomu. Przykładowo ulepszenie Alhambry do poziomu 2 ma bazowy koszt 2500 dukatów i trwa 240 miesięcy, a do poziomu 3 kosztuje 5000 dukatów i trwa 480 miesięcy. Premię Alhambry do efektywności administracyjnej, 5 punktów procentowych, zapisano na poziomie 3. Bazowe akcje przyspieszenia projektu kosztują 250 dukatów albo 10 000 zasobów ludzkich, a każda skraca budowę o 730 dni. Przed wydatkiem sprawdź poziom, koszt oraz uprawnienia do ulepszenia i używania danego projektu w kampanii.",
+      "refs": [
+        {
+          "path": "common/great_projects/01_monuments.txt",
+          "symbol": "alhambra"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GREAT_PROJECT_MANPOWER_REQUIRED_FOR_CONSTRUCTION_BOOST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GREAT_PROJECT_MANPOWER_CONSTRUCTION_BOOST_AMOUNT_IN_DAYS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GREAT_PROJECT_MONEY_REQUIRED_FOR_CONSTRUCTION_BOOST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GREAT_PROJECT_MONEY_CONSTRUCTION_BOOST_AMOUNT_IN_DAYS"
+        }
+      ]
+    },
+    {
+      "id": "monument-religion-culture-eligibility",
+      "title": "Wielkie projekty — kultura prowincji, religia i szczególne uprawnienia",
+      "symbols": [
+        "parthenon",
+        "kaaba",
+        "province_is_or_accepts_culture",
+        "province_is_or_accepts_religion_group",
+        "can_use_modifiers_trigger",
+        "can_upgrade_trigger",
+        "keep_trigger",
+        "BYZ_may_use_kaaba"
+      ],
+      "text": "Przy wielkim projekcie sprawdź osobno warunki budowy, zachowania po przejęciu, ulepszania i otrzymywania premii. W Partenonie jedna z dróg kwalifikacji wymaga, aby prowincja miała kulturę grecką, ateńską albo rzymską, która jest kulturą główną lub akceptowaną przez właściciela. Osobną drogą jest warunek religii z grupy pogańskiej, sprawdzający wyznanie prowincji i religię państwową lub dodatkową właściciela. Kaaba ma odrębny warunek dla grupy muzułmańskiej, a jej użycie i ulepszanie są dostępne również dla właściciela z flagą BYZ_may_use_kaaba. Flagę może ustawić wydarzenie Bizancjum przy aktywnym Leviathanie, a zakres premii trzeba wtedy sprawdzić w poziomie zabytku i jego warunkach.",
+      "refs": [
+        {
+          "path": "common/great_projects/01_monuments.txt",
+          "symbol": "parthenon"
+        },
+        {
+          "path": "common/great_projects/01_monuments.txt",
+          "symbol": "kaaba"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "province_is_or_accepts_culture"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "province_is_or_accepts_religion_group"
+        },
+        {
+          "path": "events/flavorBYZ.txt",
+          "symbol": "MEE_Byzantine_Events.9"
+        }
+      ]
+    },
+    {
+      "id": "idea-groups-tech-unlocks",
+      "title": "Grupy idei — odblokowanie miejsc, kategoria i premia końcowa",
+      "symbols": [
+        "adm:5",
+        "adm:7",
+        "adm:10",
+        "adm:14",
+        "adm:18",
+        "adm:22",
+        "adm:26",
+        "adm:29",
+        "allowed_idea_groups",
+        "MAX_IDEA_GROUPS_FROM_SAME_CATEGORY",
+        "economic_ideas"
+      ],
+      "text": "Miejsca na grupy idei (idea groups) odblokowują technologie administracyjne 5, 7, 10, 14, 18, 22, 26 i 29, po jednym na każdym poziomie z listy. Grupa należy do kategorii ADM, DIP albo MIL, która wyznacza rodzaj wydawanych punktów przy zakupie jej idei. Wybrane idee dają własne efekty, a ukończenie grupy uruchamia jej premię końcową, na przykład +10% wytwarzanych towarów dla Economic Ideas. Przy włączonym ograniczeniu kategorii silnik korzysta z parametru 0,5 dla udziału grup jednej kategorii, więc możliwość następnego wyboru zależy od dotychczasowego układu grup i ustawień gry.",
+      "refs": [
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:5"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:7"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:10"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:14"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:18"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:22"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:26"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:29"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MAX_IDEA_GROUPS_FROM_SAME_CATEGORY"
+        },
+        {
+          "path": "common/ideas/00_basic_ideas.txt",
+          "symbol": "economic_ideas"
+        }
+      ]
+    },
+    {
+      "id": "policies-completed-ideas-cost",
+      "title": "Polityki państwowe — ukończenie grup idei, koszt i blokada anulowania",
+      "symbols": [
+        "trade_connection_policy",
+        "the_education_act",
+        "aristocracy_ideas",
+        "trade_ideas",
+        "full_idea_group",
+        "BASE_POSSIBLE_POLICIES",
+        "BASE_FREE_POLICIES",
+        "POLICY_COST",
+        "MINIMUM_POLICY_TIME"
+      ],
+      "text": "Polityka państwowa (policy) jest przypisana do konkretnej pary grup idei, a do jej włączenia trzeba ukończyć obie grupy. Przykładowa Trade Connection Policy wymaga Aristocratic Ideas i Trade Ideas, zajmuje miejsce DIP, daje dodatkowego kupca i +30% siły handlowej za granicą. Bazowo w każdej kategorii są trzy miejsca i jedna bezpłatna polityka, a odpowiednie modyfikatory mogą je zwiększyć. Każda aktywna polityka ponad darmowy limit kosztuje 1 punkt swojej kategorii miesięcznie. Po włączeniu standardowo trzeba odczekać 10 lat, aby politykę anulować.",
+      "refs": [
+        {
+          "path": "common/policies/00_dip.txt",
+          "symbol": "trade_connection_policy"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_POSSIBLE_POLICIES"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_FREE_POLICIES"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "POLICY_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "MINIMUM_POLICY_TIME"
+        },
+        {
+          "path": "localisation/dharma_l_english.yml",
+          "symbol": "POLICY_EXPLANATION"
+        }
+      ]
+    },
+    {
+      "id": "alliance-offensive-call-favors-promise",
+      "title": "Sojusz — wezwanie do wojny, przysługi i obietnica ziemi",
+      "symbols": [
+        "CALL_TO_ARMS_COST",
+        "OFFENSIVE_WAR_COOLDOWN",
+        "TRUST_PENALTY_FOR_NO_LAND",
+        "BROKE_LAND_PROMISE_YEARS",
+        "DIPLO_BLOCKED_OFFENSIVE_CALLS",
+        "DIPLO_DEFENSIVE_WAR",
+        "CALL_PROMISE_LAND"
+      ],
+      "text": "Ofensywne wezwanie sojusznika do wojny (Call to Arms) kosztuje standardowo 10 przysług, jeśli nie obiecujesz mu ziemi. Obietnica terytorium to odrębna podstawa wezwania, a niedotrzymanie obietnicy może obniżyć zaufanie proporcjonalnie do oczekiwanego udziału sojusznika w zdobyczy. Przy kolejnym wezwaniu ofensywnym istotna jest także bazowa, dziesięcioletnia przerwa u tego samego sojusznika. Gotowość AI zależy m.in. od wojny obronnej lub ofensywnej, odległości, bieżących wojen i wyłączonej zgody na udział ofensywny. Sojusz i przysługi otwierają możliwość wezwania, a faktyczną zgodę sprawdź przed wypowiedzeniem wojny w podpowiedzi dyplomatycznej.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "CALL_TO_ARMS_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "OFFENSIVE_WAR_COOLDOWN"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRUST_PENALTY_FOR_NO_LAND"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "CALL_PROMISE_LAND"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_DEFENSIVE_WAR"
+        },
+        {
+          "path": "localisation/diplo_reasons_l_english.yml",
+          "symbol": "DIPLO_BLOCKED_OFFENSIVE_CALLS"
+        }
+      ]
+    },
+    {
+      "id": "favors-spending-trust-resources-war-prep",
+      "title": "Przysługi — pozyskiwanie, zasoby, zaufanie i przygotowanie do wojny",
+      "symbols": [
+        "INCREASE_TRUST_COST",
+        "INCREASE_TRUST_AMOUNT",
+        "PREPARE_FOR_WAR_COST",
+        "PREPARE_FOR_WAR_MONTHS",
+        "TRADE_FAVORS_FOR_GOLD_FAVOR_COST",
+        "TRADE_FAVORS_FOR_MEN_FAVOR_COST",
+        "TRADE_FAVORS_FOR_SAILORS_FAVOR_COST",
+        "TRADE_FAVORS_ACTION_COOLDOWN",
+        "CURRY_FAVORS_DESC"
+      ],
+      "text": "Przysługi (favors) to pula wobec określonego państwa, którą można powiększać m.in. udziałem w wojnach sojusznika lub przydzieleniem mu ziemi w pokoju. Akcja Curry Favors wysyła dyplomatę, by zwiększał pulę z czasem, a tempo zależy między innymi od reputacji dyplomatycznej. Wymiana 10 przysług może zwiększyć zaufanie o 5, a osobna prośba za 10 przysług pozwala poprosić AI o przygotowania do wojny przez 12 miesięcy. Prośby o dukaty, zasoby ludzkie i marynarzy kosztują po 10 przysług i mają ustawiony próg opinii 50 oraz okres odnowienia. Akcje mają własne warunki dostępności i zgodę AI, dlatego koszt w przysługach sam nie przesądza o wyniku.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "FAVOR_GAIN_FOR_HELP"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "FAVOR_GAIN_FOR_LAND"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INCREASE_TRUST_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INCREASE_TRUST_AMOUNT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PREPARE_FOR_WAR_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PREPARE_FOR_WAR_MONTHS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_FAVORS_FOR_GOLD_FAVOR_COST"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_FAVORS_FOR_MEN_REQUIRED_OPINION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_FAVORS_FOR_SAILORS_REQUIRED_OPINION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_FAVORS_ACTION_COOLDOWN"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CURRY_FAVORS_DESC"
+        }
+      ]
+    },
+    {
+      "id": "pirate-republic-hoist-black-flag",
+      "title": "Podniesienie czarnej flagi — warunki przejścia na piracką republikę",
+      "symbols": [
+        "become_pirates_decision",
+        "pirate_republic_reform",
+        "neutral_ground_reform",
+        "vassals_can_hoist_the_black_flag",
+        "privateer_power",
+        "navy_size_percentage"
+      ],
+      "text": "Decyzja Hoist the Black Flag wymaga Golden Century lub Lions of the North. Zwykła droga jest dostępna dla niezależnej monarchii lub republiki bez poddanych, mającej najwyżej sześć miast i posiadającej wyłącznie porty na wyspach lub w Maghrebie. Przy podejmowaniu decyzji potrzeba stabilności co najmniej +2, floty osiągającej 90% limitu morskiego i udziału korsarzy co najmniej 10% w głównym węźle handlowym. Szczególna ścieżka dotyczy poddanych seniora z atrybutem vassals_can_hoist_the_black_flag, który daje Neutral Ground. Nadal obowiązują pokój, brak bankructwa i ogólne wykluczenia dotyczące tagu, cesarza i reform. Decyzja kosztuje 2 stabilności, zmienia ustrój na republikę z reformą piracką i dodaje 20 tradycji republikańskiej.",
+      "refs": [
+        {
+          "path": "decisions/PirateGovernment.txt",
+          "symbol": "become_pirates_decision"
+        },
+        {
+          "path": "common/government_reforms/02_government_reforms_republics.txt",
+          "symbol": "pirate_republic_reform"
+        },
+        {
+          "path": "common/government_reforms/02_government_reforms_republics.txt",
+          "symbol": "neutral_ground_reform"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "HAVE_A_NAVY_LARGER_THAN"
+        }
+      ]
+    },
+    {
+      "id": "pirate-reforms-raiding-and-alliances",
+      "title": "Piracka republika — skutki ustroju i ograniczenie sojuszy z The Pirate Ways",
+      "symbols": [
+        "pirate_republic_reform",
+        "the_pirate_ways_reform",
+        "neutral_ground_reform",
+        "may_perform_slave_raid_on_same_religion",
+        "cannot_ally_non_pirates",
+        "COAST_RAID_RANGE",
+        "SLAVE_RAIDS_DURATION"
+      ],
+      "text": "Piracka republika (Pirate Republic) daje +50% limitu floty i premię do przechwytywania okrętów, ale zwiększa koszt rządzenia stanami o 75% i zmniejsza roczny przyrost tradycji republikańskiej o 1. Jej reforma dopuszcza również najazdy na wybrzeża państw tego samego wyznania, a pliki gry podają bazowy zasięg najazdu i jego czas odnowienia. Korsarstwo w węźle handlowym jest inną aktywnością niż najazd na prowincje wybrzeża. Dopiero dodatkowa reforma The Pirate Ways zrywa istniejące sojusze z państwami niepirackimi i blokuje zawieranie nowych takich sojuszy. Daje przy tym +25% skuteczności korsarzy i po +10% do morale wojsk lądowych oraz floty.",
+      "refs": [
+        {
+          "path": "common/government_reforms/02_government_reforms_republics.txt",
+          "symbol": "pirate_republic_reform"
+        },
+        {
+          "path": "common/government_reforms/02_government_reforms_republics.txt",
+          "symbol": "the_pirate_ways_reform"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "COAST_RAID_RANGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "SLAVE_RAIDS_DURATION"
+        }
+      ]
+    },
+    {
+      "id": "townships-investment",
+      "title": "Townships i Brokers Exchange: inwestycje kompanii handlowej",
+      "symbols": [
+        "townships",
+        "brokers_exchange",
+        "governor_general_mansion"
+      ],
+      "text": "Townships kosztuje bazowo 1000 dukatów i zwiększa wartość handlu o 10% w całym regionie kompanii. Townships wyklucza inne inwestycje regionalne w tym samym regionie, w tym Governor General’s Mansion. Brokers Exchange to osobna inwestycja obszarowa za 400 dukatów. Daje +0,3 do liczby wytwarzanych towarów w każdej prowincji obszaru i +50% efektywności produkcji w prowincjach kompanii w tym obszarze.",
+      "refs": [
+        {
+          "path": "common/tradecompany_investments/00_Investments.txt",
+          "symbol": "townships"
+        },
+        {
+          "path": "common/tradecompany_investments/00_Investments.txt",
+          "symbol": "governor_general_mansion"
+        },
+        {
+          "path": "common/tradecompany_investments/00_Investments.txt",
+          "symbol": "brokers_exchange"
+        }
+      ]
+    },
+    {
+      "id": "netherlands-mission-forming",
+      "title": "Niderlandy przed technologią 10: misja Je Maintiendrai i warunki decyzji",
+      "symbols": [
+        "NED_unification_of_low_countries",
+        "netherlands_nation",
+        "ned_ignore_tech_requirement_netherlands"
+      ],
+      "text": "W drzewie Winds of Change Je Maintiendrai znosi wymaganie technologii administracyjnej 10 i daje roszczenia do regionu Niderlandów. Misja wymaga 15 prowincji w regionie, z uwzględnieniem podległych niesuwerennych państw, oraz ukończenia trzech wcześniejszych misji regionalnych. Decyzja o utworzeniu Niderlandów nadal wymaga m.in. własnych rdzeni w Bredzie, Utrechcie, Gelre, Hadze i Amsterdamie, Amsterdamu objętego stanem oraz co najmniej 10 własnych rdzeni w regionie. Zwykłe księstwo po podjęciu decyzji opuszcza Rzeszę, z wyjątkiem cesarza i elektora.",
+      "refs": [
+        {
+          "path": "missions/WOC_Dutch_Missions.txt",
+          "symbol": "NED_unification_of_low_countries"
+        },
+        {
+          "path": "decisions/NetherlandsNation.txt",
+          "symbol": "netherlands_nation"
+        }
+      ]
+    },
+    {
+      "id": "netherlands-voc",
+      "title": "VOC: odblokowanie przywileju, cztery prowincje i przekazanie Indii",
+      "symbols": [
+        "establish_voc",
+        "NED_founding_the_voc",
+        "commercial_enterprise"
+      ],
+      "text": "Winds of Change pozwala Niderlandom utworzyć VOC jako poddanego Commercial Enterprise. Misja Founding the VOC odblokowuje przywilej mieszczan. Decyzja wymaga jego nadania i co najmniej czterech własnych prowincji w nadregionie Indii. Kliknięcie oddaje VOC wszystkie własne prowincje w całym nadregionie, wraz z rdzeniami VOC. Zwykła kompania handlowa na własnych prowincjach jest odrębną mechaniką.",
+      "refs": [
+        {
+          "path": "decisions/VOC_decisions.txt",
+          "symbol": "establish_voc"
+        },
+        {
+          "path": "missions/WOC_Dutch_Missions.txt",
+          "symbol": "NED_founding_the_voc"
+        }
+      ]
+    },
+    {
+      "id": "culture-promotion",
+      "title": "Promowanie akceptowanej kultury: próg rozwoju i koszt",
+      "symbols": [
+        "CULTURE_MIN_DEVELOPMENT_TO_PROMOTE",
+        "PS_ADD_ACCEPTED_CULTURE"
+      ],
+      "text": "Awansowanie kultury do akceptowanej ma w 1.37.5.0 bazowy próg 20 rozwoju kultury i koszt 100 punktów dyplomatycznych. To parametry bazowe promocji istniejącej kultury. Oceniając konkretną kampanię, sprawdź kwalifikujący się rozwój, dostępne miejsca na kultury akceptowane i modyfikatory kosztu w interfejsie.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "CULTURE_MIN_DEVELOPMENT_TO_PROMOTE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_ADD_ACCEPTED_CULTURE"
+        }
+      ]
+    },
+    {
+      "id": "economic-and-military-hegemony-thresholds",
+      "title": "Hegemonia gospodarcza i wojskowa — progi oraz pierwsze miejsce",
+      "symbols": [
+        "economic_hegemon",
+        "military_hegemon",
+        "monthly_income",
+        "army_size",
+        "halve_hegemony_requirements",
+        "fra_enable_mil_hegemony_flag",
+        "fra_declaratio_gallica",
+        "lost_hegemony"
+      ],
+      "text": "Hegemonia wymaga statusu wielkiego mocarstwa, wolnego tytułu i braku aktywnego modyfikatora utraconej hegemonii. Hegemon gospodarczy (Economic Hegemon) potrzebuje co najmniej 1000 dukatów miesięcznego dochodu i musi przewyższać dochodem pozostałe wielkie mocarstwa. Hegemon wojskowy (Military Hegemon) potrzebuje standardowo 1000 pułków i największej armii spośród wielkich mocarstw. Flaga halve_hegemony_requirements może zredukować próg do 500 dukatów lub 500 pułków, ale w skrypcie wojskowym obecna lub dawna Francja z aktywnym wyjątkiem trafia do odrębnej gałęzi. Specjalna misja Francji lub odpowiadająca jej flaga może zastąpić wymóg liczby pułków, przy zachowaniu porównania armii z rywalami.",
+      "refs": [
+        {
+          "path": "common/hegemons/0_economic_hegemon.txt",
+          "symbol": "economic_hegemon"
+        },
+        {
+          "path": "common/hegemons/2_military_hegemon.txt",
+          "symbol": "military_hegemon"
+        },
+        {
+          "path": "missions/DOM_French_Missions.txt",
+          "symbol": "fra_declaratio_gallica"
+        },
+        {
+          "path": "missions/SCA_Lithuania_Missions.txt",
+          "symbol": "lit_great_power_politics"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "OTHER_HEGEMON_ALREADY"
+        }
+      ]
+    },
+    {
+      "id": "naval-hegemony-fleet-and-heavy-ships",
+      "title": "Hegemonia morska — liczba wszystkich okrętów i ranking ciężkich",
+      "symbols": [
+        "naval_hegemon",
+        "navy_size",
+        "num_of_heavy_ship",
+        "jap_halve_naval_hegemony_requirements",
+        "halve_hegemony_requirements",
+        "lost_hegemony",
+        "jap_surpass_the_west",
+        "NED_dutch_naval_supremacy"
+      ],
+      "text": "Hegemon morski (Naval Hegemon) jest wielkim mocarstwem z co najmniej 500 okrętami w całej flocie. Oddzielne porównanie wymaga większej liczby ciężkich okrętów niż u każdego innego wielkiego mocarstwa, więc remis w tej kategorii nie wystarcza. Próg całej floty uwzględnia także lekkie okręty, galery i transportowce. Odpowiednia flaga misji obniża próg całej floty do 250 okrętów. Wariant z progiem 250 zachowuje ten sam ranking ciężkich okrętów oraz wymóg braku aktywnego modyfikatora utraconej hegemonii.",
+      "refs": [
+        {
+          "path": "common/hegemons/1_naval_hegemon.txt",
+          "symbol": "naval_hegemon"
+        },
+        {
+          "path": "missions/DOM_Japanese_Missions.txt",
+          "symbol": "jap_surpass_the_west"
+        },
+        {
+          "path": "missions/WOC_Dutch_Missions.txt",
+          "symbol": "NED_dutch_naval_supremacy"
+        }
+      ]
+    },
+    {
+      "id": "rebel-accept-enforce-break",
+      "title": "Żądania buntowników — dobrowolne ustępstwo, egzekucja i rozpad kraju",
+      "symbols": [
+        "can_negotiate_trigger",
+        "can_enforce_trigger",
+        "demands_enforced_effect",
+        "YEARS_UNTIL_BROKEN",
+        "REBEL_BREAK_STABILITY_SET",
+        "REBEL_BREAK_EXHAUSTION_SET",
+        "CV_BREAK_COUNTRY_DESC",
+        "CV_REBEL_PROGRESS_NONE_AT_WAR",
+        "execute_rebel_acceptance_command"
+      ],
+      "text": "Dobrowolne zaakceptowanie żądań (Accept demands) zależy od reguły danej frakcji, a podczas Epoki Absolutyzmu ta akcja ma bazowy koszt 10 absolutyzmu. Buntownicy mogą odrębnie wyegzekwować żądania (Enforce demands) po zajęciu stolicy, dla którego bazowy próg czasowy wynosi dwa lata. Pełny rozpad kraju egzekwuje żądania wszystkich aktywnych powstań. Interfejs podaje, że pełny rozpad wymaga pokoju i kontroli przynajmniej jednej ufortyfikowanej prowincji przez buntowników oraz grozi po zajęciu przez nich ponad połowy prowincji. Po rozpadzie silnik ustawia stabilność i wyczerpanie wojną na 0, a konkretne ustępstwa zależą od frakcji.",
+      "refs": [
+        {
+          "path": "common/rebel_types/particularist.txt",
+          "symbol": "particularist_rebels"
+        },
+        {
+          "path": "common/rebel_types/pretender.txt",
+          "symbol": "pretender_rebels"
+        },
+        {
+          "path": "common/ages/00_default.txt",
+          "symbol": "age_of_absolutism"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "YEARS_UNTIL_BROKEN"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "REBEL_BREAK_STABILITY_SET"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "REBEL_BREAK_EXHAUSTION_SET"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "REBEL_ENFORCEDEMANDS_CAPITAL_MONTHS"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_BREAK_COUNTRY_DESC"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_BREAK_COUNTRY_CITIES"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_REBEL_PROGRESS_NO_FORTS"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_REBEL_PROGRESS_NONE_AT_WAR"
+        }
+      ]
+    },
+    {
+      "id": "particularists-and-pretenders-demands",
+      "title": "Partykułaryści i pretendenci — skutki ustępstwa i zwycięstwa frakcji",
+      "symbols": [
+        "particularist_rebels",
+        "pretender_rebels",
+        "can_negotiate_trigger",
+        "demands_enforced_effect",
+        "siege_won_effect",
+        "court_and_country",
+        "define_ruler",
+        "unit_transfer"
+      ],
+      "text": "Partykułaryści (Particularists) dopuszczają dobrowolne ustępstwo i żądają autonomii zamiast niepodległości. Pomyślne żądania zwiększają autonomię o 30 punktów w prowincjach przypisanych do ich frakcji, obniżają prestiż o 20 i mogą zmienić udziały ziemi stanów. Osobno zdobycie prowincji przez tę frakcję dodaje w niej 10 punktów autonomii jeszcze przed egzekucją żądań. Pretendenci (Pretender Rebels) nie przyjmują dobrowolnego ustępstwa. Gdy wyegzekwują żądania, skrypt osadza ich przywódcę jako władcę, usuwa dotychczasowego następcę i małżonka, jeśli istnieją, oraz zależnie od ustroju może zmienić rząd.",
+      "refs": [
+        {
+          "path": "common/rebel_types/particularist.txt",
+          "symbol": "particularist_rebels"
+        },
+        {
+          "path": "common/rebel_types/pretender.txt",
+          "symbol": "pretender_rebels"
+        }
+      ]
+    },
+    {
+      "id": "separatist-demands-and-defection",
+      "title": "Separatyści — skutki zajęcia prowincji, negocjacje i separacja",
+      "symbols": [
+        "nationalist_rebels",
+        "defect_delay",
+        "demands_enforced_effect",
+        "siege_won_effect",
+        "can_negotiate_trigger",
+        "nationalist_rebels_title"
+      ],
+      "text": "Separatyści (Separatists) walczą w imieniu określonego państwa, a skrypt typu frakcji dopuszcza dobrowolne zaakceptowanie żądań w czasie pokoju. Gdy zdobędą prowincję, mogą dodać rdzeń swojego państwa i przedłużają separatyzm o 10 lat. Skutek egzekucji zależy od tego, czy państwo separatystów istnieje. Jeśli już istnieje, otrzymuje kwalifikujące się prowincje frakcji zgodne z warunkiem kultury, a jeśli jeszcze nie istnieje, skrypt przydziela rdzenie i wywołuje utworzenie go jako wasala. Od tego efektu odróżnij samorzutną secesję okupowanych prowincji, dla której skrypt podaje najwcześniejszy próg 60 miesięcy.",
+      "refs": [
+        {
+          "path": "common/rebel_types/nationalist.txt",
+          "symbol": "nationalist_rebels"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "nationalist_rebels_title"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "CV_REBEL_INDEP_MONTH"
+        }
+      ]
+    },
+    {
+      "id": "institution-embrace-autonomy-threshold",
+      "title": "Przyjęcie instytucji — próg rozwoju, autonomia i koszt",
+      "symbols": [
+        "renaissance",
+        "can_embrace",
+        "EMBRACE_INSTITUTION_COST",
+        "INSTI_NOT_ENOUGH_HOLD",
+        "TUT_CAM_CHAPTER02_PAGE14_inst_TEXT"
+      ],
+      "text": "Przyjęcie instytucji przez kraj (Embrace Institution) wymaga jej obecności w prowincjach reprezentujących co najmniej 10% rozwoju kraju liczonego z uwzględnieniem autonomii. Przyjęcie ma osobny koszt w dukatach, a bazowy przelicznik wynosi 2,5 na jednostkę rozwoju skorygowaną autonomią. Renesans ma dodatkowy warunek przyjętego feudalizmu. Panel instytucji pokazuje bieżący udział i koszt dla stanu kampanii.",
+      "refs": [
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "INSTI_NOT_ENOUGH_HOLD"
+        },
+        {
+          "path": "localisation/tutorial_l_english.yml",
+          "symbol": "TUT_CAM_CHAPTER02_PAGE14_inst_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "EMBRACE_INSTITUTION_COST"
+        },
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "renaissance"
+        }
+      ]
+    },
+    {
+      "id": "colonialism-and-printing-press-spawn",
+      "title": "Kolonializm i prasa drukarska — warunki miejsca narodzin",
+      "symbols": [
+        "new_world_i",
+        "printing_press",
+        "has_any_exploration_idea",
+        "quest_for_the_new_world",
+        "can_start",
+        "institution_events.3",
+        "institution_events.4"
+      ],
+      "text": "Kolonializm (Colonialism) może pojawić się od 1500 roku po aktywowaniu Renesansu, w prowincji portowej w Europie, Azji lub Afryce. Prowincja musi być niewyspiarska, należeć do stanu i leżeć w obszarze stolicy, a dodatkowo być stolicą, mieć centrum handlu albo co najmniej 12 rozwoju. Właściciel musi spełnić warunek idei eksploracyjnej i odkrycia Nowego Świata oraz już mieć tam własną prowincję lub zależne państwo kolonialne ze stolicą w tym obszarze. Prasa drukarska (Printing Press) może powstać od 1550 roku po aktywowaniu Kolonializmu, także w niewyspiarskiej prowincji stanu w obszarze stolicy, z co najmniej 15 rozwoju, statusem stolicy albo produkcją papieru. Jej prowincja musi wyznawać protestantyzm lub wyznanie reformowane albo leżeć w regionie północnoniemieckim lub południowoniemieckim.",
+      "refs": [
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "new_world_i"
+        },
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "printing_press"
+        },
+        {
+          "path": "common/scripted_triggers/00_scripted_triggers.txt",
+          "symbol": "has_any_exploration_idea"
+        }
+      ]
+    },
+    {
+      "id": "manufactories-and-enlightenment-spawn",
+      "title": "Manufaktury i oświecenie — rozwój, sąsiedzi i wcześniejsze instytucje",
+      "symbols": [
+        "manufactories",
+        "enlightenment",
+        "can_start",
+        "global_trade",
+        "printing_press",
+        "university",
+        "two_neighbor_dev_15_provinces"
+      ],
+      "text": "Obie instytucje mogą powstać w niewyspiarskiej prowincji stanu z obszaru stolicy, w której Prasa drukarska i Handel globalny są w pełni obecne. Manufaktury (Manufactories) mogą pojawić się od 1650 roku, gdy Handel globalny jest aktywny. Prowincja potrzebuje 20 rozwoju, dwóch sąsiadów z co najmniej 15 rozwoju i jednego z budynków z listy skryptu, na przykład manufaktury broni lub tkanin. Oświecenie (Enlightenment) może pojawić się od 1700 roku, gdy Manufaktury są aktywne, a prowincja ma co najmniej 30 rozwoju. W jej przypadku wystarczy miejsce w parlamencie, uniwersytet albo położenie w Europie i władca z co najmniej 5 umiejętności w każdej z trzech kategorii.",
+      "refs": [
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "manufactories"
+        },
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "enlightenment"
+        }
+      ]
+    },
+    {
+      "id": "industrialization-spawn-rule-britannia",
+      "title": "Industrializacja — wymagania fabryki i wyjątki według daty",
+      "symbols": [
+        "industrialization",
+        "furnace",
+        "weapons",
+        "textile",
+        "production_leader",
+        "highest_value_trade_node",
+        "enlightenment",
+        "manufactories"
+      ],
+      "text": "Industrializacja (Industrialization) może powstać od 1750 roku po aktywowaniu Oświecenia. Kandydat to niewyspiarska prowincja stanu w obszarze stolicy, z co najmniej 30 rozwoju oraz w pełni obecnymi Manufakturami i Oświeceniem. Z aktywnym Rule Britannia do 1780 roku potrzebuje pieca (furnace), a w pozostałych przypadkach manufaktury broni lub tkanin. Właściciel musi być liderem produkcji odpowiedniego towaru lub mieć co najmniej trzy premie handlowe, chyba że nadszedł już 1770 rok. Do 1760 roku prowincja musi też leżeć w węźle o najwyższej wartości handlu.",
+      "refs": [
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "industrialization"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "furnace"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "weapons"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "textile"
+        }
+      ]
+    },
+    {
+      "id": "hre-electors-vote-and-eligibility",
+      "title": "Wybór cesarza Rzeszy — uprawnienie, wynik elektora i dziedziczenie",
+      "symbols": [
+        "HRE_VOTE_SCORE_DESC",
+        "HRE_VOTE_ALLIANCE",
+        "HRE_VOTE_ROYAL_MARRIAGE",
+        "HRE_VOTE_NON_MEMBER",
+        "HRE_VOTE_HERETIC",
+        "HREVOTE_DIPLO_SKILL",
+        "pragmatic_sanction_decision",
+        "erbkaisertum",
+        "emperor_erbkaisertum"
+      ],
+      "text": "Elektor AI odnawia poparcie co miesiąc, oceniając uprawnionych kandydatów do tronu Rzeszy (Holy Roman Emperor). Ustalona religia cesarstwa ogranicza uprawnienie, a Pragmatic Sanction jest sposobem dopuszczenia kobiety na tron. Sojusz z elektorem daje 30 punktów oceny, małżeństwo królewskie 10, a spoza Rzeszy działa kara 50 punktów. Interfejs pokazuje też wpływ między innymi prestiżu, prawowitości i reputacji dyplomatycznej, więc porównaj ocenę z najlepszym innym kandydatem u każdego elektora. Reforma Erbkaisertum, zależnie od wariantu DLC, może wprowadzić dziedziczenie urzędu.",
+      "refs": [
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "HRE_VOTE_SCORE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "HRE_VOTE_ALLIANCE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "HRE_VOTE_ROYAL_MARRIAGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "HRE_VOTE_NON_MEMBER"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "HREVOTE_DIPLO_SKILL"
+        },
+        {
+          "path": "localisation/aow_l_english.yml",
+          "symbol": "HRE_PERMANENT_RELIGION_DESC"
+        },
+        {
+          "path": "decisions/PragmaticSanction.txt",
+          "symbol": "pragmatic_sanction_decision"
+        },
+        {
+          "path": "events/PragmaticSanction.txt",
+          "symbol": "pragmatic_sanction.2"
+        },
+        {
+          "path": "common/imperial_reforms/00_hre.txt",
+          "symbol": "erbkaisertum"
+        },
+        {
+          "path": "common/imperial_reforms/00_hre_emperor.txt",
+          "symbol": "emperor_erbkaisertum"
+        }
+      ]
+    },
+    {
+      "id": "army-movement-lock-straits-and-forts",
+      "title": "Ruch armii — blokada marszu, cieśniny i strefa fortu",
+      "symbols": [
+        "MOVE_LOCK_PERCENTAGE",
+        "may_force_march",
+        "PS_FORCE_MARCH",
+        "FORCE_MARCH_FACTOR",
+        "STRAITSDESC",
+        "STRAIT_CROSSING_PENALTY",
+        "HINT_ZONEOFCONTROL_TEXT",
+        "PREV_NO_ZOC_FORT_ICON_DELAYED"
+      ],
+      "text": "Po przebyciu połowy drogi do następnej prowincji marsz zostaje zablokowany (movement lock). Technologia administracyjna 15 odblokowuje marsz forsowny (Forced March), którego bazowy koszt to 2 punkty wojskowe za przebytą prowincję. Cieśniny zapisane jako przejścia morskie pozwalają armii iść bez transportowców, lecz wroga flota może powstrzymać przeprawę, jeśli obie strony nie są pod kontrolą sojuszniczą. Obsadzony fort ogranicza ruch nieprzyjaciela w sąsiednich prowincjach przez strefę kontroli (zone of control). Dostępność trasy zależy od kontroli fortów, przeprawy i prowincji powrotu zapamiętanej przez grę.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "MOVE_LOCK_PERCENTAGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_FORCE_MARCH"
+        },
+        {
+          "path": "common/technologies/adm.txt",
+          "symbol": "adm:15"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "MOVEMENT_LOCKED_DESC"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "STRAITSDESC"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "HINT_ZONEOFCONTROL_TEXT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "PREV_NO_ZOC_FORT_ICON_DELAYED"
+        }
+      ]
+    },
+    {
+      "id": "fort-siege-phases-and-barrage",
+      "title": "Oblężenie — liczebność armii, rzut, wyłom i szturm",
+      "symbols": [
+        "SIEGE_FORCE_NEEDED_MULTIPLIER",
+        "GARRISON_SIZE",
+        "DAYS_PER_SIEGE_PHASE",
+        "SIEGE_GARRISON_SURRENDER",
+        "PS_ARTILLERY_BARRAGE",
+        "PS_NAVAL_BARRAGE",
+        "PS_ASSAULT",
+        "SIEGE_ARTILLERY_EXPLANATION",
+        "NOAB_NOT_ENOUGH_ART",
+        "NAVAL_BARRAGE_CANNON_REQ"
+      ],
+      "text": "Do postępu oblężenia (siege) potrzeba siły liczonej według trzykrotności garnizonu, a bazową fazę 30 dni skraca zdolność oblężnicza i wydłuża obronność fortu. Rzut fazy uwzględnia punkty oblężnicze dowódcy, poziom fortu, stosunek liczby dział do poziomu fortu, postęp, wyłom i ewentualny nieblokowany port. Ostrzał lądowy (Artillery Barrage) tworzy wyłom, bazowo kosztuje 50 punktów wojskowych i wymaga co najmniej jednego pełnego pułku artylerii na poziom fortu. Ostrzał morski to osobna akcja dla fortu nadbrzeżnego, z sąsiednią flotą liczącą co najmniej 100 dział na poziom fortu. Do szturmu trzeba istniejącego wyłomu, a bazowy koszt rozkazu szturmu to 5 punktów wojskowych.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "SIEGE_FORCE_NEEDED_MULTIPLIER"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "DAYS_PER_SIEGE_PHASE"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "SIEGE_ABILITY_LONG"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_FORTDEFENSE_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_ARTILLERY_BARRAGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_NAVAL_BARRAGE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_ASSAULT"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "SIEGE_ARTILLERY_EXPLANATION"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "SIEGE_BONUS_NOBLOCKADE"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NOAB_NOT_ENOUGH_ART"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NAVAL_BARRAGE_CANNON_REQ"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "NOAS_NO_BREACH"
+        }
+      ]
+    },
+    {
+      "id": "construction-cost-inflation-local-modifiers",
+      "title": "Koszt budynków — cena bazowa, inflacja i zniżki",
+      "symbols": [
+        "build_cost",
+        "local_build_cost",
+        "inflation",
+        "renaissance",
+        "infrastructure_ideas",
+        "organised_construction",
+        "marketplace",
+        "fort_15th",
+        "fort_16th"
+      ],
+      "text": "Każdy budynek ma cenę bazową (construction cost) zapisaną w definicji, na przykład targowisko 100 dukatów, zamek poziomu 2 200, a bastion poziomu 4 400. Inflacja zwiększa koszt budowy o 1 punkt procentowy za każdy punkt inflacji w stosunku do ceny bazowej. Przyjęcie Renesansu daje −5% kosztu budowy, a Organised Construction w grupie idei Infrastructure −10%. Modyfikator local_build_cost dotyczy prowincji objętych jego zakresem, dzięki czemu ten sam budynek może kosztować różnie w zależności od miejsca. Ostateczna cena w panelu budowy uwzględnia jednocześnie aktywne modyfikatory państwa i prowincji.",
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "marketplace"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "fort_15th"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "fort_16th"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "inflation"
+        },
+        {
+          "path": "common/institutions/00_Core.txt",
+          "symbol": "renaissance"
+        },
+        {
+          "path": "common/ideas/00_basic_ideas.txt",
+          "symbol": "infrastructure_ideas"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "LOCAL_BUILD_COST"
+        }
+      ]
+    },
+    {
+      "id": "ordinary-bank-loans",
+      "title": "Zwykła pożyczka bankowa • kapitał, oprocentowanie roczne, okres i inflacja",
+      "symbols": [
+        "BANK_LOAN_DURATION",
+        "BASE_INTERESTS",
+        "INFLATION_FROM_LOAN"
+      ],
+      "text": "Bazowy okres zwykłej pożyczki bankowej to 60 miesięcy, czyli 5 lat. Bazowe oprocentowanie to 4% w skali roku przed modyfikatorami. Roczny koszt odsetek w dukatach to kapitał × 0,04, a miesięczny koszt to roczny koszt podzielony przez 12. Zaciągnięcie jednej pożyczki powoduje wzrost inflacji o 0,1 punktu procentowego. To oddzielny efekt od odsetek.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "BANK_LOAN_DURATION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BASE_INTERESTS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INFLATION_FROM_LOAN"
+        }
+      ]
+    },
+    {
+      "id": "wartime-budget",
+      "title": "Budżet wojenny • utrzymanie armii i fortów, płynność i rezerwa",
+      "symbols": [
+        "LAND_MAINTENANCE_FACTOR",
+        "FORT_CURRENTLY_HALF_MAIN",
+        "FORT_CURRENTLY_WITHOUT_MAIN"
+      ],
+      "text": "Przy planowaniu wojny ustaw docelowe utrzymanie wojska i aktywuj potrzebne forty. Odczytaj bilans miesięczny w panelu gospodarki po tej zmianie. Obniżone utrzymanie armii lub uśpienie fortu zmienia koszty względem wojny. Uśpiony własny fort standardowo kosztuje połowę utrzymania i ma niegotową załogę. Prognozowany skarbiec = środki dziś + prognozowane miesięczne saldo × liczba miesięcy − wydatki jednorazowe. Dla deficytu i stałych warunków dopuszczalny miesięczny deficyt = (rezerwa − wydatki jednorazowe) ÷ liczba miesięcy. Przy zmieniającym się bilansie sprawdź też saldo w każdym miesiącu. Przychody z łupów czy pomocy sojuszników to oddzielne założenia.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "LAND_MAINTENANCE_FACTOR"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "FORT_CURRENTLY_HALF_MAIN"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "FORT_CURRENTLY_WITHOUT_MAIN"
+        }
+      ]
+    },
+    {
+      "id": "combat-terrain-and-crossings",
+      "title": "Walka lądowa • teren, rzeka, cieśnina i manewr",
+      "symbols": [
+        "mountain",
+        "hills",
+        "forest",
+        "marsh",
+        "RIVER_CROSSING_PENALTY",
+        "STRAIT_CROSSING_PENALTY",
+        "THERE_WILL_BE_CROSSING_MODIFIER"
+      ],
+      "text": "W bitwie lądowej wartość defence terenu jest ujemnym modyfikatorem rzutu strony atakującej. Dla gór to −2, dla wzgórz, lasu, mokradeł i terenów wyżynnych −1, dla równin 0. Zwykła przeprawa przez rzekę daje −1 do rzutu, a przeprawa przez cieśninę −2. Dodatki sumują się, gdy oba obowiązują. Dowódca atakującego z większym manewrem niż dowódca obrońcy może usunąć karę przeprawy, przy równym manewrze kara pozostaje. Oblężenie fortu jest szczególnym przypadkiem identyfikacji atakującego i obrońcy. Gra pokazuje modyfikatory przy przewidywanej bitwie.",
+      "refs": [
+        {
+          "path": "map/terrain.txt",
+          "symbol": "mountain"
+        },
+        {
+          "path": "map/terrain.txt",
+          "symbol": "hills"
+        },
+        {
+          "path": "map/terrain.txt",
+          "symbol": "forest"
+        },
+        {
+          "path": "map/terrain.txt",
+          "symbol": "marsh"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "RIVER_CROSSING_PENALTY"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "STRAIT_CROSSING_PENALTY"
+        },
+        {
+          "path": "localisation/EU4_l_english.yml",
+          "symbol": "THERE_WILL_BE_CROSSING_MODIFIER"
+        }
+      ]
+    },
+    {
+      "id": "war-reparations",
+      "title": "Reparacje wojenne • koszt pokoju, udział w dochodach i okres",
+      "symbols": [
+        "PEACE_COST_WAR_REPARATIONS",
+        "WAR_REPARATIONS_FACTOR",
+        "WAR_REPARATIONS_YEARS"
+      ],
+      "text": "Reparacje to żądanie warte 10 punktów wyniku wojny. Bazowo przez 10 lat płacący oddaje 10% dochodu. Odsetek ten jest udziałem w dochodzie strony płacącej, więc w dukatach może się zmieniać. Gotówka wynegocjowana w pokoju jest odrębnym żądaniem.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "PEACE_COST_WAR_REPARATIONS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_FACTOR"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "WAR_REPARATIONS_YEARS"
+        }
+      ]
+    },
+    {
+      "id": "war-taxes",
+      "title": "Podatki wojenne • utrzymanie wojska, floty i najemników",
+      "symbols": [
+        "PS_RAISE_WAR_TAXES",
+        "war_taxes",
+        "ab_free_war_taxes",
+        "WAR_TAXES_TOOLTIP_COST"
+      ],
+      "text": "Podatki wojenne bazowo kosztują 2 punkty militarne na miesiąc w stanie wojny. Dają −15% kosztu utrzymania armii, −15% kosztu utrzymania floty i −5% kosztu utrzymania najemników. Zdolność Improved War Taxes w Epoce Odkryć zmniejsza koszt punktów o 100%. To redukcja wydatków przy podniesieniu podatków wojennych.",
+      "refs": [
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_RAISE_WAR_TAXES"
+        },
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "war_taxes"
+        },
+        {
+          "path": "common/ages/00_default.txt",
+          "symbol": "ab_free_war_taxes"
+        },
+        {
+          "path": "localisation/emperor_l_english.yml",
+          "symbol": "WAR_TAXES_TOOLTIP_COST"
+        }
+      ]
+    },
+    {
+      "id": "coalition-separate-peace",
+      "title": "Wojna przeciw koalicji • zakaz osobnego pokoju z jej członkiem",
+      "symbols": [
+        "NO_SEPARATE_PEACE_IF_COALITION",
+        "WAR_OVERVIEW_NO_PEACE",
+        "COALITIONWITHAGAINST"
+      ],
+      "text": "Z uczestnikiem, który walczy jako członek koalicji w wojnie koalicyjnej, nie można zawrzeć osobnego pokoju. Podpisuje się pokój z przywódcą strony. Pełna okupacja prowincji członka nie wyłącza zakazu. Uczestnictwo po tej samej stronie wojny jako zwykły sojusznik to odrębna sytuacja.",
+      "refs": [
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "NO_SEPARATE_PEACE_IF_COALITION"
+        },
+        {
+          "path": "localisation/core_l_english.yml",
+          "symbol": "WAR_OVERVIEW_NO_PEACE"
+        },
+        {
+          "path": "localisation/diplomacy_l_english.yml",
+          "symbol": "COALITIONWITHAGAINST"
+        }
+      ]
+    },
+    {
+      "id": "collecting-and-steering-trade",
+      "title": "Kupcy • zbieranie poza głównym węzłem i przekazywanie handlu",
+      "symbols": [
+        "TRADE_MISSION_OFFICE_DESC",
+        "TRADE_NON_CAPITAL_OFFICE",
+        "TRADE_POWER_HOME_BONUS",
+        "TRADE_POWER_HOME_BONUS_MAX",
+        "HINT_MERCHANT_TEXT"
+      ],
+      "text": "Kupiec ma dwa podstawowe zastosowania: zbiera dochód handlowy w węźle lub kieruje wartość handlu do połączonego węzła dalej w sieci. Na początek często warto wysłać kupca do węzła zasilającego twój główny węzeł i wybrać przekazywanie handlu w jego kierunku. Główny węzeł zbiera handel automatycznie. W innym węźle kupiec musi pozostać przy zbieraniu. Jego wycofanie kończy zbieranie i ponownie przekazuje się siłę handlową. Modyfikator zbierania poza głównym węzłem to bazowo −50% lokalnej siły handlowej danego kraju w tym węźle. Dochód zależy od udziału w sile przy danej wartości handlu, więc kara nie odejmuje płasko połowy gotowego dochodu.",
+      "refs": [
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_MISSION_OFFICE_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_NON_CAPITAL_OFFICE"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_POWER_HOME_BONUS"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_POWER_HOME_BONUS_MAX"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MERCHANT_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "trade-protection-and-power",
+      "title": "Ochrona handlu lekkimi okrętami • wpływ na siłę",
+      "symbols": [
+        "HINT_TRADEPOWER_TEXT",
+        "TRADE_SEND_MERCHANT_DESC",
+        "TRADE_NON_CAPITAL_OFFICE"
+      ],
+      "text": "Lekkie okręty wykonujące misję Protect Trade dodają siłę handlową kraju w wybranym węźle. Większa siła zwiększa udział w wartości węzła, który możesz zebrać lub przekazywać. Porównaj efekt w panelu handlu po przeliczeniu wyniku miesięcznego, wraz z utrzymaniem okrętów. Różne węzły mogą oferować różny zysk przy tej samej liczbie okrętów.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEPOWER_TEXT"
+        },
+        {
+          "path": "localisation/tradenodes_l_english.yml",
+          "symbol": "TRADE_SEND_MERCHANT_DESC"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "TRADE_NON_CAPITAL_OFFICE"
+        }
+      ]
+    },
+    {
+      "id": "workshops-and-manufactories",
+      "title": "Budynki gospodarcze • warsztat, manufaktura i wartość handlu",
+      "symbols": [
+        "workshop",
+        "manufactory",
+        "textile",
+        "HINT_TRADEPOWER_TEXT"
+      ],
+      "text": "Warsztat daje +50% lokalnej efektywności produkcji (local_production_efficiency), co podnosi dochód produkcyjny bez zwiększania ilości towarów. Zwykła manufaktura opiera się na bazie manufactory z +1 jednostką ilości wytwarzanego towaru (trade_goods_size). Manufaktura włókiennicza stosuje tę bazę m.in. dla sukna. Większa ilość towaru podnosi zarówno wartość handlową prowincji przekazaną do węzła, jak i bazę jej dochodu produkcyjnego.",
+      "refs": [
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "workshop"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "manufactory"
+        },
+        {
+          "path": "common/buildings/00_buildings.txt",
+          "symbol": "textile"
+        },
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_TRADEPOWER_TEXT"
+        }
+      ]
+    },
+    {
+      "id": "pol-move-capital-warsaw",
+      "title": "Polska i Rzeczpospolita • krajowa decyzja o przeniesieniu stolicy do Warszawy",
+      "symbols": [
+        "move_capital_to_warsawa",
+        "relocated_capital_warsawa"
+      ],
+      "text": "Krajowa decyzja dla POL lub PLC wymaga posiadania Warszawy będącej częścią stanu, rdzenia na prowincji i pozostawania w pokoju. Pokazuje się, jeśli stolica jest gdzie indziej, decyzji jeszcze nie wykorzystano i spełniono warunki trybu kraju. Przenosi stolicę do Warszawy i przyznaje +20 prestiżu państwu oraz po +1 bazowego podatku, bazowej produkcji i bazowych zasobów ludzkich w Warszawie (+3 rozwoju łącznie).",
+      "refs": [
+        {
+          "path": "decisions/Poland.txt",
+          "symbol": "move_capital_to_warsawa"
+        },
+        {
+          "path": "decisions/Poland.txt",
+          "symbol": "relocated_capital_warsawa"
+        }
+      ]
+    },
+    {
+      "id": "advisors-and-monarch-points",
+      "title": "Doradcy • punkty administracyjne, dyplomatyczne i militarne",
+      "symbols": [
+        "HINT_ADVISOR_TEXT",
+        "ADVISOR_COST"
+      ],
+      "text": "Doradca daje co miesiąc punkty w swojej kategorii: administracyjnej, dyplomatycznej lub militarnej. Doradcy mają także własne premie i miesięczną pensję. Droższy poziom to więcej punktów, ale przy napiętym budżecie zacznij od taniego doradcy w kategorii, w której najbardziej brakuje punktów.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_ADVISOR_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "ADVISOR_COST"
+        }
+      ]
+    },
+    {
+      "id": "battle-morale-and-discipline",
+      "title": "Morale, dyscyplina i taktyka • różne sposoby wygrywania bitwy",
+      "symbols": [
+        "HINT_MORALE_TEXT",
+        "BATTLE_DAILY_MORALE_DAMAGE",
+        "military_tactics",
+        "DISCIPLINE"
+      ],
+      "text": "Morale określa, jak długo armia pozostaje w walce. Porównaj bieżące morale obu armii przed starciem i daj oddziałom czas na odnowienie morale po przywróceniu utrzymania. Dyscyplina poprawia skuteczność walki i taktykę armii, a technologia militarna może dawać przewagę m.in. w taktyce, morale lub szerokości frontu. Armia o niskim morale może uciec mimo dużej liczby pozostałych żołnierzy.",
+      "refs": [
+        {
+          "path": "localisation/hints_l_english.yml",
+          "symbol": "HINT_MORALE_TEXT"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "BATTLE_DAILY_MORALE_DAMAGE"
+        },
+        {
+          "path": "common/technologies/mil.txt",
+          "symbol": "military_tactics"
+        },
+        {
+          "path": "localisation/text_l_english.yml",
+          "symbol": "DISCIPLINE"
+        }
+      ]
+    },
+    {
+      "id": "inflation-and-spending",
+      "title": "Inflacja • koszty, przyczyny i obniżanie",
+      "symbols": [
+        "inflation",
+        "INFLATION_FROM_LOAN",
+        "GOLD_INFLATION",
+        "PS_REDUCE_INFLATION",
+        "INFLATION_ACTION_REDUCTION"
+      ],
+      "text": "Inflacja zwiększa koszty wielu wydatków, w tym budowy, rekrutacji i utrzymania. Może rosnąć przez pożyczki lub dochody ze złota. W panelu gospodarki możesz wydać bazowo 75 punktów administracyjnych i obniżyć inflację o 2 punkty procentowe. Najpierw sprawdź bieżące źródła wzrostu w podpowiedzi inflacji i rozważ, czy bardziej potrzebujesz punktów administracyjnych.",
+      "refs": [
+        {
+          "path": "common/static_modifiers/00_static_modifiers.txt",
+          "symbol": "inflation"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INFLATION_FROM_LOAN"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "GOLD_INFLATION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "PS_REDUCE_INFLATION"
+        },
+        {
+          "path": "common/defines.lua",
+          "symbol": "INFLATION_ACTION_REDUCTION"
+        }
+      ]
+    }
+  ]
+}

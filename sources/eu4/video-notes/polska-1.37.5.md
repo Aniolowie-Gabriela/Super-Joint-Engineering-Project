@@ -61,11 +61,11 @@ Pruska Konfederacja może wybuchnąć u Krzyżaków od 1460 do końca 1499, jeż
 - `decisions/TheCommonwealth.txt`, `pol_commonwealth / owns_core_province = 43` — Gdańsk i Malbork są obowiązkowymi polskimi rdzeniami przy formowaniu przez unię.
 
 <a id="prussian-confederation-mission-pol"></a>
-## Gdańsk jako wasal lub Prusy Królewskie: wybierz pod wymagane rdzenie
+## Gdańsk jako wasal lub Prusy Książęce: wybierz pod wymagane rdzenie
 
-Po poparciu Konfederacji misja może być zaliczona, gdy Gdańsk jest niezależny i w pokoju, lecz nagroda z wydarzeniem o wasalizacji ma dodatkowy próg poniżej 100 rozwoju Gdańska. Zwykły wybór wasalizacji pozostawia Gdańsk jako osobne państwo i przyznaje roszczenia do wybranych ziem Prus Zachodnich. Jeśli Prusy jeszcze nie istnieją, drugi wybór także wasalizuje Gdańsk, zmienia jego tag na Prusy z nazwą Prusy Królewskie i przekazuje Polsce należące do niej lub jej poddanych prowincje Prus Zachodnich wraz z rdzeniami. Wniosek strategiczny: jeśli Gdańsk i Malbork są już po twojej stronie i chcesz formować Rzeczpospolitą, wariant Prus Królewskich może od razu załatwić własność i rdzenie potrzebne do decyzji.
+Po poparciu Konfederacji misja może być zaliczona, gdy Gdańsk jest niezależny i w pokoju, lecz nagroda z wydarzeniem o wasalizacji ma dodatkowy próg poniżej 100 rozwoju Gdańska. Zwykły wybór wasalizacji pozostawia Gdańsk jako osobne państwo i przyznaje roszczenia do wybranych ziem Prus Zachodnich. Jeśli Prusy jeszcze nie istnieją, drugi wybór także wasalizuje Gdańsk, zmienia jego tag na Prusy z nazwą Prusy Książęce i przekazuje Polsce należące do niej lub jej poddanych prowincje Prus Zachodnich wraz z rdzeniami. Przy formowaniu Rzeczypospolitej sprawdź, czy wariant od razu zapewni Gdańsk i Malbork jako polskie rdzenie.
 
-**Zakres i warunki.** Wariant Prus Królewskich nie przekazuje ziem trzymanych przez obce niezależne państwo. Warunek pokojowego i niezależnego Gdańska można obejść, zaliczając misję przez kontrolę wymaganych prowincji, ale to samo w sobie nie uruchamia nagrody wasalizacji.
+**Zakres i warunki.** Wariant Prus Książęcych nie przekazuje ziem trzymanych przez obce niezależne państwo. Warunek pokojowego i niezależnego Gdańska można obejść, zaliczając misję przez kontrolę wymaganych prowincji, ale to samo w sobie nie uruchamia nagrody wasalizacji.
 
 **Punkty odniesienia w plikach EU4 1.37.5.0.**
 
@@ -74,6 +74,7 @@ Po poparciu Konfederacji misja może być zaliczona, gdy Gdańsk jest niezależn
 - `events/flavorTEU.txt`, `flavor_teu.3.a oraz flavor_teu.3.b` — Dwie opcje podległości, w tym warunek braku istniejących Prus i przekazanie ziem Prus Zachodnich z rdzeniami.
 - `map/area.txt`, `west_prussia_area` — Prowincje 43 i 1841 leżą w obszarze objętym transferem.
 - `decisions/TheCommonwealth.txt`, `pol_commonwealth / allow` — Polska musi sama posiadać rdzenie na Gdańsku i Malborku.
+- `localisation/scandinavia_l_english.yml`, `RPR:1` — Nazwa ustawiana przez wydarzenie to Ducal Prussia, czyli Prusy Książęce.
 
 <a id="pol-commonwealth-potential-allow-i-inherit-lit"></a>
 ## Utworzenie Rzeczypospolitej: dwa tryby i granice dla Litwy
