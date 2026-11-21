@@ -1,0 +1,6 @@
+.git
+.eu4
+outputs
+.env
+**/__pycache__
+agent-skills

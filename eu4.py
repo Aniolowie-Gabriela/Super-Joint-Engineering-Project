@@ -82,7 +82,8 @@ def prepare(args):
         game = Path(entered) if entered else None
     if game is not None and not (game / "launcher-settings.json").is_file():
         raise ValueError("Wybierz folder instalacji Europa Universalis IV z plikiem launcher-settings.json.")
-    prepare_model(args.url)
+    if not args.no_model:
+        prepare_model(args.url)
     if not PYTHON.is_file():
         print("Przygotowuję Pythona dla asystenta…", flush=True)
         venv.create(ENV, with_pip=True)
@@ -140,6 +141,8 @@ def main():
     source = setup.add_mutually_exclusive_group()
     source.add_argument("--game-dir", type=Path, help="dołącz pliki własnej instalacji EU4")
     source.add_argument("--choose-game", action="store_true", help="zapytaj o folder gry")
+    setup.add_argument("--no-model", action="store_true",
+                       help="pomiń Ollamę i Gemmę (np. serwer wyszukiwania dla zewnętrznego agenta)")
     ask = commands.add_parser("ask", help="zadaj pytanie")
     ask.add_argument("question", nargs="?")
     ask.add_argument("--db", type=Path, help="otwórz wskazaną istniejącą bazę")
