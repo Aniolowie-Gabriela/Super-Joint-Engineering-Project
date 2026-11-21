@@ -14,7 +14,7 @@ git clone https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project.
 cd Super-Joint-Engineering-Project
 ~~~
 
-[Schemat działania i odtwarzanie testu](docs/eu4-workflow.md) · [Przykładowa rozmowa o kampanii Polską](docs/eu4-polska-demo.md) · [Materiały do bazy](sources/eu4/README.md)
+[Schemat działania i odtwarzanie testu](docs/eu4-workflow.md) · [Przykładowa rozmowa o kampanii Polską](docs/eu4-polska-demo.md) · [Materiały do bazy](sources/eu4/README.md) · [Rozmowa głosowa przez ElevenLabs](docs/eu4-elevenlabs.md)
 
 ## Agent skills
 

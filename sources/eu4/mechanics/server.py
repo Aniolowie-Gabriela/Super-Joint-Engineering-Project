@@ -9,7 +9,7 @@ import hmac
 import os
 from pathlib import Path
 
-from ask import resolve_db_path
+from ask import prepared_db_path
 from mcp_server import find_passages
 from search import find_symbol, read_record, trace_flag, trade_route
 
@@ -76,7 +76,7 @@ def create_app(db_path: Path, token: str):
 def build_app():
     """Fabryka dla uvicorn: uvicorn --factory server:build_app."""
     token = os.environ.get("SEARCH_API_TOKEN", "")
-    return create_app(resolve_db_path(), token)
+    return create_app(prepared_db_path(), token)
 
 
 def main():
@@ -87,7 +87,7 @@ def main():
     args = parser.parse_args()
     import uvicorn
 
-    app = create_app(resolve_db_path(args.db), os.environ.get("SEARCH_API_TOKEN", ""))
+    app = create_app(prepared_db_path(args.db), os.environ.get("SEARCH_API_TOKEN", ""))
     uvicorn.run(app, host=args.host, port=args.port)
 
 

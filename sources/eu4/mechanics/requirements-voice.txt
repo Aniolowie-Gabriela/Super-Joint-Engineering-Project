@@ -1,0 +1,7 @@
+-r requirements-server.txt
+elevenlabs==2.79.0
+sounddevice==0.5.6
+# aplikacja w tle (voice_app.py)
+pynput==1.8.2
+pystray==0.19.5
+pillow==13.0.0

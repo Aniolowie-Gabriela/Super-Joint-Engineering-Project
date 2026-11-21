@@ -63,6 +63,17 @@ def resolve_db_path(explicit=None):
     raise FileNotFoundError("Nie znaleziono bazy EU4. Podaj jej ścieżkę przez --db.")
 
 
+def prepared_db_path(explicit=None):
+    """Baza z --db/EU4_RAG_DB, inaczej przygotowana przez `eu4.py setup` (.eu4/game lub .eu4/shared)."""
+    if explicit is None and not os.environ.get("EU4_RAG_DB"):
+        data = Path(__file__).resolve().parents[3] / ".eu4"
+        for kind in ("game", "shared"):
+            path = data / kind / "knowledge.sqlite3"
+            if path.is_file():
+                return path
+    return resolve_db_path(explicit)
+
+
 def _loopback_address(url):
     try:
         parsed = urlsplit(url)
