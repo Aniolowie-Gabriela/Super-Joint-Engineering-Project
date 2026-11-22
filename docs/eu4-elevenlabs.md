@@ -61,11 +61,16 @@ Do grania: asystent siedzi w zasobniku systemowym, a ty mówisz, trzymając skr�
 2. Uruchom `Asystent-glosowy-EU4.cmd`. Za pierwszym razem doinstaluje pakiety, potem pokaże ikonę mikrofonu w zasobniku.
 3. Trzymaj **Prawy Ctrl** i mów, puść, gdy skończysz. Naciśnięcie skrótu przerywa agenta.
 
-Kolor ikony: szary — gotowy, pomarańczowy — łączenie, zielony — połączony, czerwony — słucha, niebieski — agent mówi. W menu ikony są „Rozłącz teraz” i „Zakończ”.
+Kolor ikony: szary — gotowy, pomarańczowy — łączenie, zielony — połączony, czerwony — słucha, niebieski — agent mówi. W menu ikony są „Historia rozmów”, „Rozłącz teraz” i „Zakończ”.
+
+**Historia rozmów** (kliknięcie ikony albo pozycja w menu) otwiera okno z listą rozmów i wyszukiwarką. Przy każdym pytaniu widać, czego agent szukał, i dokładnie te fragmenty, które dostał, z linkami do źródeł (wiki, filmy) albo ścieżką do pliku gry i przyciskiem „Pełny fragment”. Okno odświeża się na żywo, a zamknięcie go nie wyłącza asystenta. Jest też „Dziennik ostrzeżeń” z błędami aplikacji.
+
+- Historia leży lokalnie w `.eu4/history.sqlite`; aby ją wyczyścić, zamknij asystenta i usuń ten plik.
+- Okno to strona na `127.0.0.1` z losowym portem, otwierana w Edge (albo Chrome) jako okno aplikacji. Dostęp wymaga tokenu, który zna tylko to okno.
 
 - Połączenie z agentem powstaje przy pierwszym naciśnięciu skrótu i kończy się po minucie bezczynności, bo ElevenLabs liczy minuty połączenia. Mowa sprzed zestawienia połączenia jest buforowana.
 - Inny skrót: `EU4_VOICE_HOTKEY=<caps_lock>` w `.env` albo np. `<ctrl>+<alt>+v`. Unikaj Spacji (pauza w EU4) i klawiszy F1–F12.
-- Rozmowa i wyszukiwane źródła trafiają do `.eu4/voice-app.log`.
+- Log techniczny jest w `.eu4/voice-app.log`.
 - Najpewniej działa z EU4 w trybie okna bez ramki.
 - Start razem z Windows: Win+R → `shell:startup` i wrzuć tam skrót do `Asystent-glosowy-EU4.cmd`.
 - Na Linuksie z Waylandem skrót działa tylko w oknach X11. To ograniczenie Waylanda.

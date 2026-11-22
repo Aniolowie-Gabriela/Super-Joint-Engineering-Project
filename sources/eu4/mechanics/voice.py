@@ -34,7 +34,8 @@ def load_env_file(path):
             os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
 
 
-def make_tools(db_path, ClientTools, report=print):
+def make_tools(db_path, ClientTools, report=print, on_tool=None):
+    """on_tool(kind, text, payload) dostaje dokładnie to, co trafia do agenta (np. do historii)."""
     def search_eu4(params):
         query = str(params.get("query") or "")
         try:
@@ -45,14 +46,20 @@ def make_tools(db_path, ClientTools, report=print):
         report(f"  [szukam: {query}]")
         for item in passages:
             report(f"    • {item.get('title', item['chunk_id'])}  ({item['chunk_id']})")
-        return json.dumps(passages, ensure_ascii=False)
+        payload = json.dumps(passages, ensure_ascii=False)
+        if on_tool is not None:
+            on_tool("search", query, payload)
+        return payload
 
     def read_eu4_record(params):
         found = read_record(db_path, str(params.get("chunk_id") or ""))
         if found is None:
             raise ValueError("Nie ma takiego fragmentu.")
         report(f"  [czytam: {found.get('chunk_id')}]")
-        return json.dumps(found, ensure_ascii=False)
+        payload = json.dumps(found, ensure_ascii=False)
+        if on_tool is not None:
+            on_tool("record", found.get("chunk_id", ""), payload)
+        return payload
 
     tools = ClientTools()
     tools.register("search_eu4", search_eu4)

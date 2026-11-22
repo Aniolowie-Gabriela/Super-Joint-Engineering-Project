@@ -3,7 +3,8 @@
 Ikona w zasobniku pokazuje stan. Połączenie z agentem ElevenLabs powstaje przy pierwszym
 naciśnięciu skrótu i kończy się po minucie bezczynności, bo ElevenLabs liczy minuty
 połączenia. Mikrofon trafia do agenta tylko podczas trzymania skrótu; poza tym idzie cisza.
-Źródła EU4 są szukane lokalnie, jak w voice.py. Konfiguracja w .env:
+Źródła EU4 są szukane lokalnie, jak w voice.py. Pytania, odpowiedzi, źródła wysłane agentowi
+i ostrzeżenia trafiają do .eu4/history.sqlite; okno historii otwiera się z ikony. Konfiguracja w .env:
 ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID i opcjonalnie EU4_VOICE_HOTKEY (domyślnie <ctrl_r>).
 """
 
@@ -18,6 +19,7 @@ import threading
 import time
 
 from ask import prepared_db_path
+from history import History
 from mcp_server import find_passages
 from voice import RATE, ROOT, load_env_file, make_tools
 
@@ -27,6 +29,7 @@ MAX_HOLD_SECONDS = 120  # zabezpieczenie, gdy system zgubi puszczenie klawisza
 LOCK_PORT = 47821       # druga kopia aplikacji nie wystartuje
 BLOCK = 4000            # 250 ms dźwięku z mikrofonu
 LOG_FILE = ROOT / ".eu4" / "voice-app.log"
+HISTORY_FILE = ROOT / ".eu4" / "history.sqlite"
 KEY_NAMES = {"ctrl_r": "Prawy Ctrl", "ctrl_l": "Lewy Ctrl", "ctrl": "Ctrl", "shift": "Shift",
              "shift_r": "Prawy Shift", "alt": "Alt", "alt_l": "Lewy Alt", "alt_r": "Prawy Alt",
              "alt_gr": "AltGr", "caps_lock": "Caps Lock", "scroll_lock": "Scroll Lock", "space": "Spacja"}
@@ -36,6 +39,23 @@ STATUS = {"idle": "Gotowy", "connecting": "Łączę z agentem…", "ready": "Po�
           "listening": "Słucham…", "speaking": "Agent mówi"}
 
 log = logging.getLogger("eu4-voice")
+
+
+class HistoryLogHandler(logging.Handler):
+    """Ostrzeżenia i błędy aplikacji trafiają też do historii, przy bieżącej rozmowie."""
+
+    def __init__(self, history, session):
+        super().__init__(logging.WARNING)
+        self.history, self.session = history, session
+
+    def emit(self, record):
+        try:
+            text = record.getMessage()
+            if record.exc_info:
+                text += "\n" + logging.Formatter().formatException(record.exc_info)
+            self.history.add(self.session(), "log", text, {"level": record.levelname})
+        except Exception:  # historia nie może zatrzymać aplikacji ani zapętlić logowania
+            pass
 
 
 def hotkey_label(spec):
@@ -176,12 +196,14 @@ def make_audio_class(AudioInterface, sounddevice):
 
 
 class VoiceApp:
-    def __init__(self, db_path, api_key, agent_id, hotkey):
+    def __init__(self, db_path, api_key, agent_id, hotkey, history):
         from elevenlabs.client import ElevenLabs
         from elevenlabs.conversational_ai.conversation import (
             AudioInterface, ClientTools, Conversation, ConversationInitiationData)
 
         self.db_path = db_path
+        self.history = history
+        self.session_id = None
         self.agent_id = agent_id
         self.client = ElevenLabs(api_key=api_key)
         self.Conversation, self.ClientTools = Conversation, ClientTools
@@ -200,6 +222,9 @@ class VoiceApp:
         self.running = True
         self.icon = None
         self.state = None
+        from history_web import HistoryWindow
+
+        self.window = HistoryWindow(history, db_path, self.status, log)
 
     # --- rozmowa ---------------------------------------------------------------------------
     def touch(self):
@@ -218,12 +243,13 @@ class VoiceApp:
             if self.conversation is not None or not self.running:
                 return
             log.info("Łączę z agentem…")
+            self.session_id = self.history.new_session()
             self.conversation = self.Conversation(
                 self.client, self.agent_id,
                 requires_auth=True,
                 audio_interface=self.audio,
                 config=self.initiation,
-                client_tools=make_tools(self.db_path, self.ClientTools, report=log.info),
+                client_tools=make_tools(self.db_path, self.ClientTools, report=log.info, on_tool=self.remember),
                 callback_user_transcript=self.on_user,
                 callback_agent_response=self.on_agent,
                 callback_disconnect=self.on_disconnect,
@@ -234,15 +260,23 @@ class VoiceApp:
                 log.exception("Nie udało się połączyć z ElevenLabs")
                 self.conversation = None
 
+    def remember(self, kind, text, data=None):
+        try:
+            self.history.add(self.session_id, kind, text, data)
+        except Exception as error:
+            log.warning("Nie zapisano w historii: %s", error)
+
     def on_user(self, text):
         self.touch()
         self.connected = True
         log.info("Ty: %s", text)
+        self.remember("user", text)
 
     def on_agent(self, text):
         self.touch()
         self.connected = True
         log.info("Agent: %s", text)
+        self.remember("agent", text)
 
     def on_disconnect(self, details):
         with self.lock:
@@ -253,6 +287,7 @@ class VoiceApp:
             self.notify("Połączenie z agentem przerwane. Naciśnij skrót, aby połączyć ponownie.")
         else:
             log.info("Rozłączono (%s)", details.reason)
+        self.session_id = None  # późniejsze ostrzeżenia nie należą już do tej rozmowy
 
     def end_conversation(self):
         conversation = self.conversation
@@ -260,6 +295,11 @@ class VoiceApp:
             conversation.end_session()
 
     # --- ikona i pętla stanu ----------------------------------------------------------------
+    def status(self):
+        state = self.state or "idle"
+        return {"state": state, "label": STATUS[state], "hotkey": self.hotkey_text,
+                "session_id": self.session_id}
+
     def current_state(self):
         if self.audio.talking:
             return "listening"
@@ -300,6 +340,7 @@ class VoiceApp:
         self.running = False
         self.end_conversation()
         self.hotkey.listener.stop()
+        self.window.stop()
         self.audio.close()
         if self.icon is not None:
             self.icon.stop()
@@ -310,6 +351,7 @@ class VoiceApp:
         menu = pystray.Menu(
             pystray.MenuItem(lambda item: f"Stan: {STATUS[self.state or 'idle']}", None, enabled=False),
             pystray.MenuItem(f"Mów: przytrzymaj {self.hotkey_text}", None, enabled=False),
+            pystray.MenuItem("Historia rozmów", self.window.open, default=True),
             pystray.MenuItem("Rozłącz teraz", lambda *_: self.end_conversation()),
             pystray.MenuItem("Zakończ", self.quit),
         )
@@ -385,14 +427,16 @@ def main():
     log.info("Ładuję indeks…")
     find_passages(db_path, "kupcy", 1)
 
+    history = History(HISTORY_FILE)
     try:
-        app = VoiceApp(db_path, api_key, agent_id, args.hotkey)
+        app = VoiceApp(db_path, api_key, agent_id, args.hotkey, history)
     except ImportError as exc:
         fatal(f"Brakuje pakietu {exc.name}. Uruchom ponownie EU4-Glos, aby go doinstalować.")
     except ValueError as exc:
         fatal(f"Nieprawidłowy skrót {args.hotkey!r}: {exc}")
     except OSError as exc:
         fatal(f"Nie mogę otworzyć mikrofonu ani głośnika: {exc}")
+    logging.getLogger().addHandler(HistoryLogHandler(history, lambda: app.session_id))
     log.info("Gotowe. Przytrzymaj %s i mów.", app.hotkey_text)
     app.run()
 
