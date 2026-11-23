@@ -30,7 +30,8 @@ PORTABLE = ROOT / "tools" / "portable"
 APP_NAME = "Asystent-EU4"
 APP_FILES = (
     "ask.py", "build_index.py", "chat_history.py", "game_facts.py", "interpret.py", "local_web.py",
-    "panel_access.py", "rules.json", "search.py", "semantic.py", "user_sources.py", "web_import.py",
+    "paged_reader.py", "panel_access.py", "rules.json", "search.py",
+    "semantic.py", "user_sources.py", "web_import.py",
 )
 DATA_FILES = (
     "knowledge.sqlite3", "coverage.json",

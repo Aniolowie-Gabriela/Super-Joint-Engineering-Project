@@ -17,11 +17,20 @@ class ChatHistoryTest(unittest.TestCase):
             source_id = sources.save("Polska", "Pierwotny fragment.")["id"]
             chunk_id = f"user:{source_id}:1"
             snapshot = {**sources.record(chunk_id), "number": 1}
+            reading = {"pages": [
+                {"query": "Unia Polski", "items": [
+                    {"chunk_id": chunk_id, "title": "Polska", "text": "Pierwotny fragment.",
+                     "kept": True, "kept_text": "Pierwotny", "game_version": ""},
+                    {"chunk_id": "trade:1", "title": "Handel", "text": "Kupcy kierują handlem.",
+                     "kept": False, "game_version": "1.37"},
+                ], "action": "search", "gap": "Warunki unii"},
+                {"query": "Warunki unii Polski", "items": [], "action": "ready", "gap": ""},
+            ], "stop": "ready"}
 
             chat_id, first_id = history.append(
                 chat_id=None, expected_message_id=None, question="Pytanie o Polskę",
                 answer="Zobacz opis [1].", sources=[snapshot],
-                diagnostics={"sources": [snapshot], "cited_numbers": [1]},
+                diagnostics={"sources": [snapshot], "cited_numbers": [1], "reading": reading},
             )
             _, second_id = history.append(
                 chat_id=chat_id, expected_message_id=first_id, question="I co dalej?",
@@ -31,6 +40,8 @@ class ChatHistoryTest(unittest.TestCase):
             first = saved["messages"][0]
             self.assertEqual(first["sources"][0]["text"], "Pierwotny fragment.")
             self.assertEqual(first["diagnostics"]["sources"], [snapshot])
+            self.assertEqual(first["diagnostics"]["reading"], reading)
+            self.assertEqual(saved["messages"][1]["diagnostics"], {})
 
             sources.save("Polska", "Nowy fragment.", source_id=source_id)
             self.assertEqual(sources.record(chunk_id)["text"], "Nowy fragment.")

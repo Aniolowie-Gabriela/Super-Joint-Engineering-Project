@@ -10,11 +10,17 @@ flowchart LR
     Q["Zapytaj-EU4<br/>Twoje pytanie"] --> S["Wyszukiwanie źródeł"]
     B --> S
     S --> K["Sprawdzona karta dla prostego pytania"]
-    S --> M["Gemma 4 E4B<br/>wybór karty lub odpowiedź z kontekstu"]
+    S --> M["Gemma czyta do 3 nowych fragmentów"]
+    M --> E["Zachowuje przydatne fragmenty ze źródłami"]
+    E -->|"kolejna strona lub inne zapytanie, łącznie do 5 stron"| S
+    E -->|"wystarczające dowody, brak nowych notatek lub koniec limitu"| F["Odpowiedź z zachowanych fragmentów"]
+    E -->|"potrzebne dane z kampanii"| F
     K --> A["Odpowiedź po polsku + źródła"]
-    M --> A
+    F --> A
     B --> C["MCP<br/>źródła dla innych aplikacji"]
 ~~~
+
+W aplikacji „strona” oznacza partię wyników z lokalnej bazy. Po zmianie zapytania Atlas może znaleźć kolejne materiały ze wspólnej bazy i z własnych notatek gracza. Każda przeczytana strona zużywa jeden z pięciu kroków. Kolejne wywołanie modelu dostaje wybrane wcześniej dowody i nową stronę. Pozwala to pracować w domyślnym oknie 4096 tokenów. Gdy brakuje informacji o stanie kampanii, Atlas może poprosić o konkretną informację. W panelu **Jak powstała odpowiedź?** można porównać odczytane fragmenty z tymi zachowanymi do odpowiedzi.
 
 ## Którą wiedzę możesz udostępnić
 

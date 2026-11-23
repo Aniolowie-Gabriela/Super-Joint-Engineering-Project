@@ -174,7 +174,12 @@ def normalize(value):
     return "".join(char for char in plain if not unicodedata.combining(char))
 
 
-def guide_context(db_path, question=None):
+def exact_question(question):
+    text = normalize(question).strip().rstrip("?.!")
+    return re.sub(r"^eu4 1\.37(?:\.\d+){0,2},? bez modow\.\s*", "", text)
+
+
+def guide_context(db_path, question=None, exact_match=False):
     """Odczytaj gotowe objaśnienia pasujące do krótkiego, typowego pytania."""
     with closing(open_index(db_path)) as db:
         if not db.execute("SELECT 1 FROM sqlite_master WHERE name = 'guide_pattern'").fetchone():
@@ -182,9 +187,15 @@ def guide_context(db_path, question=None):
         if question is None:
             matched = [row[0] for row in db.execute("SELECT DISTINCT record_id FROM guide_pattern ORDER BY record_id")]
         else:
-            text = normalize(question)
+            text = exact_question(question) if exact_match else normalize(question)
             rows = db.execute("SELECT pattern, record_id FROM guide_pattern ORDER BY record_id")
-            matched = list(dict.fromkeys(record_id for pattern, record_id in rows if re.search(pattern, text)))
+            if exact_match:
+                matched = list(dict.fromkeys(
+                    record_id for pattern, record_id in rows
+                    if ".*" not in pattern and ".{" not in pattern and re.fullmatch(pattern, text)
+                ))
+            else:
+                matched = list(dict.fromkeys(record_id for pattern, record_id in rows if re.search(pattern, text)))
         return [
             {**json.loads(db.execute("SELECT json FROM record WHERE id = ?", (record_id,)).fetchone()[0]),
              "index_row_id": record_id}
@@ -242,8 +253,15 @@ def trade_route(db_path, origin, destination, nodes=None):
     return []
 
 
-def trade_question(db_path, question):
-    text = normalize(question)
+def trade_question(db_path, question, exact_match=False):
+    text = exact_question(question) if exact_match else normalize(question)
+    route_prefix = re.compile(
+        r"(?:czy (?:mozna |da sie )?(?:przekierowac|skierowac) handel|"
+        r"czy handel (?:moze )?(?:plynie|plynac|przeplywa|przeplywac)|"
+        r"jaka jest trasa handlu|jak plynie handel) (?:z|ze|od)\b",
+    )
+    if exact_match and not route_prefix.match(text):
+        return None
     if not re.search(r"handel|handl|zbier|przekier|wezl|towar|trade|kupc", text):
         return None
     nodes = trade_network(db_path)
@@ -260,17 +278,22 @@ def trade_question(db_path, question):
                 direction = "destination"
             else:
                 direction = None
-            mentions.append((found.end(), symbol, direction))
+            mentions.append((found.start(), found.end(), symbol, direction))
     if len(mentions) != 2:
         return None
     mentions.sort()
     first, second = mentions
-    if first[2] == second[2]:
-        if first[2] is not None or not re.match(r"\s*(?:→|->)", text[first[0]:]):
+    if exact_match:
+        leading = text[:first[0]].strip()
+        separator = text[first[1]:second[0]].strip()
+        if not route_prefix.fullmatch(leading) or separator not in {"do", "w kierunku"} or text[second[1]:]:
             return None
-    if first[2] == "destination" or second[2] == "origin":
+    if first[3] == second[3]:
+        if first[3] is not None or not re.match(r"\s*(?:→|->)", text[first[1]:]):
+            return None
+    if first[3] == "destination" or second[3] == "origin":
         first, second = second, first
-    origin, target = first[1], second[1]
+    origin, target = first[2], second[2]
     return nodes[origin][0], nodes[target][0], trade_route(db_path, origin, target, nodes)
 
 
@@ -371,8 +394,10 @@ def related(db, record, limit=6):
     return links
 
 
-def for_context(db, record):
+def for_context(db, record, original=False):
     result = dict(record)
+    if original:
+        result.setdefault("source_text", record["text"])
     result["related"] = related(db, record)
     if "notes_path" not in record:
         siblings = db.execute(
@@ -488,7 +513,7 @@ def dependencies(db, record, question):
             yield technology
 
 
-def threshold_context(db, question):
+def threshold_context(db, question, original=False):
     """Select the exact intervals in small game-defined tier tables."""
     normalized = re.sub(r"^\s*eu4 [\d.]+ bez modow[. ]*", "", normalize(question))
     if re.search(r"ziem.{0,15}koron|crown land|crownland", normalized):
@@ -516,6 +541,8 @@ def threshold_context(db, question):
         if applies:
             result = dict(record)
             result["tier_match"] = True
+            if original:
+                result["source_text"] = record["text"]
             result["text"] = (
                 f"Dane {', '.join(f'{value:g}' for value in applies)} należą do tego przedziału "
                 f"(od {start:g} włącznie do {finish:g} wyłącznie).\n\n" + record["text"]
@@ -524,7 +551,7 @@ def threshold_context(db, question):
     return results
 
 
-def context(db_path, question, limit=6, extra_terms=()):
+def context(db_path, question, limit=6, extra_terms=(), original=False):
     question = question.strip()
     if not question or len(question) > 1200:
         raise ValueError("Wpisz pytanie o EU4 o długości do 1200 znaków.")
@@ -568,7 +595,7 @@ def context(db_path, question, limit=6, extra_terms=()):
             exact_entry = next((item for item in matches if item["symbol"] == symbol), None)
             if exact_entry:
                 choose({**exact_entry, "direct_mechanic": True})
-        for entry in threshold_context(db, question)[:limit]:
+        for entry in threshold_context(db, question, original=original)[:limit]:
             choose(entry)
         symbols = explicit_symbols(question)
         inferred = [normalize(term).replace(" ", "_") for term in extra_terms]
@@ -651,7 +678,7 @@ def context(db_path, question, limit=6, extra_terms=()):
         find(phrase_query(extra_terms), max(1, limit - 1))
         lexical_limit = min(limit, len(candidates) + 2) if len(candidates) >= 2 and symbols else limit
         find(lexical_query(question), lexical_limit)
-        return [for_context(db, record) for record in candidates]
+        return [for_context(db, record, original=original) for record in candidates]
 
 
 def main():

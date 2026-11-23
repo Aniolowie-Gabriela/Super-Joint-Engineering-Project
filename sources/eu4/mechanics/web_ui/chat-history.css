@@ -108,6 +108,17 @@
 .diagnostic-list li { display: grid; gap: .08rem; justify-items: start; }
 .diagnostic-list .diagnostic-explanation { font-size: .83rem; }
 
+.reading-trace { margin: .8rem 0; padding-top: .65rem; border-top: 1px solid var(--line); }
+.reading-trace h3, .reading-page h4 { margin: 0; font-size: inherit; }
+.reading-page { margin-top: .7rem; }
+.reading-items { list-style: none; display: grid; gap: .5rem; margin: .45rem 0 0; padding: 0; }
+.reading-items:empty { display: none; }
+.reading-items li { padding: .35rem .6rem; border-left: 2px solid var(--line); background: var(--paper); }
+.reading-item-status { display: block; font-size: .83rem; }
+.reading-items .reading-excerpt { margin-top: .2rem; }
+.reading-full { margin-top: .3rem; }
+.reading-full summary { font-size: .83rem; }
+
 .remove-chat-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
 #remove-chat-dialog .danger { background: #8b2137; color: white; }
 #remove-chat-dialog .danger:disabled { background: #e3d9ce; color: #5f554f; }

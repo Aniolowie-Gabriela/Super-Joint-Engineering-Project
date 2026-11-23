@@ -4,11 +4,11 @@ Zadawaj po polsku pytania o rozgrywkę. Asystent korzysta z naszej wiedzy o EU4 
 
 ## Aplikacja dla gracza na Windows x64
 
-**[Pobierz instalator Atlas EU4 (.exe)](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.2.0/Atlas-EU4-Setup-x64.exe)**. Uruchom go, kliknij **Instaluj**, a następnie otwórz **Atlas EU4** z menu Start. Instalacja obejmuje konto bieżącego użytkownika. Aplikację można usunąć z listy zainstalowanych aplikacji Windows.
+**[Pobierz instalator Atlas EU4 (.exe)](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.3.0/Atlas-EU4-Setup-x64.exe)**. Uruchom go, kliknij **Instaluj**, a następnie otwórz **Atlas EU4** z menu Start. Instalacja obejmuje konto bieżącego użytkownika. Aplikację można usunąć z listy zainstalowanych aplikacji Windows.
 
 ### Wersja przenośna ZIP
 
-1. [Pobierz paczkę dla Windows](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.2.0/Asystent-EU4-Windows-x64.zip) i rozpakuj ją do jednego folderu.
+1. [Pobierz paczkę dla Windows](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.3.0/Asystent-EU4-Windows-x64.zip) i rozpakuj ją do jednego folderu.
 2. Dwukrotnie kliknij **Uruchom-EU4.cmd**. W przeglądarce otworzy się lokalna aplikacja. **Wiedza o grze** zawiera 698 materiałów, które możesz przeszukiwać od pierwszego uruchomienia.
 3. W **Czacie** wpisz pytanie, np. „Ile kosztuje warsztat?”. Do pierwszej rozmowy potrzebujesz Gemmy 4 E4B i zgodnej karty z miejscem na cały model. Jeśli brakuje Ollamy, uruchom **Przygotuj-model.cmd** z paczki. Pierwsze pobranie modelu wymaga internetu.
 
@@ -18,7 +18,7 @@ Kliknięcie źródła odpowiedzi otwiera materiał z wersją gry. Po przygotowan
 
 **Historia rozmów.** W widoku **Czat** wybierz tytuł wcześniejszej rozmowy, żeby przeczytać odpowiedzi lub zadać kolejne pytanie. **Nowa rozmowa** zaczyna osobny temat. Rozmowy i własne materiały są zapisywane lokalnie w folderze `%LOCALAPPDATA%\AtlasEU4`.
 
-**Sprawdzenie słabej odpowiedzi.** Przy odpowiedzi otwórz **Jak powstała odpowiedź?**. Najpierw zobacz, czego szukał asystent. Potem sprawdź fragmenty użyte przy odpowiedzi i porównaj je z cytatami. Jeśli w przekazanym fragmencie jest prawidłowa liczba, a w odpowiedzi inna, rozbieżność powstała już po wyborze materiału. W historii możesz otworzyć treść źródła zachowaną w chwili odpowiedzi.
+**Sprawdzenie słabej odpowiedzi.** Przy odpowiedzi otwórz **Jak powstała odpowiedź?**. W wersji 0.3.0 przy pytaniach wymagających wyszukiwania zobaczysz kolejne strony notatek, zachowane dowody i powód zakończenia poszukiwań. Atlas może przeczytać do pięciu stron po trzy fragmenty i zmienić zapytanie, gdy brakuje konkretnej reguły. Porównaj zachowany tekst z tym, co podaje odpowiedź. Jeśli w przekazanym fragmencie jest prawidłowa liczba, a w odpowiedzi inna, rozbieżność powstała już po wyborze materiału. W historii możesz otworzyć treść źródła zachowaną w chwili odpowiedzi.
 
 **Próba dla operatora.** W widoku **Wiedza o grze** wyszukaj „warsztat” i otwórz „Budowa • Warsztat”. Karta powinna pokazać 100 dukatów, 12 miesięcy i technologię administracyjną 6. W **Czacie** zapytaj „Ile kosztuje warsztat?”, a potem „A ile trwa jego budowa?”. Kliknij numer źródła i porównaj odpowiedź z kartą.
 

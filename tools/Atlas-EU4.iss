@@ -2,11 +2,13 @@
 #ifndef PayloadDir
   #error Pass the absolute path of the unpacked portable application in PayloadDir.
 #endif
+#define AtlasVersion "0.3.0"
 
 [Setup]
 AppId={{0ED26FD5-8E48-4667-BE9C-9739C6411A28}
 AppName=Atlas EU4
-AppVersion=0.2.0
+AppVersion={#AtlasVersion}
+VersionInfoVersion={#AtlasVersion}
 AppPublisher=Aniolowie-Gabriela
 AppPublisherURL=https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project
 DefaultDirName={localappdata}\Programs\Atlas EU4

@@ -176,6 +176,73 @@
     storage: "Nie udało się odczytać albo zapisać rozmowy.",
   };
 
+  const readingStopLabels = {
+    ready: "Zebrano fragmenty do odpowiedzi.",
+    exhausted: "Skończyły się wyniki wyszukiwania.",
+    limit: "Osiągnięto limit przeglądania źródeł.",
+    campaign: "Do odpowiedzi potrzeba informacji o Twojej kampanii.",
+    invalid: "Nie udało się ustalić, które fragmenty zachować.",
+  };
+
+  const readingActionLabels = {
+    ready: "Przygotowanie odpowiedzi",
+    next: "Sprawdzenie kolejnych wyników",
+    search: "Wyszukiwanie brakującej informacji",
+    campaign: "Dopytanie o kampanię",
+    invalid: "Nie udało się odczytać decyzji modelu",
+  };
+
+  function appendReadingExcerpt(item, fragment) {
+    const kept = fragment.kept && fragment.kept_text;
+    const text = kept || fragment.text;
+    if (!text) return;
+    const limit = 260;
+    const characters = [...text];
+    const shortened = characters.length > limit;
+    const preview = shortened ? `${characters.slice(0, limit).join("").trimEnd()}…` : text;
+    item.append(element("p", "reading-excerpt", preview));
+
+    const hasMore = kept && fragment.text && kept !== fragment.text;
+    if (!shortened && !hasMore) return;
+    const full = element("details", "reading-full");
+    full.append(element("summary", null, "Pokaż cały fragment"));
+    if (shortened && hasMore) {
+      full.append(element("p", "diagnostic-explanation", "Zachowany cytat"), element("p", null, kept));
+    }
+    if (hasMore) full.append(element("p", "diagnostic-explanation", "Cały przejrzany fragment"));
+    full.append(element("p", null, hasMore ? fragment.text : text));
+    item.append(full);
+  }
+
+  function readingTrace(reading) {
+    const section = element("section", "reading-trace");
+    section.append(element("h3", null, "Przejrzane fragmenty"));
+    const stop = readingStopLabels[reading.stop];
+    if (stop) section.append(element("p", null, stop));
+
+    for (const [index, page] of reading.pages.entries()) {
+      const group = element("div", "reading-page");
+      const action = readingActionLabels[page.action];
+      const heading = `Przegląd ${index + 1}${action ? ` · ${action}` : ""}`;
+      group.append(element("h4", null, heading));
+      if (page.query) group.append(element("p", "diagnostic-explanation", `Szukano · ${page.query}`));
+      if (page.gap) group.append(element("p", "diagnostic-explanation", `Brakowało · ${page.gap}`));
+      const items = element("ul", "reading-items");
+      for (const fragment of page.items) {
+        const item = element("li");
+        const meta = [fragment.kept ? "Zachowano" : "Pominięto"];
+        if (fragment.game_version) meta.push(`EU4 ${fragment.game_version}`);
+        item.append(element("strong", null, fragment.title || "Fragment źródła"));
+        item.append(element("span", "reading-item-status diagnostic-explanation", meta.join(" · ")));
+        appendReadingExcerpt(item, fragment);
+        items.append(item);
+      }
+      group.append(items);
+      section.append(group);
+    }
+    return section;
+  }
+
   function traceSources(diagnostics, failed) {
     const items = new Map();
     const cited = new Set(diagnostics.cited_numbers ?? []);
@@ -206,6 +273,7 @@
     }
 
     const { method, stage, game_version: version, model, seconds, search_terms: terms, retrieval_query: query } = diagnostics;
+    const reading = Array.isArray(diagnostics.reading?.pages) ? diagnostics.reading : null;
     const facts = [
       methodLabels[method],
       version && `EU4 ${version}`,
@@ -215,11 +283,11 @@
     if (failed && stageLabels[stage]) details.append(element("p", null, stageLabels[stage]));
     if (facts.length) details.append(element("p", "diagnostic-explanation", facts.join(" · ")));
     if (query) details.append(element("p", "diagnostic-explanation", `Pytanie użyte do wyszukiwania · ${query}`));
-    if (terms?.length) details.append(element("p", "diagnostic-explanation", `Słowa wyszukiwania · ${terms.join(", ")}`));
+    if (!reading && terms?.length) details.append(element("p", "diagnostic-explanation", `Słowa wyszukiwania · ${terms.join(", ")}`));
 
     const status = [];
     if (diagnostics.truncated) status.push("Odpowiedź została ucięta przez limit długości.");
-    if ((diagnostics.excluded_count ?? 0) > 0) {
+    if (!reading && (diagnostics.excluded_count ?? 0) > 0) {
       status.push(`Poza limitem miejsca na źródła · ${diagnostics.excluded_count}.`);
     }
     if (!failed && !diagnostics.sources?.length && !diagnostics.supporting_sources?.length && stage === "completed") {
@@ -234,6 +302,8 @@
       status.push(`Te odsyłacze nie wskazują żadnego źródła: ${unknown}.`);
     }
     for (const note of status) details.append(element("p", null, note));
+
+    if (reading) details.append(readingTrace(reading));
 
     const items = traceSources(diagnostics, failed);
     if (items.length) {

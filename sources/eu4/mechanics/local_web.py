@@ -241,11 +241,11 @@ class ModelRuntime:
             if not self.llama and not self.load():
                 raise HTTPException(503, MODEL_MESSAGES["gpu_required"])
             trace.update(stage="retrieval", retrieval_query=retrieval_query)
-            preferred = source_action(user_sources.context, retrieval_query)
             result = ask(
                 question, database, model=self.model, url=self.url, think=True,
-                detailed=True if follow_up else None, preferred_records=preferred,
+                detailed=True if follow_up else None,
                 retrieval_question=retrieval_query, diagnostics=trace,
+                personal_search=lambda query: source_action(user_sources.context, query, 15),
             )
             if not self.llama and not self.all_gpu(self.active_model()):
                 trace["stage"] = "model_ready"
