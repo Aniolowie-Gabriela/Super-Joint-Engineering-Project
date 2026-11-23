@@ -196,17 +196,16 @@ internal sealed class CoachForm : Form
             status.Text = "Twoje pytanie: " + question;
             var advice = await client.GuideAsync(question, original.Jpeg, request.Token);
             request.Token.ThrowIfCancellationRequested();
-            bool sameScreen = advice.Target is RectangleF target
-                ? overlay.Show(original, target)
-                : GameWindow.IsCurrent(original, new RectangleF(0, 0, 1, 1));
-            if (!sameScreen)
+            answer.Text = advice.Message;
+            if (!GameWindow.IsCurrent(original))
             {
-                Report("Ekran gry się zmienił. Przytrzymaj F8 i zapytaj ponownie.");
+                status.Text = "Wskazówka dotyczy widoku z chwili pytania.";
                 return;
             }
-            answer.Text = advice.Message;
             try { voice.Speak(advice.Message); }
             catch (Exception e) { Report(OperatorError(e), advice.Message); }
+            if (advice.Target is RectangleF target && !overlay.Show(original, target))
+                answer.Text = advice.Message + Environment.NewLine + "Ramka jest niedostępna dla tego widoku.";
         }
         catch (OperationCanceledException) when (request.IsCancellationRequested) { }
         catch (Exception e)

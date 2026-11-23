@@ -2,9 +2,9 @@
 
 Na tej gałęzi jest pierwsze demo głosowego doradcy dla Windows x64. Podczas kampanii Polską przytrzymaj **F8**, powiedz **„Co teraz?”** i puść klawisz. Luna ogląda okno EU4. Gdy rozpozna skarbiec, Atlas otacza go ramką i czyta krótką wskazówkę po polsku.
 
-1. [Pobierz Atlas-Polska.exe dla Windows x64](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/atlas-2.0.0-preview.1/Atlas-Polska.exe). Uruchom aplikację, wpisz swój klucz API OpenAI i kliknij **Włącz doradcę**. Aplikacja może też pobrać klucz ze zmiennej `OPENAI_API_KEY`.
+1. [Pobierz Atlas-Polska.exe dla Windows x64](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/atlas-2.0.0-preview.2/Atlas-Polska.exe). Uruchom aplikację, wpisz swój klucz API OpenAI i kliknij **Włącz doradcę**. Aplikacja może też pobrać klucz ze zmiennej `OPENAI_API_KEY`.
 2. Uruchom EU4 w trybie okienkowym bez ramek, wybierz Polskę i wejdź na mapę kampanii. Pozostaw Atlas w tle.
-3. Przytrzymaj **F8** na czas pytania. Ramka pojawia się nad grą. Ostatnie pytanie, odpowiedź lub komunikat błędu odczytasz również w oknie Atlasu.
+3. Przytrzymaj **F8** na czas pytania. Po odpowiedzi Luny usłyszysz wskazówkę. Jeśli wskazane miejsce jest nadal widoczne, Atlas pokaże też ramkę. Ostatnie pytanie i odpowiedź odczytasz w oknie Atlasu.
 
 **Wymagania.** Windows 10 (wersja 2004 lub nowsza) albo Windows 11, mikrofon, internet i konto API z dostępem do modeli `gpt-transcribe` i `gpt-6-luna`. Do odsłuchu służy zainstalowany polski głos Windows SAPI. Jeśli brakuje głosu, odpowiedź pozostaje w oknie aplikacji. Koszt wywołań API ponosi właściciel klucza.
 

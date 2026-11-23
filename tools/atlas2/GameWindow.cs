@@ -223,16 +223,15 @@ internal static class GameWindow
         return pixels;
     }
 
-    private static bool SceneMatches(GameFrame frame, int[] current, RectangleF target)
+    internal static bool SceneMatches(GameFrame frame, int[] current, RectangleF target)
     {
         int width = frame.SceneSize.Width;
         int height = frame.SceneSize.Height;
-        int left = Math.Max(0, (int)Math.Floor((target.Left - 0.018f) * width));
-        int top = Math.Max(0, (int)Math.Floor((target.Top - 0.018f) * height));
-        int right = Math.Min(width, (int)Math.Ceiling((target.Right + 0.018f) * width));
-        int bottom = Math.Min(height, (int)Math.Ceiling((target.Bottom + 0.018f) * height));
-        return RegionMatches(frame.Scene, current, width, left, top, right, bottom, 0.14) &&
-            RegionMatches(frame.Scene, current, width, 0, 0, width, height, 0.22);
+        int left = Math.Max(0, (int)Math.Floor(target.Left * width));
+        int top = Math.Max(0, (int)Math.Floor(target.Top * height));
+        int right = Math.Min(width, (int)Math.Ceiling(target.Right * width));
+        int bottom = Math.Min(height, (int)Math.Ceiling(target.Bottom * height));
+        return RegionMatches(frame.Scene, current, width, left, top, right, bottom, 0.14);
     }
 
     private static bool RegionMatches(int[] baseline, int[] current, int stride,

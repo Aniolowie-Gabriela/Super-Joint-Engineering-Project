@@ -10,7 +10,7 @@
     <AssemblyName>Atlas-Polska</AssemblyName>
     <RootNamespace>Atlas2</RootNamespace>
     <Product>Atlas EU4</Product>
-    <Version>2.0.0-preview.1</Version>
+    <Version>2.0.0-preview.2</Version>
     <Description>Pierwszy wieczór z Polską</Description>
   </PropertyGroup>
 </Project>

@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 /tools/atlas2/bin/
 /tools/atlas2/obj/
+/tests/atlas2-scene/bin/
+/tests/atlas2-scene/obj/

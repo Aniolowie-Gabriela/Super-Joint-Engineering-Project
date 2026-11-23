@@ -50,6 +50,7 @@ internal sealed class LunaClient(HttpClient http, string apiKey)
         się w obrazie. Nigdy nie zwracaj współrzędnych pikselowych ani przykładowych.
         W message podaj po polsku jedno krótkie zdanie do odczytania na głos. Przy pewnym celu
         poproś o najechanie na monetę na górnym pasku, by sprawdzić stan skarbca w podpowiedzi.
+        Opisz położenie za pomocą elementów interfejsu, bez odwołań do ramki.
         Bez pewnego celu podaj jeden konkretny krok, np. otwórz kampanię,
         albo powiedz, że nie widzisz skarbca. Nie odczytuj ani nie szacuj kwot i nie podawaj
         porad finansowych. Bez Markdownu i bez pytań o dane spoza obrazu.
