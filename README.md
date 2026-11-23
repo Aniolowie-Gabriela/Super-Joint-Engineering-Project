@@ -1,4 +1,25 @@
-# Lokalny asystent Europa Universalis IV
+# Atlas EU4 2.0 preview · Pierwszy wieczór z Polską
+
+Na tej gałęzi jest pierwsze demo głosowego doradcy dla Windows x64. Podczas kampanii Polską przytrzymaj **F8**, powiedz **„Co teraz?”** i puść klawisz. Luna ogląda okno EU4. Gdy rozpozna skarbiec, Atlas otacza go ramką i czyta krótką wskazówkę po polsku.
+
+1. [Pobierz Atlas-Polska.exe dla Windows x64](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/atlas-2.0.0-preview.1/Atlas-Polska.exe). Uruchom aplikację, wpisz swój klucz API OpenAI i kliknij **Włącz doradcę**. Aplikacja może też pobrać klucz ze zmiennej `OPENAI_API_KEY`.
+2. Uruchom EU4 w trybie okienkowym bez ramek, wybierz Polskę i wejdź na mapę kampanii. Pozostaw Atlas w tle.
+3. Przytrzymaj **F8** na czas pytania. Ramka pojawia się nad grą. Ostatnie pytanie, odpowiedź lub komunikat błędu odczytasz również w oknie Atlasu.
+
+**Wymagania.** Windows 10 (wersja 2004 lub nowsza) albo Windows 11, mikrofon, internet i konto API z dostępem do modeli `gpt-transcribe` i `gpt-6-luna`. Do odsłuchu służy zainstalowany polski głos Windows SAPI. Jeśli brakuje głosu, odpowiedź pozostaje w oknie aplikacji. Koszt wywołań API ponosi właściciel klucza.
+
+**Dane.** Atlas zbiera dźwięk podczas przytrzymania klawisza (do 20 s) i pobiera pojedynczy obraz aktywnego okna EU4 przy rozpoczęciu pytania. Wysyła nagranie do transkrypcji, a rozpoznane pytanie i obraz do Luny. Do kontroli aktualności oznaczenia porównuje dalsze klatki lokalnie. Wpisany klucz, obraz i nagranie są przechowywane przez aplikację w pamięci. Demo koncentruje się na wskazaniu skarbca; odczyt zapisów kampanii, otwieranie zakładek i poprzedni panel RAG stanowią osobne funkcje.
+
+### Zbuduj demo ze źródeł
+
+Na Windows x64 z .NET SDK 8 w katalogu repozytorium:
+
+```powershell
+dotnet publish tools/atlas2/Atlas2.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -o outputs/atlas2
+.\outputs\atlas2\Atlas-Polska.exe
+```
+
+## Atlas EU4 0.3 · Lokalny asystent
 
 Zadawaj po polsku pytania o rozgrywkę. Asystent korzysta z naszej wiedzy o EU4 1.37.5.0 i podaje źródła. Gemma działa na twoim komputerze.
 
