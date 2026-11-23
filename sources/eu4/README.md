@@ -7,7 +7,7 @@ Baza dla asystenta rozgrywki w EU4 1.37 bez modów. Lokalne dane gry pochodzą z
 | [Strategie i odsyłacze do wiki i Reddita](strategies-1.37.json) | Dziewięć polskich notatek o gospodarce na starcie, wojnach i unikaniu koalicji. Każda ma identyfikator, zastosowanie, ograniczenia oraz powiązane źródła. |
 | [Poradniki wideo](videos.md) | Linki do filmów, tematy, wersje i dostępność napisów. |
 | [Notatki i dane do RAG](video-notes/README.md) | Opracowania sześciu filmów z odsyłaczami do konkretnych minut, osobny przewodnik po Polsce i fragmenty do bezpośredniego indeksowania. |
-| [Wspólna paczka do RAG](rag/README.md) | 313 gotowych fragmentów JSONL z kart, notatek i strategii. |
+| [Wspólna paczka do RAG](rag/README.md) | 698 fragmentów JSONL, w tym ceny towarów, budynki i statystyki jednostek z instalacji gry. |
 | [Mechaniki z lokalnej instalacji i narzędzie MCP](mechanics/README.md) | Generator indeksu, wyszukiwanie mechanik, klient Gemmy i test odpowiedzi z RAG. |
 | [Dane instalacji Steam](game-data.md) | Wersja, zakres zweryfikowanego eksportu lokalnego oraz miejsca, w których gra definiuje reguły i stan startowy. |
 

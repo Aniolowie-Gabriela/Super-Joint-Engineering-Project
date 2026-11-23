@@ -143,11 +143,27 @@ def assets(directory, model_dir):
     )
 
 
-def neighbors(db_path, question, terms, limit=30, record_ids=None):
+def index_paths(db_path):
     root = Path(db_path).resolve().parent
     directory = root / "semantic"
     model_dir = Path(os.environ.get("EU4_EMBED_MODEL_DIR", str(root / "embedding-model")))
-    if not (directory / "manifest.json").is_file() or not (model_dir / "model_int8.onnx").is_file():
+    return directory, model_dir
+
+
+def complete_index(directory, model_dir):
+    files = [
+        directory / "manifest.json", directory / "ids.npy", directory / "vectors.npy",
+        model_dir / "model_int8.onnx", model_dir / "tokenizer.json",
+    ]
+    try:
+        return all(path.is_file() and path.stat().st_size > 0 for path in files)
+    except OSError:
+        return False
+
+
+def neighbors(db_path, question, terms, limit=30, record_ids=None):
+    directory, model_dir = index_paths(db_path)
+    if not complete_index(directory, model_dir):
         return []
     with closing(db_connection(db_path)) as db:
         pages = db.execute("PRAGMA page_count").fetchone()[0]

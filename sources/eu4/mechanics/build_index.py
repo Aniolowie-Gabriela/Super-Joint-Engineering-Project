@@ -506,7 +506,20 @@ def insert(db, handle, record):
     handle.write(payload + "\n")
 
 
-def build(game, output, notes, rules=None, strategies=None, wiki=None):
+def fact_records(game, version):
+    if game is not None:
+        from game_facts import game_facts
+        yield from game_facts(game, version)
+        return
+    bundle = Path(__file__).resolve().parents[1] / "rag/chunks.jsonl"
+    with bundle.open(encoding="utf-8") as handle:
+        for line in handle:
+            item = json.loads(line)
+            if item["source_type"] == "game_fact" and item["game_version"] == version:
+                yield item
+
+
+def build(game, output, notes, rules=None, strategies=None, wiki=None, facts_game=None):
     if game is None:
         if rules is None or not rules.is_file():
             raise ValueError("Brakuje pliku wspólnych kart mechanik.")
@@ -555,7 +568,7 @@ def build(game, output, notes, rules=None, strategies=None, wiki=None):
                 insert(db, handle, record)
                 summary["chunks_per_family"][record["family"]] += 1
             for extra in (rule_records(rules, game, version), strategy_records(strategies), wiki_records(wiki, version),
-                          tooltip_records(labels, version)):
+                          tooltip_records(labels, version), fact_records(game or facts_game, version)):
                 for record in extra:
                     insert(db, handle, record)
                     summary["chunks_per_family"][record["family"]] += 1
@@ -574,13 +587,22 @@ def main():
     source.add_argument("--game-dir", type=Path, help="Katalog instalacji Europa Universalis IV")
     source.add_argument("--shared-only", action="store_true", help="Zbuduj bazę z opracowań z repozytorium")
     parser.add_argument("--output", required=True, type=Path, help="Nowy folder dla lokalnej bazy")
+    parser.add_argument("--facts-game-dir", type=Path, help="Odtwórz wspólne karty faktów z danej instalacji")
     parser.add_argument("--notes", type=Path, default=Path(__file__).resolve().parent.parent / "video-notes/chunks.jsonl")
     parser.add_argument("--rules", type=Path, default=Path(__file__).resolve().with_name("rules.json"))
     parser.add_argument("--strategies", type=Path, default=Path(__file__).resolve().parents[1] / "strategies-1.37.json")
     parser.add_argument("--wiki-jsonl", type=Path, help="opcjonalne wcześniej pobrane artykuły z lokalnego JSONL")
     args = parser.parse_args()
     try:
-        coverage = build(args.game_dir, args.output, args.notes, args.rules, args.strategies, args.wiki_jsonl)
+        if args.facts_game_dir:
+            if not args.shared_only:
+                raise ValueError("Opcja --facts-game-dir wymaga --shared-only.")
+            settings = json.loads((args.facts_game_dir / "launcher-settings.json").read_text(encoding="utf-8-sig"))
+            expected = json.loads(args.rules.read_text(encoding="utf-8"))["game_version"]
+            if settings["gameId"] != "eu4" or settings["rawVersion"].removeprefix("v") != expected:
+                raise ValueError(f"Wybierz instalację EU4 {expected}.")
+        coverage = build(args.game_dir, args.output, args.notes, args.rules, args.strategies, args.wiki_jsonl,
+                         args.facts_game_dir)
     except (OSError, ValueError, KeyError) as error:
         parser.exit(1, f"Nie udało się zbudować bazy. {error}\n")
     print(f"Gotowe. Zapisano {coverage['chunks']} fragmentów z {coverage['files']} plików EU4 {coverage['game_version']}.")

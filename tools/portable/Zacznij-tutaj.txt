@@ -1,0 +1,20 @@
+Asystent EU4 · Windows x64
+
+1. Wypakuj cały ZIP i otwórz Uruchom-EU4.cmd.
+2. W przeglądarce od razu możesz przeszukiwać 698 kart o EU4 1.37.5.
+3. Żeby zadawać pytania Gemmie, otwórz Przygotuj-model.cmd. Przy pierwszym
+   uruchomieniu może być potrzebna instalacja Ollamy i pobranie kilku GB.
+   Po przygotowaniu modelu wróć do strony asystenta.
+
+Podczas pracy pozostaw otwarte okno Uruchom-EU4. Zamknij je, aby zakończyć
+działanie panelu. Jeżeli karta przeglądarki się nie otworzy, wejdź na
+http://127.0.0.1:8765.
+
+Za przyspieszenie na zgodnej karcie graficznej odpowiada Ollama. Po pobraniu
+modelu możesz korzystać z panelu bez dostępu do Internetu.
+Wymagania Ollamy są na https://docs.ollama.com/windows.
+
+Jeśli okno Uruchom-EU4 zgłosi brak Microsoft Visual C++ Redistributable,
+możesz od razu przeglądać karty i szukać w nich słów. Aby także wyszukiwać
+według znaczenia, otwórz Przygotuj-wyszukiwanie.cmd, zainstaluj pakiet x64
+Microsoftu i uruchom panel ponownie.

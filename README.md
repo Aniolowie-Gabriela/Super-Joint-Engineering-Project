@@ -2,7 +2,29 @@
 
 Zadawaj po polsku pytania o rozgrywkę. Asystent korzysta z naszej wiedzy o EU4 1.37.5.0 i podaje źródła. Gemma działa na twoim komputerze.
 
-## Uruchom na Windows
+## Aplikacja dla gracza na Windows x64
+
+1. [Pobierz paczkę dla Windows](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.1.0/Asystent-EU4-Windows-x64.zip) i rozpakuj ją do jednego folderu.
+2. Dwukrotnie kliknij **Uruchom-EU4.cmd**. W przeglądarce otworzy się lokalna aplikacja. **Wiedza o grze** zawiera 698 materiałów, które możesz przeszukiwać od pierwszego uruchomienia.
+3. W **Czacie** wpisz pytanie, np. „Ile kosztuje warsztat?”. Do pierwszej rozmowy potrzebujesz Gemmy 4 E4B i zgodnej karty z miejscem na cały model. Jeśli brakuje Ollamy, uruchom **Przygotuj-model.cmd** z paczki. Pierwsze pobranie modelu wymaga internetu.
+
+Kliknięcie źródła odpowiedzi otwiera materiał z wersją gry. Po przygotowaniu modelu rozmowa i wyszukiwanie działają lokalnie.
+
+**Próba dla operatora.** W widoku **Wiedza o grze** wyszukaj „warsztat” i otwórz „Budowa • Warsztat”. Karta powinna pokazać 100 dukatów, 12 miesięcy i technologię administracyjną 6. W **Czacie** zapytaj „Ile kosztuje warsztat?”, a potem „A ile trwa jego budowa?”. Kliknij numer źródła i porównaj odpowiedź z kartą.
+
+Paczka korzysta ze wspólnej bazy. Aby wskazać własny pełny indeks, ustaw w środowisku `EU4_RAG_DB` na ścieżkę do pliku `knowledge.sqlite3`. Katalogi `embedding-model` i `semantic` umieść obok tego pliku. Pełny indeks można zbudować z lokalnej instalacji EU4 przez `eu4.py setup --game-dir`. [Budowanie indeksu](docs/eu4-workflow.md)
+
+## Zbuduj paczkę Windows z repozytorium
+
+Na stanowisku budującym wydanie użyj Windows x64 i CPythona 3.14 x64. Polecenia uruchom w katalogu repozytorium. Pierwsze polecenie przygotowuje wspólną bazę i wektory.
+
+~~~powershell
+python eu4.py setup --no-model
+.\.eu4\.venv\Scripts\python.exe -m pip install -r sources/eu4/mechanics/requirements-web.txt
+.\.eu4\.venv\Scripts\python.exe tools/build-portable.py --data .eu4/shared --output outputs/Asystent-EU4-Windows-x64.zip
+~~~
+
+## Uruchom wersję wiersza poleceń ze źródeł
 
 1. Zainstaluj Python 3.12 lub nowszy oraz Ollamę. Otwórz Ollamę. [Python](https://www.python.org/downloads/) · [Ollama dla Windows](https://docs.ollama.com/windows)
 2. Pobierz repozytorium przez **Code → Download ZIP** i rozpakuj je lub użyj polecenia poniżej.

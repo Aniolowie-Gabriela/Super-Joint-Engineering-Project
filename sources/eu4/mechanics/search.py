@@ -198,7 +198,7 @@ def guide_candidates(db_path, question, limit=8):
         return []
     try:
         from semantic import neighbors
-    except ImportError:
+    except (ImportError, OSError):
         return []
     by_row = {record["index_row_id"]: record for record in records}
     return [by_row[row] for row, _ in neighbors(db_path, question, (), limit, list(by_row))]
@@ -632,7 +632,7 @@ def context(db_path, question, limit=6, extra_terms=()):
             if embed.is_file():
                 try:
                     from semantic import neighbors
-                except ImportError:
+                except (ImportError, OSError):
                     neighbors = None
                 if neighbors:
                     expanded = neighbors(db_path, question, extra_terms)

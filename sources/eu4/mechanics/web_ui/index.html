@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas EU4</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✧</span>
+        <div class="brand-name">Atlas <strong>EU4</strong></div>
+      </div>
+      <nav class="navigation" aria-label="Widoki aplikacji">
+        <a href="#czat" id="chat-nav" aria-current="page">Czat</a>
+        <a href="#wiedza" id="knowledge-nav">Wiedza o grze</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell content">
+    <section id="chat-view" aria-labelledby="chat-title">
+      <div class="intro chat-intro">
+        <h1 id="chat-title">Zapytaj o EU4</h1>
+        <p>Mechanika i strategie gry w wersji 1.37.</p>
+        <div class="compass" aria-hidden="true"><span>✧</span></div>
+      </div>
+
+      <div class="chat-panel">
+        <div class="model-bar" id="model-bar" data-state="busy">
+          <p class="model-status" id="model-status" role="status">Sprawdzam gotowość czatu…</p>
+          <button class="button secondary compact" id="setup-model" type="button" hidden>Pobierz model</button>
+        </div>
+
+        <div class="conversation" id="conversation" role="log" aria-label="Rozmowa"></div>
+        <p class="notice error" id="question-error" role="alert" hidden></p>
+        <form id="chat-form" class="composer">
+          <label for="question">Twoje pytanie</label>
+          <div class="field-row">
+            <textarea id="question" name="question" rows="2" maxlength="1200" placeholder="Np. Jak ograniczyć agresywną ekspansję?" autofocus required></textarea>
+            <button class="button primary" id="send-question" type="submit" disabled>Wyślij pytanie <span aria-hidden="true">↑</span></button>
+          </div>
+        </form>
+
+        <div class="examples" id="examples">
+          <span>Wypróbuj</span>
+          <button type="button" data-question="Jak ograniczyć agresywną ekspansję?">Agresywna ekspansja</button>
+          <button type="button" data-question="Jak działa przekazywanie handlu między węzłami?">Przekazywanie handlu</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="knowledge-view" aria-labelledby="knowledge-title" hidden>
+      <div class="intro">
+        <h1 id="knowledge-title">Wiedza o grze</h1>
+        <p>Przeglądaj mechanikę i strategie gry w wersji 1.37.</p>
+      </div>
+      <form id="search-form" class="search-form" role="search">
+        <label for="search">Temat, którego szukasz</label>
+        <div class="field-row">
+          <input id="search" name="q" type="search" maxlength="1200" placeholder="Np. handel, koalicje, Polska">
+          <button class="button primary" type="submit">Szukaj</button>
+        </div>
+      </form>
+      <p class="knowledge-message" id="knowledge-message" role="status" hidden></p>
+      <p class="notice" id="search-status" role="status"></p>
+      <div class="knowledge-results" id="results" aria-label="Wyniki wyszukiwania"></div>
+      <button class="button secondary more" id="load-more" type="button" hidden>Pokaż więcej</button>
+    </section>
+  </main>
+
+  <dialog id="source-dialog" aria-labelledby="source-title">
+    <div class="dialog-head">
+      <h2 id="source-title">Źródło</h2>
+      <form method="dialog"><button class="button secondary compact" autofocus>Zamknij</button></form>
+    </div>
+    <div class="dialog-content" id="source-content"></div>
+  </dialog>
+</body>
+</html>
