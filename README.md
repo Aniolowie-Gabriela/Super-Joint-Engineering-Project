@@ -4,6 +4,10 @@ Zadawaj po polsku pytania o rozgrywkę. Asystent korzysta z naszej wiedzy o EU4 
 
 ## Aplikacja dla gracza na Windows x64
 
+**[Pobierz instalator Atlas EU4 (.exe)](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.1.0/Atlas-EU4-Setup-x64.exe)**. Uruchom go, kliknij **Instaluj**, a następnie otwórz **Atlas EU4** z menu Start. Instalacja obejmuje konto bieżącego użytkownika. Aplikację można usunąć z listy zainstalowanych aplikacji Windows.
+
+### Wersja przenośna ZIP
+
 1. [Pobierz paczkę dla Windows](https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project/releases/download/eu4-operator-v0.1.0/Asystent-EU4-Windows-x64.zip) i rozpakuj ją do jednego folderu.
 2. Dwukrotnie kliknij **Uruchom-EU4.cmd**. W przeglądarce otworzy się lokalna aplikacja. **Wiedza o grze** zawiera 698 materiałów, które możesz przeszukiwać od pierwszego uruchomienia.
 3. W **Czacie** wpisz pytanie, np. „Ile kosztuje warsztat?”. Do pierwszej rozmowy potrzebujesz Gemmy 4 E4B i zgodnej karty z miejscem na cały model. Jeśli brakuje Ollamy, uruchom **Przygotuj-model.cmd** z paczki. Pierwsze pobranie modelu wymaga internetu.
@@ -22,6 +26,15 @@ Na stanowisku budującym wydanie użyj Windows x64 i CPythona 3.14 x64. Poleceni
 python eu4.py setup --no-model
 .\.eu4\.venv\Scripts\python.exe -m pip install -r sources/eu4/mechanics/requirements-web.txt
 .\.eu4\.venv\Scripts\python.exe tools/build-portable.py --data .eu4/shared --output outputs/Asystent-EU4-Windows-x64.zip
+~~~
+
+Instalator EXE buduje Inno Setup 6.7.4 z tej samej paczki. W PowerShellu z poleceniem ISCC dostępnym w PATH wykonaj:
+
+~~~powershell
+Expand-Archive outputs/Asystent-EU4-Windows-x64.zip outputs/installer-input
+$payload = (Resolve-Path outputs/installer-input/Asystent-EU4).Path
+$output = (Resolve-Path outputs).Path
+ISCC "/DPayloadDir=$payload" "/O$output" tools/Atlas-EU4.iss
 ~~~
 
 ## Uruchom wersję wiersza poleceń ze źródeł
