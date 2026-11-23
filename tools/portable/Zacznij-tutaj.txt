@@ -6,12 +6,21 @@ Asystent EU4 · Windows x64
    uruchomieniu może być potrzebna instalacja Ollamy i pobranie kilku GB.
    Po przygotowaniu modelu wróć do strony asystenta.
 
+Własne źródła dodasz w zakładce Wiedza o grze → Moje źródła → Dodaj źródło.
+Możesz wkleić tekst, wczytać plik TXT lub MD albo pobrać tekst jednej publicznej
+strony WWW. W przypadku strony wpisz jej adres i kliknij Pokaż podgląd.
+Sprawdź treść i kliknij Zapisz źródło. Internet jest potrzebny do pobrania
+strony. Zapisana treść jest potem dostępna offline.
+
+Twoje źródła i historia rozmów pozostają w profilu Windows po aktualizacji.
+W folderze %LOCALAPPDATA%\AtlasEU4 są pliki user-sources.sqlite3 i chats.sqlite3.
+
 Podczas pracy pozostaw otwarte okno Uruchom-EU4. Zamknij je, aby zakończyć
-działanie panelu. Jeżeli karta przeglądarki się nie otworzy, wejdź na
-http://127.0.0.1:8765.
+działanie panelu. Jeżeli przeglądarka nie otworzy się sama, skopiuj jednorazowy
+adres z okna Uruchom-EU4 i wklej go w przeglądarce.
 
 Za przyspieszenie na zgodnej karcie graficznej odpowiada Ollama. Po pobraniu
-modelu możesz korzystać z panelu bez dostępu do Internetu.
+modelu możesz czatować i przeglądać zapisane karty bez dostępu do Internetu.
 Wymagania Ollamy są na https://docs.ollama.com/windows.
 
 Jeśli okno Uruchom-EU4 zgłosi brak Microsoft Visual C++ Redistributable,

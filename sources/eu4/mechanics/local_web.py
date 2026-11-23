@@ -2,24 +2,29 @@
 
 import argparse
 from contextlib import asynccontextmanager, closing
+import errno
 from http.client import HTTPConnection, HTTPException as ClientHTTPException
 import json
 import os
 from pathlib import Path
 import re
+import socket
 import sqlite3
 from threading import Lock, Thread
-from time import sleep
+from time import perf_counter, sleep
 import webbrowser
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel, Field
 import uvicorn
 
 from ask import DEFAULT_MODEL, DEFAULT_NUM_CTX, DEFAULT_URL, _loopback_address, ask, resolve_db_path
+from chat_history import ChatConflict, ChatHistory, ChatHistoryError, history_router
+from panel_access import PanelAccess
 from search import lexical_query, open_index, read_record
+from user_sources import MAX_TEXT, MAX_TITLE, MAX_URL, UserSources, search_words
 
 
 ASSETS = Path(__file__).with_name("web_ui")
@@ -42,6 +47,18 @@ class ChatRequest(BaseModel):
     question: str = Field(max_length=1200)
     previous_question: str | None = Field(default=None, max_length=1200)
     previous_answer: str | None = Field(default=None, max_length=12000)
+    chat_id: str | None = Field(default=None, min_length=1, max_length=64)
+    expected_message_id: int | None = Field(default=None, ge=1, strict=True)
+
+
+class SourceRequest(BaseModel):
+    title: str = Field(max_length=MAX_TITLE)
+    text: str = Field(max_length=MAX_TEXT)
+    url: str | None = Field(default=None, max_length=MAX_URL)
+
+
+class SourcePreviewRequest(BaseModel):
+    url: str = Field(max_length=MAX_URL)
 
 
 def status_data(state, message=None):
@@ -216,18 +233,22 @@ class ModelRuntime:
                 self.failure = failure
                 self.job = None
 
-    def answer(self, question, database, follow_up):
+    def answer(self, question, database, follow_up, retrieval_query, user_sources, trace):
         current = self.status()
         if current["model_state"] not in {"ready", "model_installed"}:
             raise HTTPException(503, current["message"])
         with self.generation_lock:
             if not self.llama and not self.load():
                 raise HTTPException(503, MODEL_MESSAGES["gpu_required"])
+            trace.update(stage="retrieval", retrieval_query=retrieval_query)
+            preferred = source_action(user_sources.context, retrieval_query)
             result = ask(
                 question, database, model=self.model, url=self.url, think=True,
-                detailed=True if follow_up else None,
+                detailed=True if follow_up else None, preferred_records=preferred,
+                retrieval_question=retrieval_query, diagnostics=trace,
             )
             if not self.llama and not self.all_gpu(self.active_model()):
+                trace["stage"] = "model_ready"
                 raise HTTPException(503, MODEL_MESSAGES["gpu_required"])
         return {"answer": result["answer"], "sources": result["sources"]}
 
@@ -249,8 +270,21 @@ def chat_question(payload):
     return question + intro + history[:available], True
 
 
-def knowledge_items(database, query, offset):
-    params = (PAGE_SIZE + 1, offset)
+def retrieval_question(payload, follow_up):
+    question = payload.question.strip()
+    if follow_up:
+        has_reference = re.search(r"\b(?:ona|ono|one|jego|jej|ich|tam|wtedy|takim|takiej|tych|tego)\b", question, re.I)
+        short_follow_up = len(search_words(question, for_chat=True)) < 2 and re.match(r"a\b", question, re.I)
+        if has_reference or short_follow_up:
+            return f"{question}\n{payload.previous_question.strip()}"[:1200]
+    return question
+
+
+def knowledge_items(database, query, offset, user_sources=None):
+    custom, custom_count = source_action(user_sources.browse, query, PAGE_SIZE + 1, offset) if user_sources else ([], 0)
+    if len(custom) > PAGE_SIZE:
+        return {"items": custom[:PAGE_SIZE], "more": True}
+    params = (PAGE_SIZE + 1 - len(custom), max(0, offset - custom_count))
     with closing(open_index(database)) as db:
         if query:
             match = lexical_query(query)
@@ -264,7 +298,7 @@ def knowledge_items(database, query, offset):
             """, (match, *params)) if match else ()
         else:
             rows = db.execute("SELECT json FROM record ORDER BY id LIMIT ? OFFSET ?", params)
-        items = [json.loads(row[0]) for row in rows]
+        items = custom + [json.loads(row[0]) for row in rows]
     return {"items": items[:PAGE_SIZE], "more": len(items) > PAGE_SIZE}
 
 
@@ -290,8 +324,22 @@ def knowledge_status(database):
     return None
 
 
-def create_app(database, port=DEFAULT_PORT, runtime=None):
+def source_action(operation, *args, **kwargs):
+    try:
+        return operation(*args, **kwargs)
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
+    except RuntimeError as error:
+        raise HTTPException(503, str(error)) from error
+    except (sqlite3.Error, OSError) as error:
+        raise HTTPException(503, "Nie udało się otworzyć bazy własnych źródeł.") from error
+
+
+def create_app(database, port=DEFAULT_PORT, runtime=None, user_sources=None, history=None, panel_access=None):
     model = ModelRuntime() if runtime is None else runtime
+    user_sources = UserSources() if user_sources is None else user_sources
+    history = ChatHistory() if history is None else history
+    access = PanelAccess() if panel_access is None else panel_access
     knowledge_message = knowledge_status(database)
 
     @asynccontextmanager
@@ -301,6 +349,7 @@ def create_app(database, port=DEFAULT_PORT, runtime=None):
         yield
 
     app = FastAPI(openapi_url=None, docs_url=None, redoc_url=None, lifespan=lifespan)
+    app.include_router(history_router(history))
     hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
     if port == 80:
         hosts.update({"127.0.0.1", "localhost"})
@@ -318,8 +367,11 @@ def create_app(database, port=DEFAULT_PORT, runtime=None):
         if (origin and (len(origin) != 1 or origin[0] not in allowed_origins)
                 or cross_site and request.method != "GET"):
             return JSONResponse({"detail": "Wyślij żądanie z lokalnego panelu EU4."}, status_code=403)
-        response = await call_next(request)
+        response = access.response(request)
+        if response is None:
+            response = await call_next(request)
         response.headers["Cache-Control"] = "no-store"
+        response.headers["Referrer-Policy"] = "no-referrer"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
@@ -345,6 +397,16 @@ def create_app(database, port=DEFAULT_PORT, runtime=None):
     def javascript():
         return FileResponse(ASSETS / "app.js", media_type="text/javascript")
 
+    @app.get("/chat-history.css")
+    @app.get("/assets/chat-history.css")
+    def chat_stylesheet():
+        return FileResponse(ASSETS / "chat-history.css", media_type="text/css")
+
+    @app.get("/chat-history.js")
+    @app.get("/assets/chat-history.js")
+    def chat_javascript():
+        return FileResponse(ASSETS / "chat-history.js", media_type="text/javascript")
+
     @app.get("/api/status")
     def status():
         current = model.status()
@@ -364,32 +426,100 @@ def create_app(database, port=DEFAULT_PORT, runtime=None):
 
     @app.post("/api/chat")
     def chat(payload: ChatRequest):
+        started = perf_counter()
+        trace = {
+            "stage": "model_ready", "model": model.model, "method": None, "game_version": None,
+            "retrieval_query": None, "search_terms": [], "candidates": [], "sources": [], "supporting_sources": [],
+            "cited_numbers": [], "unknown_cited_numbers": [], "model_called": False, "retrieval_model_called": False,
+            "excluded_count": 0, "truncated": False,
+        }
+
+        def error_response(code, message):
+            trace["seconds"] = round(perf_counter() - started, 3)
+            return JSONResponse({"detail": message, "diagnostics": trace}, status_code=code)
+
         try:
+            previous = history.last_message(payload.chat_id) if payload.chat_id else None
+            previous_id = previous["id"] if previous else None
+            if payload.chat_id and payload.expected_message_id != previous_id:
+                raise ChatConflict()
+            if previous:
+                payload = payload.model_copy(update={
+                    "previous_question": previous["question"], "previous_answer": previous["answer"],
+                })
             question, follow_up = chat_question(payload)
-            return model.answer(question, database, follow_up)
+            result = model.answer(question, database, follow_up, retrieval_question(payload, follow_up), user_sources, trace)
+            trace["seconds"] = round(perf_counter() - started, 3)
+            chat_id, message_id = history.append(
+                chat_id=payload.chat_id, expected_message_id=previous_id,
+                question=payload.question.strip(), answer=result["answer"], sources=result["sources"], diagnostics=trace,
+            )
+            return {**result, "diagnostics": trace, "chat_id": chat_id, "message_id": message_id}
+        except ChatHistoryError as error:
+            trace["stage"] = "storage"
+            return error_response(error.status_code, str(error))
+        except HTTPException as error:
+            return error_response(error.status_code, error.detail)
         except ValueError as error:
-            raise HTTPException(422, str(error)) from error
-        except sqlite3.Error as error:
-            raise HTTPException(503, "Nie udało się odczytać bazy wiedzy EU4.") from error
+            return error_response(422, str(error))
+        except sqlite3.Error:
+            return error_response(503, "Nie udało się odczytać bazy wiedzy EU4.")
         except RuntimeError as error:
             detail = str(error)
             if model.llama:
                 detail = detail.replace("Ollama", "Serwer llama.cpp").replace("z Ollamą", "z serwerem llama.cpp")
-            raise HTTPException(502, detail) from error
-        except (OSError, ClientHTTPException) as error:
-            raise HTTPException(503, "Utracono połączenie z lokalnym modelem. Spróbuj ponownie.") from error
+            return error_response(502, detail)
+        except (OSError, ClientHTTPException):
+            return error_response(503, "Utracono połączenie z lokalnym modelem. Spróbuj ponownie.")
+
+    @app.get("/api/sources")
+    def list_sources():
+        return {"items": source_action(user_sources.list)}
+
+    @app.post("/api/sources/preview")
+    def preview_source(payload: SourcePreviewRequest):
+        from web_import import fetch_page
+
+        try:
+            return fetch_page(payload.url)
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from error
+
+    @app.post("/api/sources", status_code=201)
+    def add_source(payload: SourceRequest):
+        return source_action(user_sources.save, payload.title, payload.text, payload.url)
+
+    @app.get("/api/sources/{source_id}")
+    def get_source(source_id: str):
+        item = source_action(user_sources.get, source_id)
+        if item is None:
+            raise HTTPException(404, "Nie znaleziono tego własnego źródła.")
+        return item
+
+    @app.put("/api/sources/{source_id}")
+    def edit_source(source_id: str, payload: SourceRequest):
+        item = source_action(user_sources.save, payload.title, payload.text, payload.url, source_id=source_id)
+        if item is None:
+            raise HTTPException(404, "Nie znaleziono tego własnego źródła.")
+        return item
+
+    @app.delete("/api/sources/{source_id}", status_code=204)
+    def delete_source(source_id: str):
+        if not source_action(user_sources.delete, source_id):
+            raise HTTPException(404, "Nie znaleziono tego własnego źródła.")
+        return Response(status_code=204)
 
     @app.get("/api/knowledge")
     def knowledge(q: str = Query(default="", max_length=1200), offset: int = Query(default=0, ge=0, le=2**31-1)):
         try:
-            return knowledge_items(database, q.strip(), offset)
+            return knowledge_items(database, q.strip(), offset, user_sources)
         except sqlite3.Error as error:
             raise HTTPException(503, "Nie udało się odczytać bazy wiedzy EU4.") from error
 
     @app.get("/api/record")
     def record(id: str = Query(min_length=1, max_length=2048)):
         try:
-            item = read_record(database, id)
+            item = source_action(user_sources.record, id) if id.startswith("user:") else read_record(database, id)
         except sqlite3.Error as error:
             raise HTTPException(503, "Nie udało się odczytać bazy wiedzy EU4.") from error
         if item is None:
@@ -402,30 +532,46 @@ def create_app(database, port=DEFAULT_PORT, runtime=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, help="ścieżka do bazy wiedzy EU4")
-    parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="lokalny port panelu")
+    parser.add_argument("--port", type=int, help=f"lokalny port panelu (domyślnie {DEFAULT_PORT}, gdy jest wolny)")
     parser.add_argument("--no-browser", action="store_true", help="uruchom panel bez otwierania przeglądarki")
     args = parser.parse_args()
-    if not 1 <= args.port <= 65535:
+    if args.port is not None and not 1 <= args.port <= 65535:
         parser.error("Wybierz port od 1 do 65535.")
     if os.environ.get("EU4_LLM_BACKEND") != "llama.cpp":
         # ask.py i wczytywanie używają tych samych opcji, z wyłączonym modelem szkicującym.
         os.environ["EU4_GPU_STRICT"] = "1"
+    access = PanelAccess()
+    host = "127.0.0.1"
     try:
-        app = create_app(choose_database(args.db), args.port)
+        database = choose_database(args.db)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
+            if os.name == "nt":
+                listener.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+            try:
+                listener.bind((host, args.port or DEFAULT_PORT))
+            except OSError as error:
+                if args.port is not None or (error.errno not in {errno.EADDRINUSE, errno.EACCES, 10048, 10013}):
+                    raise
+                listener.bind((host, 0))
+            port = listener.getsockname()[1]
+            app = create_app(database, port, panel_access=access)
+            serve_panel(app, listener, host, port, access, args.no_browser)
     except (OSError, ValueError) as error:
         parser.exit(2, f"{error}\n")
-    host = "127.0.0.1"
-    server = uvicorn.Server(uvicorn.Config(app, host=host, port=args.port, proxy_headers=False))
 
-    def open_panel():
+
+def serve_panel(app, listener, host, port, access, no_browser):
+    server = uvicorn.Server(uvicorn.Config(app, host=host, port=port, proxy_headers=False, access_log=False))
+    def present_panel():
         while not server.started and not server.should_exit:
             sleep(0.05)
         if server.started:
-            webbrowser.open(f"http://{host}:{args.port}/")
+            link = access.launch_url(host, port)
+            if no_browser or not webbrowser.open(link):
+                print(f"Otwórz panel: {link}", flush=True)
 
-    if not args.no_browser:
-        Thread(target=open_panel, daemon=True).start()
-    server.run()
+    Thread(target=present_panel, daemon=True).start()
+    server.run(sockets=[listener])
 
 
 if __name__ == "__main__":

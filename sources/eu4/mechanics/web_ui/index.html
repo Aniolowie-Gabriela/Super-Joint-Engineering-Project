@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atlas EU4</title>
   <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/chat-history.css">
   <script src="/assets/app.js" defer></script>
+  <script src="/assets/chat-history.js" defer></script>
 </head>
 <body>
   <header class="masthead">
@@ -29,7 +31,24 @@
         <div class="compass" aria-hidden="true"><span>✧</span></div>
       </div>
 
-      <div class="chat-panel">
+      <div class="chat-layout">
+        <aside class="chat-history" aria-label="Historia rozmów" data-expanded="false">
+          <div class="chat-history-head">
+            <h2>Rozmowy</h2>
+            <button class="button secondary compact" type="button" id="toggle-chat-history" aria-expanded="false" aria-controls="chat-history-list">Historia rozmów</button>
+            <button class="button secondary compact" type="button" id="new-chat">Nowa rozmowa</button>
+          </div>
+          <div id="chat-history-list">
+            <p class="chat-history-status" id="chat-history-status" role="status"></p>
+            <button class="button secondary compact" id="retry-chat-history" type="button" hidden>Wczytaj historię</button>
+            <ul class="chat-list" id="chat-list"></ul>
+          </div>
+        </aside>
+        <div class="chat-panel">
+        <div class="current-chat" id="current-chat" hidden>
+          <h2 id="current-chat-title"></h2>
+          <button class="chat-text-button" id="remove-chat" type="button">Usuń rozmowę</button>
+        </div>
         <div class="model-bar" id="model-bar" data-state="busy">
           <p class="model-status" id="model-status" role="status">Sprawdzam gotowość czatu…</p>
           <button class="button secondary compact" id="setup-model" type="button" hidden>Pobierz model</button>
@@ -37,6 +56,8 @@
 
         <div class="conversation" id="conversation" role="log" aria-label="Rozmowa"></div>
         <p class="notice error" id="question-error" role="alert" hidden></p>
+        <button class="button secondary compact" id="retry-chat" type="button" hidden>Wczytaj rozmowę</button>
+        <p class="chat-waiting" id="chat-waiting" role="status" hidden>Atlas odpowiada w innej rozmowie.</p>
         <form id="chat-form" class="composer">
           <label for="question">Twoje pytanie</label>
           <div class="field-row">
@@ -50,13 +71,17 @@
           <button type="button" data-question="Jak ograniczyć agresywną ekspansję?">Agresywna ekspansja</button>
           <button type="button" data-question="Jak działa przekazywanie handlu między węzłami?">Przekazywanie handlu</button>
         </div>
+        </div>
       </div>
     </section>
 
     <section id="knowledge-view" aria-labelledby="knowledge-title" hidden>
-      <div class="intro">
-        <h1 id="knowledge-title">Wiedza o grze</h1>
-        <p>Przeglądaj mechanikę i strategie gry w wersji 1.37.</p>
+      <div class="intro knowledge-intro">
+        <div>
+          <h1 id="knowledge-title">Wiedza o grze</h1>
+          <p>Przeglądaj mechanikę i strategie gry w wersji 1.37.</p>
+        </div>
+        <button class="button secondary" id="open-owned-sources" type="button">Moje źródła</button>
       </div>
       <form id="search-form" class="search-form" role="search">
         <label for="search">Temat, którego szukasz</label>
@@ -78,6 +103,83 @@
       <form method="dialog"><button class="button secondary compact" autofocus>Zamknij</button></form>
     </div>
     <div class="dialog-content" id="source-content"></div>
+  </dialog>
+
+  <dialog id="remove-chat-dialog" aria-labelledby="remove-chat-title">
+    <div class="dialog-head">
+      <h2 id="remove-chat-title">Usunąć rozmowę?</h2>
+    </div>
+    <div class="dialog-content">
+      <p id="remove-chat-prompt"></p>
+      <p class="notice error" id="remove-chat-error" role="alert"></p>
+      <form method="dialog" class="remove-chat-actions">
+        <button class="button secondary" type="submit" id="cancel-remove-chat" autofocus>Wróć do rozmowy</button>
+        <button class="button danger" type="button" id="confirm-remove-chat">Usuń na zawsze</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="owned-dialog" aria-labelledby="owned-title">
+    <div class="dialog-head">
+      <h2 id="owned-title">Moje źródła</h2>
+      <button class="button secondary compact" id="close-owned" type="button">Zamknij</button>
+    </div>
+    <div class="dialog-content owned-content">
+      <p class="notice owned-status" id="owned-status" role="status" tabindex="-1"></p>
+      <div id="owned-list-view">
+        <div class="owned-actions">
+          <button class="button primary" id="add-owned" type="button">Dodaj źródło</button>
+          <button class="button secondary" id="retry-owned" type="button" hidden>Wczytaj listę</button>
+        </div>
+        <p id="owned-empty" class="owned-muted" hidden>Tu pojawią się dodane przez Ciebie materiały do wyszukiwania i czatu.</p>
+        <ul class="owned-list" id="owned-list" aria-label="Moje źródła"></ul>
+      </div>
+      <div id="owned-edit-view" hidden>
+        <fieldset class="import-modes" id="import-modes">
+          <legend>Skąd wziąć treść?</legend>
+          <label><input type="radio" name="source-mode" value="paste" checked> Wklej tekst</label>
+          <label><input type="radio" name="source-mode" value="file"> Wczytaj plik</label>
+          <label><input type="radio" name="source-mode" value="site"> Pobierz stronę</label>
+        </fieldset>
+        <div class="import-controls" id="source-file-view" hidden>
+          <label for="source-file">Wybierz plik TXT lub MD <span class="owned-muted">(UTF-8)</span></label>
+          <input id="source-file" type="file" accept=".txt,.md,text/plain,text/markdown">
+        </div>
+        <form class="import-controls" id="source-site-form" hidden>
+          <label for="source-site-url">Adres publicznej strony</label>
+          <div class="field-row">
+            <input id="source-site-url" type="url" placeholder="https://…" maxlength="2048" required>
+            <button class="button primary" id="preview-source" type="submit">Pokaż podgląd</button>
+          </div>
+        </form>
+        <form class="owned-editor" id="owned-editor">
+          <div>
+            <label for="owned-name">Tytuł</label>
+            <input id="owned-name" type="text" maxlength="200" required>
+          </div>
+          <div>
+            <label for="owned-text">Treść źródła</label>
+            <textarea id="owned-text" rows="7" maxlength="1000000" required></textarea>
+          </div>
+          <div>
+            <label for="owned-url">Link do pochodzenia <span class="owned-muted">(opcjonalnie)</span></label>
+            <input id="owned-url" type="url" placeholder="https://…" maxlength="2048">
+          </div>
+        </form>
+        <div class="owned-actions">
+          <button class="button primary" id="save-owned" type="submit" form="owned-editor">Zapisz źródło</button>
+          <button class="button secondary" id="back-owned-edit" type="button">Wróć do listy</button>
+        </div>
+      </div>
+      <div id="owned-delete-view" hidden>
+        <p id="owned-delete-prompt"></p>
+        <p class="owned-muted">Źródło zniknie z wyszukiwania i kolejnych odpowiedzi. Jego treść zapisana w starszej rozmowie pozostanie w niej, dopóki nie usuniesz tej rozmowy.</p>
+        <div class="owned-actions">
+          <button class="button danger" id="delete-owned" type="button">Usuń na zawsze</button>
+          <button class="button secondary" id="back-owned-delete" type="button">Wróć do listy</button>
+        </div>
+      </div>
+    </div>
   </dialog>
 </body>
 </html>

@@ -6,7 +6,7 @@
 [Setup]
 AppId={{0ED26FD5-8E48-4667-BE9C-9739C6411A28}
 AppName=Atlas EU4
-AppVersion=0.1.0
+AppVersion=0.2.0
 AppPublisher=Aniolowie-Gabriela
 AppPublisherURL=https://github.com/Aniolowie-Gabriela/Super-Joint-Engineering-Project
 DefaultDirName={localappdata}\Programs\Atlas EU4

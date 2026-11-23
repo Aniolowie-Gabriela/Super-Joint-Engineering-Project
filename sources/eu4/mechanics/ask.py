@@ -258,7 +258,8 @@ def source_excerpt(record, question):
     return text
 
 
-def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, think=True, detailed=None):
+def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, think=True, detailed=None,
+        preferred_records=(), retrieval_question=None, diagnostics=None):
     """Zwróć odpowiedź, listę ponumerowanych źródeł, czas i metryki Ollamy."""
     started = perf_counter()
     question = question.strip()
@@ -278,31 +279,54 @@ def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, t
     except ValueError:
         raise ValueError("Ustaw EU4_NUM_CTX na liczbę całkowitą co najmniej 2048.") from None
 
-    records = []
+    query = retrieval_question or question
+    trace = diagnostics if diagnostics is not None else {}
+    trace.update(stage="retrieval", retrieval_query=query)
+    candidates = []
+    seen = set()
+
+    def track(found):
+        for record in found:
+            if record["chunk_id"] not in seen:
+                seen.add(record["chunk_id"])
+                candidates.append(record)
+
+    def finish_shortcut(answer, used, method):
+        track(used)
+        result = brief_result(answer, used, started, method)
+        complete_trace(trace, result)
+        return result
+
+    trace["candidates"] = candidates
+    preferred = list(preferred_records[:min(3, limit)])
+    track(preferred)
+    records = preferred
     terms = []
     guides = []
     if db_path is not None:
         db_path = resolve_db_path(db_path)
-        if not detailed and question.count("?") <= 1:
+        if not preferred and not detailed and question.count("?") <= 1:
             if re.search(r"\b(zbieram|collect|szlak|trasa|przez)\b|przekier|przepływ|skier", question, re.I):
                 route_answer = trade_question(db_path, question)
                 if route_answer:
                     origin, target, route = route_answer
+                    track(route or [origin, target])
                     if not route:
-                        return brief_result(
+                        return finish_shortcut(
                             f"W EU4 nie ma skierowanej trasy {trade_label(origin)} → {trade_label(target)} [1, 2]. "
                             "Wybierając miejsce zbiórki, kieruj się strzałkami na mapie handlu.",
-                            [origin, target], started, "game_trade_route",
+                            [origin, target], "game_trade_route",
                         )
                     labels = " → ".join(trade_label(record) for record in route)
                     citation = ", ".join(str(number) for number in range(1, len(route)))
-                    return brief_result(
+                    return finish_shortcut(
                         f"Handel może płynąć trasą {labels} [{citation}]. "
                         "Ustaw kupców zgodnie z tym kierunkiem i sprawdź udział w sile handlowej po drodze, "
                         "aby ocenić, ile wartości dotrze do miejsca zbierania.",
-                        route[:-1], started, "game_trade_route",
+                        route[:-1], "game_trade_route",
                     )
             guides = guide_context(db_path, question)
+            track(guides)
             state_condition = re.search(
                 r"\d|\b(?:gdy|jeśli|jeżeli|pod warunkiem|when|if)\s+(?!chc|planuj|i want\b)"
                 r"|\b(?:podczas|przy|w trakcie)\s+(?:regenc|bankruct|reformac)",
@@ -315,21 +339,29 @@ def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, t
             if len(guides) == 1 and not state_condition and (
                 not interface_question or re.search(r"zakład|panel|oknie|podpowiedz|najedź|mapie", guides[0]["text"], re.I)
             ):
-                return brief_result(guides[0]["text"] + " [1]", guides, started, "checked_guide")
-            candidates = guides or guide_candidates(db_path, question)
-            guide = find_guide(question, candidates[:8], host, port, model)
+                return finish_shortcut(guides[0]["text"] + " [1]", guides, "checked_guide")
+            guide_options = guides or guide_candidates(db_path, question)
+            track(guide_options)
+            if guide_options and _llama_backend():
+                trace["retrieval_model_called"] = True
+            guide = find_guide(question, guide_options[:8], host, port, model)
             if guide and not state_condition:
-                return brief_result(guide["text"] + " [1]", [guide], started, "guide_with_gemma")
-            guides = ([guide] if guide else candidates)[:2]
-        terms = search_terms(question, host, port, model)
+                return finish_shortcut(guide["text"] + " [1]", [guide], "guide_with_gemma")
+            guides = ([guide] if guide else guide_options)[:2]
+        if _llama_backend():
+            trace["retrieval_model_called"] = True
+        terms = search_terms(query, host, port, model)
+        trace["search_terms"] = terms
         pool = min(20, max(limit, 12)) if _llama_backend() else limit
-        records = context(db_path, question, limit=pool, extra_terms=terms)
+        base_records = context(db_path, query, limit=pool, extra_terms=terms)
+        track(base_records)
         guide_ids = {guide["document_id"] for guide in guides}
-        records = guides[:limit] + rank_sources(
-            question, [record for record in records if record["document_id"] not in guide_ids],
-            host, port, model, max(0, limit - len(guides)),
+        records = preferred + guides[:limit - len(preferred)] + rank_sources(
+            query, [record for record in base_records if record["document_id"] not in guide_ids],
+            host, port, model, max(0, limit - len(preferred) - len(guides)),
         )
     sources = []
+    sent_sources = []
     excerpts = []
 
     def user_message(parts):
@@ -343,15 +375,26 @@ def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, t
         raise ValueError("Pytanie jest za długie. Skróć je i spróbuj ponownie.")
     for record in records:
         number = len(sources) + 1
+        source_label = (
+            "Źródło użytkownika" if record["source_type"] == "user_source"
+            else f"EU4 {record['game_version']} | {record['source_type']}"
+        )
+        text = source_excerpt(record, question)
         excerpt = (
-            f"[{number}] {record['title']} | EU4 {record['game_version']} | {record['source_type']}\n"
-            f"{source_excerpt(record, question)}"
+            f"[{number}] {record['title']} | {source_label}\n"
+            f"{text}"
         )
         excerpts.append(excerpt)
         if len(user_message(excerpts)) > max_user_chars:
             excerpts.pop()
             continue
         sources.append({**record, "number": number})
+        sent_sources.append({**sources[-1], "text": text})
+    trace.update(
+        stage="generation", method="gemma", model_called=True,
+        sources=sent_sources, excluded_count=len(records) - len(sources),
+        game_version=next((row["game_version"] for row in candidates if row.get("game_version")), None),
+    )
 
     payload = {
         "model": model,
@@ -414,7 +457,24 @@ def ask(question, db_path=None, model=DEFAULT_MODEL, url=DEFAULT_URL, limit=6, t
     metrics = {key: data[key] for key in metric_keys if type(data.get(key)) is int}
     if metrics:
         result["metrics"] = metrics
+    complete_trace(trace, result)
     return result
+
+
+def complete_trace(trace, result):
+    found = {int(number) for group in re.findall(r"\[([0-9,\s]+)\]", result["answer"])
+             for number in re.findall(r"\d+", group)}
+    used = result["sources"]
+    numbers = {source["number"] for source in used}
+    if result["method"] != "gemma":
+        trace["supporting_sources"] = used
+    trace.update(
+        stage="completed", method=result["method"], truncated=result["truncated"],
+        cited_numbers=[source["number"] for source in used if source["number"] in found],
+        unknown_cited_numbers=sorted(found - numbers),
+        game_version=next((source["game_version"] for source in used if source.get("game_version")),
+                          trace.get("game_version")),
+    )
 
 
 def brief_result(answer, records, started, method):
