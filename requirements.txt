@@ -1,0 +1,3 @@
+mcp==2.3.0
+# Tongs MCP v0.37.0
+tongs-mcp @ git+https://github.com/happy-dwarf-team/tongs.git@b549c52010b55f80b27b5e99a85a80ebced38995#subdirectory=mcp
