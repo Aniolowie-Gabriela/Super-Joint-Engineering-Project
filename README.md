@@ -22,10 +22,17 @@ Lokalny serwer MCP dla Europy Universalis IV. Klient czatu może odczytać stan 
 
 Serwer szuka instalacji Steam i folderów zapisów gracza. Możesz wskazać własne ścieżki przez `--game-dir` i powtarzalny `--save-dir`. Opcjonalny `--rakaly` wskazuje lokalny program do dekodowania binarnych zapisów Ironman. Odczyt ZIP z kompresją Zstandard wymaga Pythona 3.14 lub nowszego. Opcjonalny `--db` włącza wyszukiwanie mechanik w istniejącym indeksie SQLite projektu. [Rakaly](https://github.com/rakaly/cli/releases)
 
+Do zrzutów okna potrzebujesz Windows 10 2004 lub nowszego i SDK .NET 8. Po pobraniu gałęzi przygotuj obsługę obrazu z głównego katalogu:
+
+```powershell
+dotnet build sources/eu4/advisor/capture -c Release
+```
+
 ## Co można zrobić
 
 | Polecenie gracza | Narzędzia MCP |
 | --- | --- |
+| „Spójrz na mój ekran. Co oznacza ta ikona?” | `eu4_ui_screenshot` zwraca jedną aktualną klatkę okna gry jako obraz JPEG. Klient musi przekazywać obrazy MCP do modelu obsługującego obraz. |
 | „Jakim krajem gram i jaki jest dzień?” | `eu4_campaign_state`, `tongs_player` |
 | „Kto kontroluje prowincje przy mojej armii?” | `eu4_map_units`, `eu4_map_neighbors`, `eu4_map_provinces`, `eu4_map_occupations` |
 | „Z kim walczę i jakie mam rezerwy?” | `eu4_country_briefing`; przy danych z zapisu klient podaje plik i datę. |
@@ -33,7 +40,7 @@ Serwer szuka instalacji Steam i folderów zapisów gracza. Możesz wskazać wła
 | „Co zmieniło się pomiędzy dwoma zapisami?” | `eu4_save_list`, `eu4_save_compare`. Szczegółowe pola odczytują `eu4_save_find` i `eu4_save_read`. |
 | „Pokaż, gdzie zaciąga się pożyczkę” | `eu4_ui_open_tab` otwiera `economy`; `eu4_ui_point` wskazuje `countryeconomyview/take_loan`. Wybór opcji pozostaje po stronie gracza. |
 
-Serwer zwraca nazwy, teksty i położenie elementów UI przez `tongs_ui_tree`, `tongs_ui_find` i `tongs_cursor`. Obraz ekranu nie jest udostępniany. Pozostałe odczyty i opisy parametrów klient otrzymuje przez MCP `tools/list`.
+Zrzut obejmuje obszar gry w rozdzielczości okna, razem z mapą, otwartymi panelami i widocznymi podpowiedziami. Możesz mieć czat przed grą. Przy zminimalizowanej grze przywróć okno. Każde wywołanie pobiera jedną klatkę do pamięci i działa także po F9. Nazwy, teksty i położenie elementów UI są nadal dostępne przez `tongs_ui_tree`, `tongs_ui_find` i `tongs_cursor`. Pozostałe odczyty i opisy parametrów klient otrzymuje przez MCP `tools/list`.
 
 ## Sterowanie myszą
 

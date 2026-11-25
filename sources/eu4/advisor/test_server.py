@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import AsyncMock, Mock, patch
 
 from mcp.server.mcpserver.exceptions import ToolError
 from mcp_types import CallToolResult, Tool
@@ -99,6 +99,15 @@ class AdvisorTests(unittest.IsolatedAsyncioTestCase):
         self.world.call_live.assert_not_awaited()
         self.world.call_live.return_value = CallToolResult(content=[], structured_content={"ok": True})
         self.assertTrue((await self.server.call_tool("tongs_state", {})).structured_content["available"])
+
+    async def test_screenshot_returns_image_block_after_handover(self):
+        self.server.ui_control.begin = Mock(side_effect=AssertionError("screenshots must not request control"))
+        with patch("campaign_screenshot.capture_frame", return_value=b"\xff\xd8\xff\xd9") as capture:
+            result = await self.server.call_tool("eu4_ui_screenshot", {})
+        capture.assert_called_once_with(self.world.game_dir)
+        image, = result.content
+        self.assertEqual((image.type, image.mime_type, image.data), ("image", "image/jpeg", "/9j/2Q=="))
+        self.assertFalse(result.is_error)
 
 
 if __name__ == "__main__":

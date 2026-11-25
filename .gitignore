@@ -4,3 +4,5 @@ __pycache__/
 .env
 *.eu4
 *.eu4.checkpoint.json
+sources/eu4/advisor/capture/bin/
+sources/eu4/advisor/capture/obj/

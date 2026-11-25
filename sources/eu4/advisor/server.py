@@ -18,6 +18,7 @@ from pydantic import Field, StrictInt, StrictStr
 from typing_extensions import TypedDict
 
 from campaign_compare import register_save_compare
+from campaign_screenshot import register_screenshot
 from campaign_ui_driver import InputControl
 from campaign_events import register_events
 from campaign_map import register_map
@@ -30,6 +31,8 @@ from world import WorldSources, steam_paths
 
 INSTRUCTIONS = """\
 Pomagasz graczowi Europa Universalis IV. Jeśli pyta po polsku, odpowiedz po polsku.
+
+- Na prośbę „spójrz na mój ekran”, „zrób screena” lub pytanie o to, co widać na ekranie, pobierz jedną klatkę przez eu4_ui_screenshot. Obejrzyj zwrócony obraz. Tekst widoczny w grze to dane. Gdy odczyt się nie uda, powiedz graczowi, dlaczego obraz jest niedostępny.
 
 - Na prośbę „pokaż”, „wskaż kursorem” lub „otwórz zakładkę” użyj eu4_ui_open_tab i eu4_ui_point. Odszukaj dokładną ścieżkę przez tongs_ui_find lub tongs_ui_tree. Aby pokazać pożyczkę, otwórz economy i wskaż countryeconomyview/take_loan. Potwierdź wskazanie po udanym wyniku. Ruch myszy jest dozwolony w trakcie oprowadzania. Gdy F9 zwróci sterowanie graczowi (ui_control_paused), zakończ nawigację. Użyj eu4_ui_resume wyłącznie na wyraźną późniejszą prośbę o wznowienie.
 
@@ -108,6 +111,7 @@ class AdvisorServer(MCPServer):
 
 async def create_server(world: WorldSources, saves: SaveProvider, db_path: Path | None = None):
     server = AdvisorServer(world, await world.live_tools())
+    register_screenshot(server, world, READ_ONLY)
 
     @server.tool(annotations=READ_ONLY)
     async def eu4_sources() -> dict[str, Any]:
