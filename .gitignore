@@ -1,6 +1,0 @@
-/.eu4/
-/.env
-/outputs/
-.venv/
-__pycache__/
-*.pyc
