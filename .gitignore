@@ -1,0 +1,114 @@
+# ==========================================================
+#  Varnez – .gitignore
+# ==========================================================
+
+# ---------- Sekrety i konfiguracja lokalna ----------
+# Klucze API (ElevenLabs, modele językowe itp.) – NIGDY do repo.
+.env
+.env.*
+!.env.example
+*.local.json
+*.local.toml
+*.local.yaml
+secrets/
+*.pem
+*.key
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+.installed.cfg
+
+# Środowiska wirtualne (także zagnieżdżone, np. .eu4/.venv)
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Narzędzia, testy, typowanie
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.ipynb_checkpoints/
+
+# ---------- Pamięć kampanii (bazy SQLite) ----------
+# Historia kampanii jest danymi gracza, nie kodem.
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3-shm
+*.sqlite3-wal
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# ---------- EU4: zapisy gry i zrzuty ----------
+# Zapisy kampanii (.eu4) – duże i prywatne. Fixtury testowe dodawać jawnie (git add -f).
+*.eu4
+# Wyjątek: folder roboczy .eu4/ nie jest plikiem zapisu.
+!/.eu4/
+*.eu4.bak
+screenshots/
+captures/
+
+# ---------- Modele i artefakty wyszukiwania ----------
+# Generowane lokalnie lub pobierane – nie przechowujemy wag w repo.
+*.onnx
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.npy
+*.npz
+embedding-model/
+
+# ---------- Wyniki, logi, pliki tymczasowe ----------
+/outputs/
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+_tmp*
+tmp/
+.cache/
+
+# ---------- Edytory i IDE ----------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.sublime-workspace
+*.code-workspace
+
+# ---------- Claude Code (ustawienia osobiste) ----------
+.claude/settings.local.json
+
+# ---------- System ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
